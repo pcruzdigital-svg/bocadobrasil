@@ -1,97 +1,656 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Boca do Brasil | Haz tu pedido</title>
-  <title>Bocado Brasil | Haz tu pedido</title>
-  <style>
-    :root {
-      --bg: #f8f4f2;
-      --surface: #ffffff;
-      --text: #1f1f24;
-      --muted: #6f727a;
-      --line: #f0dfda;
-      --brand: #bf2f21;
-      --brand-2: #e04a33;
-      --brand-soft: #fff3ef;
-      --wa: #25d366;
-      --wa-dark: #1daf57;
-      --radius-xl: 22px;
-      --radius-lg: 16px;
-      --shadow: 0 10px 28px rgba(36, 20, 16, 0.09);
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boca do Brasil</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --red:#C4362A;--red-dark:#9E2418;
+  --off-white:#FBF5F3;--white:#FFFFFF;
+  --gray-light:#F2EDED;--gray-mid:#D4C8C6;
+  --gray-text:#8A7E7C;--dark:#1A1A1A;
+  --radius:16px;
+  --shadow-sm:0 2px 8px rgba(0,0,0,.07);
+  --shadow-md:0 6px 24px rgba(0,0,0,.11);
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--off-white);color:var(--dark);padding-bottom:110px}
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+/* HEADER */
+header{background:var(--white);border-bottom:1px solid var(--gray-light);position:sticky;top:0;z-index:100;box-shadow:var(--shadow-sm)}
+.header-inner{max-width:600px;margin:0 auto;padding:13px 20px;display:flex;align-items:center;justify-content:space-between}
+.logo img{height:42px;width:auto;display:block}
+.logo-fallback{font-size:19px;font-weight:800;color:var(--red);display:none}
+.status-badge{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:6px 12px;border-radius:20px;white-space:nowrap}
+.status-badge.open{background:#EDFAF3;color:#1A9E5A}
+.status-badge.closed{background:#FFF0EE;color:var(--red)}
+.status-dot{width:7px;height:7px;border-radius:50%}
+.open .status-dot{background:#1A9E5A;animation:pulse 1.5s infinite}
+.closed .status-dot{background:var(--red)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
 
-    body {
-      font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
-      color: var(--text);
-      background:
-        radial-gradient(1000px 400px at 95% -5%, #ffe3da 0%, transparent 46%),
-        linear-gradient(180deg, #fffdfc 0%, var(--bg) 100%);
-@@ -307,62 +307,62 @@
-      border-radius: 10px;
-      padding: 10px 12px;
-      font-size: .9rem;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity .2s ease, transform .2s ease;
-      z-index: 50;
-    }
+/* HERO */
+.hero{background:linear-gradient(135deg,#C4362A 0%,#8E1F14 100%);padding:32px 20px 28px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-70px;right:-70px;width:220px;height:220px;background:rgba(255,255,255,.06);border-radius:50%}
+.hero::after{content:'';position:absolute;bottom:-80px;left:-40px;width:200px;height:200px;background:rgba(255,255,255,.04);border-radius:50%}
+.hero-inner{max-width:600px;margin:0 auto;position:relative;z-index:1}
+.hero-tag{display:inline-flex;background:rgba(255,255,255,.16);color:#fff;font-size:12px;font-weight:600;padding:5px 12px;border-radius:20px;margin-bottom:12px;text-transform:uppercase;letter-spacing:.4px}
+.hero h1{font-size:27px;font-weight:900;color:#fff;line-height:1.15;letter-spacing:-.8px;margin-bottom:6px}
+.hero h1 em{font-style:normal;color:#FFD166}
+.hero-sub{color:rgba(255,255,255,.88);font-size:16px;font-weight:500;margin-bottom:16px}
+.hero-stat{color:rgba(255,255,255,.82);font-size:13px}
 
-    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+/* TABS */
+.cat-tabs-wrap{background:var(--white);border-bottom:1px solid var(--gray-light);overflow-x:auto;scrollbar-width:none}
+.cat-tabs-wrap::-webkit-scrollbar{display:none}
+.cat-tabs{max-width:600px;margin:0 auto;padding:12px 16px;display:flex;gap:8px}
+.cat-tab{flex-shrink:0;padding:8px 22px;border-radius:20px;font-size:14px;font-weight:600;border:none;cursor:pointer;transition:all .2s;background:var(--gray-light);color:var(--gray-text)}
+.cat-tab.active{background:var(--red);color:#fff}
 
-    @media (min-width: 720px) {
-      .hero { grid-template-columns: 1.4fr .6fr; }
-      .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .hero-mark { justify-self: end; }
-    }
+.section-label{max-width:600px;margin:0 auto;padding:20px 20px 12px;display:flex;align-items:baseline;justify-content:space-between}
+.section-label h2{font-size:18px;font-weight:800;letter-spacing:-.4px}
+.section-count{font-size:12px;color:var(--gray-text)}
 
-    @media (min-width: 1020px) {
-      .cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    }
-  </style>
+/* GRID + CARDS */
+.grid{max-width:600px;margin:0 auto;padding:0 16px;display:grid;grid-template-columns:1fr 1fr;gap:13px}
+@media(max-width:360px){.grid{grid-template-columns:1fr}}
+.card{background:var(--white);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;transition:transform .2s}
+.card:active{transform:scale(.98)}
+.card-img-wrap{position:relative;width:100%;aspect-ratio:4/3;overflow:hidden;background:var(--gray-light)}
+.card-img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform .4s;display:block}
+.card:hover .card-img-wrap img{transform:scale(1.05)}
+.badge-popular{position:absolute;top:9px;left:9px;background:var(--red);color:#fff;font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px;text-transform:uppercase}
+.badge-deal{position:absolute;top:9px;right:9px;background:#FFD166;color:#7A5500;font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px}
+.card-body{padding:11px;flex:1;display:flex;flex-direction:column;gap:3px}
+.card-name{font-size:14px;font-weight:700;color:var(--dark);letter-spacing:-.2px;line-height:1.2}
+.card-desc{font-size:11px;color:var(--gray-text);line-height:1.4;flex:1}
+.card-footer{display:flex;align-items:center;justify-content:space-between;margin-top:9px}
+.card-price{display:flex;flex-direction:column}
+.price-main{font-size:16px;font-weight:800;color:var(--red);line-height:1}
+.price-main sup{font-size:10px;font-weight:500;color:var(--gray-text)}
+.price-old{font-size:10px;color:var(--gray-text);text-decoration:line-through}
+.qty-ctrl{display:flex;align-items:center;background:var(--gray-light);border-radius:10px;overflow:hidden}
+.qty-btn{width:30px;height:30px;border:none;background:transparent;font-size:17px;font-weight:700;cursor:pointer;color:var(--red);display:flex;align-items:center;justify-content:center;transition:background .15s,transform .1s;flex-shrink:0}
+.qty-btn:hover{background:var(--gray-mid)}
+.qty-btn:active{transform:scale(.85);background:var(--red);color:#fff}
+.qty-num{min-width:22px;text-align:center;font-size:13px;font-weight:700;color:var(--dark)}
+.qty-ctrl.has-items{background:#FAEEEC}
+.qty-ctrl.has-items .qty-num{color:var(--red)}
+
+/* ORDER SECTION */
+.order-section{max-width:600px;margin:20px auto 0;padding:0 16px}
+.order-box{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow-sm);overflow:hidden}
+.order-head{padding:14px 16px;border-bottom:1px solid var(--gray-light)}
+.order-head h3{font-size:15px;font-weight:800;letter-spacing:-.3px}
+.order-head p{font-size:12px;color:var(--gray-text);margin-top:2px}
+.order-types{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:14px 16px}
+.otype{display:flex;flex-direction:column;align-items:center;gap:7px;padding:14px 10px;border-radius:12px;border:2px solid var(--gray-mid);background:transparent;cursor:pointer;transition:all .2s;text-align:center;font-family:inherit}
+.otype.selected{border-color:var(--red);background:#FFF5F4}
+.otype-icon{font-size:26px}
+.otype-name{font-size:13px;font-weight:700;color:var(--dark)}
+.otype-sub{font-size:11px;color:var(--gray-text)}
+.otype.selected .otype-name{color:var(--red)}
+
+.order-detail{padding:14px 16px;border-top:1px solid var(--gray-light);display:none}
+.order-detail.visible{display:block}
+.pickup-addr-box{background:var(--gray-light);border-radius:10px;padding:12px 14px;margin-bottom:14px;display:flex;align-items:flex-start;gap:10px}
+.pickup-addr-box .pin{font-size:18px;flex-shrink:0;margin-top:1px}
+.addr-main{font-size:14px;font-weight:700;color:var(--dark)}
+.addr-sub{font-size:12px;color:var(--gray-text);margin-top:2px}
+.field-label{font-size:11px;font-weight:700;color:var(--gray-text);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;display:block}
+.text-input{width:100%;padding:11px 13px;border:1.5px solid var(--gray-mid);border-radius:10px;font-size:15px;font-family:inherit;color:var(--dark);background:var(--white);outline:none;transition:border-color .2s}
+.text-input:focus{border-color:var(--red)}
+.text-input::placeholder{color:var(--gray-mid)}
+.zone-info{display:none;margin-top:8px;padding:10px 13px;border-radius:10px;font-size:13px;font-weight:600;align-items:center;gap:6px}
+.zone-info.ok{background:#EDFAF3;color:#1A9E5A;display:flex}
+.zone-info.err{background:#FFF0EE;color:var(--red);display:flex}
+.slot-group{margin-top:14px}
+.slot-select{width:100%;padding:11px 36px 11px 13px;border:1.5px solid var(--gray-mid);border-radius:10px;font-size:14px;font-family:inherit;color:var(--dark);background:var(--white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238A7E7C' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 12px center;outline:none;-webkit-appearance:none;cursor:pointer;transition:border-color .2s}
+.slot-select:focus{border-color:var(--red)}
+.slot-closed{background:var(--gray-light);border-radius:10px;padding:12px;text-align:center;font-size:13px;color:var(--gray-text);margin-top:8px;display:none}
+.field-gap{margin-top:12px}
+
+/* CART */
+.cart-section{max-width:600px;margin:16px auto 0;padding:0 16px;display:none}
+.cart-box{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow-sm);overflow:hidden}
+.cart-head{padding:14px 16px;border-bottom:1px solid var(--gray-light);display:flex;align-items:center;gap:7px}
+.cart-head h3{font-size:15px;font-weight:800;letter-spacing:-.3px}
+.cart-badge{background:var(--red);color:#fff;font-size:11px;font-weight:700;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.cart-items{padding:4px 0}
+.cart-item{display:flex;align-items:center;gap:10px;padding:9px 16px}
+.ci-qty{font-size:13px;font-weight:700;color:var(--red);min-width:22px}
+.ci-name{font-size:13px;flex:1;color:var(--dark)}
+.ci-deal{font-size:10px;color:#7A5500;background:#FFD16630;padding:2px 6px;border-radius:10px;font-weight:600;margin-left:4px}
+.ci-price{font-size:13px;font-weight:700;white-space:nowrap}
+.cart-totals{border-top:1px solid var(--gray-light);padding:10px 16px}
+.total-row{display:flex;justify-content:space-between;align-items:center;padding:3px 0}
+.total-row .lbl{font-size:13px;color:var(--gray-text)}
+.total-row .val{font-size:13px;font-weight:600}
+.total-row.grand{border-top:1px solid var(--gray-light);padding-top:10px;margin-top:6px}
+.total-row.grand .lbl{font-size:15px;font-weight:800;color:var(--dark)}
+.total-row.grand .val{font-size:22px;font-weight:900;color:var(--red);letter-spacing:-.8px}
+
+/* HOW */
+.how-section{max-width:600px;margin:20px auto 0;padding:0 16px}
+.how-inner{background:var(--white);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-sm)}
+.how-title{font-size:15px;font-weight:800;margin-bottom:16px;text-align:center}
+.how-steps{display:flex;align-items:flex-start;gap:4px}
+.how-step{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;text-align:center}
+.how-icon{font-size:22px}
+.how-num{width:18px;height:18px;background:var(--red);color:#fff;border-radius:50%;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.how-txt{font-size:10px;font-weight:600;color:var(--dark);line-height:1.3}
+.how-arrow{color:var(--gray-mid);font-size:13px;padding-top:12px;flex-shrink:0}
+
+/* STICKY */
+.sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--white);border-top:1px solid var(--gray-light);padding:10px 16px 22px;box-shadow:0 -4px 20px rgba(0,0,0,.08)}
+.sticky-inner{max-width:600px;margin:0 auto;display:flex;gap:10px;align-items:center}
+.cart-pill{display:flex;align-items:center;gap:7px;background:var(--gray-light);padding:10px 14px;border-radius:12px;flex-shrink:0;cursor:pointer;transition:background .2s}
+.cart-pill:hover{background:var(--gray-mid)}
+.pill-icon{font-size:16px}
+.pill-count{font-size:13px;font-weight:700;color:var(--dark)}
+.pill-total{font-size:15px;font-weight:800;color:var(--red)}
+.wa-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:9px;padding:14px 16px;background:#25D366;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;transition:background .2s,transform .15s;box-shadow:0 4px 14px rgba(37,211,102,.35)}
+.wa-btn:hover{background:#1EB85A}
+.wa-btn:active{transform:scale(.97)}
+.wa-btn.disabled{background:var(--gray-mid);box-shadow:none;cursor:default;color:var(--gray-text)}
+.wa-icon{width:20px;height:20px;flex-shrink:0}
+
+/* UPSELL */
+.upsell-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:300;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s}
+.upsell-overlay.open{opacity:1;pointer-events:all}
+.upsell-modal{background:var(--white);width:100%;max-width:600px;border-radius:24px 24px 0 0;transform:translateY(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);overflow:hidden;padding-bottom:36px}
+.upsell-overlay.open .upsell-modal{transform:translateY(0)}
+.u-img-wrap{width:100%;height:160px;overflow:hidden;position:relative;background:var(--gray-light)}
+.u-img-wrap img{width:100%;height:100%;object-fit:cover}
+.u-fallback{width:100%;height:100%;display:none;align-items:center;justify-content:center;font-size:60px}
+.u-pct-badge{position:absolute;top:14px;left:14px;background:#FFD166;color:#7A5500;font-size:12px;font-weight:800;padding:5px 12px;border-radius:20px}
+.u-body{padding:20px 20px 0}
+.u-pre{font-size:12px;font-weight:600;color:var(--red);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
+.u-name{font-size:20px;font-weight:800;letter-spacing:-.5px;margin-bottom:5px}
+.u-desc{font-size:13px;color:var(--gray-text);line-height:1.4;margin-bottom:14px}
+.u-prices{display:flex;align-items:baseline;gap:10px;margin-bottom:18px}
+.u-new{font-size:28px;font-weight:900;color:var(--red);letter-spacing:-1px}
+.u-old{font-size:15px;color:var(--gray-text);text-decoration:line-through}
+.u-saving{background:#EDFAF3;color:#1A9E5A;font-size:12px;font-weight:700;padding:4px 10px;border-radius:20px}
+.u-actions{display:flex;flex-direction:column;gap:8px;padding:0 20px}
+.u-add{width:100%;padding:16px;background:var(--red);color:#fff;border:none;border-radius:14px;font-size:16px;font-weight:700;cursor:pointer;transition:background .2s}
+.u-add:hover{background:var(--red-dark)}
+.u-decline{width:100%;padding:12px;background:transparent;color:var(--gray-text);border:none;font-size:14px;font-weight:600;cursor:pointer}
+
+.img-skeleton{position:absolute;inset:0;background:linear-gradient(90deg,var(--gray-light) 25%,#EBE5E4 50%,var(--gray-light) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.toast{position:fixed;top:76px;left:50%;transform:translateX(-50%) translateY(-14px);background:var(--dark);color:#fff;padding:10px 20px;border-radius:30px;font-size:13px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;z-index:400;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
 </head>
 <body>
-  <header class="topbar">
-    <div class="container topbar-content">
-      <div class="logo-wrap" aria-label="Boca do Brasil">
-      <div class="logo-wrap" aria-label="Bocado Brasil">
-        <div class="logo-icon" aria-hidden="true">
-          <svg viewBox="0 0 32 32" role="img">
-            <path d="M4 19c4 4 20 4 24-5" />
-            <path d="M11 24c5 3 11 3 16-1" />
-            <path d="M20 8c1.4 0 2.6 1.2 2.6 2.6S21.4 16 20 16" />
-            <path d="M15 8c-1.4 0-2.6 1.2-2.6 2.6S13.6 16 15 16" />
-            <circle cx="23.6" cy="10.7" r="0.8" />
-          </svg>
-        </div>
-        <div class="logo-title">
-          <strong>Boca do Brasil</strong>
-          <strong>Bocado Brasil</strong>
-          <span>Haz tu pedido</span>
-        </div>
-      </div>
-      <div class="top-cta">Entrega rápida</div>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <img src="logo.png" alt="Boca do Brasil" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+      <span class="logo-fallback">Boca do Brasil</span>
     </div>
-  </header>
+    <div class="status-badge closed" id="status-badge">
+      <div class="status-dot"></div>
+      <span id="status-text">Cargando...</span>
+    </div>
+  </div>
+</header>
 
-  <main class="container">
-    <section class="hero" aria-label="Presentación">
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">🇧🇷 Aqui todo tiene sabor a saudade.</div>
+    <h1>Los Mejores<br><em>Bocados Brasileños</em></h1>
+    <div class="hero-sub">Elige tu menú en segundos</div>
+    <div class="hero-stat">🛵 Entrega · Recogida en Rochapea</div>
+  </div>
+</div>
+
+<div class="cat-tabs-wrap"><div class="cat-tabs" id="cat-tabs"></div></div>
+
+<div class="section-label">
+  <h2 id="section-title">Menú Clásico</h2>
+  <span class="section-count" id="section-count"></span>
+</div>
+<div class="grid" id="product-grid"></div>
+
+<div class="order-section">
+  <div class="order-box">
+    <div class="order-head">
+      <h3>¿Cómo quieres recibirlo?</h3>
+      <p>Selecciona antes de confirmar tu pedido</p>
+    </div>
+    <div class="order-types">
+      <button class="otype" id="btn-pickup" onclick="selectType('pickup')">
+        <span class="otype-icon">🏪</span>
+        <span class="otype-name">Recoger en tienda</span>
+        <span class="otype-sub">Gratis</span>
+      </button>
+      <button class="otype" id="btn-delivery" onclick="selectType('delivery')">
+        <span class="otype-icon">🛵</span>
+        <span class="otype-name">Envío a domicilio</span>
+        <span class="otype-sub" id="delivery-from">Desde €2,00</span>
+      </button>
+    </div>
+
+    <div class="order-detail" id="pickup-detail">
+      <div class="pickup-addr-box">
+        <span class="pin">📍</span>
+        <div>
+          <div class="addr-main" id="p-addr-main">Calle Vindangoz, Bajo 10</div>
+          <div class="addr-sub" id="p-addr-sub">Rochapea · Pamplona</div>
+        </div>
+      </div>
+      <div class="slot-group">
+        <label class="field-label">⏰ Hora de recogida</label>
+        <select class="slot-select" id="pickup-slot" onchange="updateBtn()">
+          <option value="">Selecciona una hora...</option>
+        </select>
+        <div class="slot-closed" id="pickup-closed-msg">Sin horarios disponibles hoy. Contáctanos directamente.</div>
+      </div>
+    </div>
+
+    <div class="order-detail" id="delivery-detail">
       <div>
-        <span class="pill">⭐ Sabor brasileño auténtico</span>
-        <h1>Haz tu pedido en segundos</h1>
-        <p>Diseño inspirado en tu logo, navegación clara y experiencia premium. Elige tus productos y envía el pedido directo a WhatsApp.</p>
+        <label class="field-label">📮 Código postal</label>
+        <input type="text" class="text-input" id="postal-input" placeholder="31003" maxlength="5" inputmode="numeric" oninput="validatePostal(this.value)">
+        <div class="zone-info" id="zone-info"></div>
       </div>
-      <div class="hero-mark" aria-hidden="true">
-        <div class="boca">Boca do</div>
-        <div class="brasil">Brasil</div>
-        <div class="swoosh"></div>
+      <div id="delivery-extra" style="display:none">
+        <div class="field-gap">
+          <label class="field-label">📍 Dirección completa</label>
+          <input type="text" class="text-input" id="delivery-addr" placeholder="Calle Mayor 5, 3ºA" oninput="updateBtn()">
+        </div>
+        <div class="slot-group">
+          <label class="field-label">⏰ Hora de entrega</label>
+          <select class="slot-select" id="delivery-slot" onchange="updateBtn()">
+            <option value="">Selecciona una hora...</option>
+          </select>
+          <div class="slot-closed" id="delivery-closed-msg">Sin horarios disponibles.</div>
+        </div>
       </div>
-    </section>
+    </div>
+  </div>
+</div>
 
-    <section class="cards" id="cards" aria-label="Productos"></section>
-  </main>
+<div class="cart-section" id="cart-section">
+  <div class="cart-box">
+    <div class="cart-head">
+      <h3>Tu pedido</h3>
+      <div class="cart-badge" id="cart-badge">0</div>
+    </div>
+    <div class="cart-items" id="cart-items"></div>
+    <div class="cart-totals">
+      <div class="total-row"><span class="lbl">Subtotal</span><span class="val" id="subtotal-val">€0,00</span></div>
+      <div class="total-row" id="fee-row" style="display:none"><span class="lbl">Envío</span><span class="val" id="fee-val">€0,00</span></div>
+      <div class="total-row grand"><span class="lbl">Total</span><span class="val" id="grand-val">€0,00</span></div>
+    </div>
+  </div>
+</div>
 
-  <div class="sticky">
+<div class="how-section">
+  <div class="how-inner">
+    <div class="how-title">¿Cómo funciona?</div>
+    <div class="how-steps">
+      <div class="how-step"><div class="how-icon">🍽️</div><div class="how-num">1</div><div class="how-txt">Elige tu menú</div></div>
+      <div class="how-arrow">→</div>
+      <div class="how-step"><div class="how-icon">💬</div><div class="how-num">2</div><div class="how-txt">Escríbenos por WhatsApp</div></div>
+      <div class="how-arrow">→</div>
+      <div class="how-step"><div class="how-icon">👨‍🍳</div><div class="how-num">3</div><div class="how-txt">Preparamos al momento</div></div>
+      <div class="how-arrow">→</div>
+      <div class="how-step"><div class="how-icon">📍</div><div class="how-num">4</div><div class="how-txt">Recogida en La Rochapea o entrega</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="sticky-bar">
+  <div class="sticky-inner">
+    <div class="cart-pill" onclick="scrollToCart()">
+      <span class="pill-icon">🛒</span>
+      <span class="pill-count" id="pill-count">0</span>
+      <span class="pill-total" id="pill-total">€0,00</span>
+    </div>
+    <button class="wa-btn disabled" id="wa-btn" onclick="sendWA()">
+      <svg class="wa-icon" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+        <path d="M12 0C5.373 0 0 5.373 0 12c0 2.121.553 4.112 1.522 5.844L.057 23.526a.5.5 0 00.61.644l5.925-1.551A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.944 9.944 0 01-5.073-1.388l-.362-.217-3.755.983.999-3.648-.237-.376A9.944 9.944 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+      </svg>
+      Enviar pedido por WhatsApp
+    </button>
+  </div>
+</div>
+
+<div class="upsell-overlay" id="upsell-overlay" onclick="handleUOvl(event)">
+  <div class="upsell-modal">
+    <div class="u-img-wrap">
+      <img id="u-img" src="" alt="" onerror="this.style.display='none';document.getElementById('u-fb').style.display='flex'">
+      <div class="u-fallback" id="u-fb"><span id="u-emoji">🍽️</span></div>
+      <div class="u-pct-badge">🎁 <span id="u-pct">20</span>% OFF</div>
+    </div>
+    <div class="u-body">
+      <div class="u-pre">¡Oferta especial para ti!</div>
+      <div class="u-name" id="u-name"></div>
+      <div class="u-desc" id="u-desc"></div>
+      <div class="u-prices">
+        <div class="u-new" id="u-new"></div>
+        <div class="u-old" id="u-old"></div>
+        <div class="u-saving">Ahorras <span id="u-saving"></span></div>
+      </div>
+    </div>
+    <div class="u-actions">
+      <button class="u-add" id="u-add-btn" onclick="acceptU()">Añadir</button>
+      <button class="u-decline" onclick="declineU()">No, gracias</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const PHONE='346611878234';
+const PROD_KEY='bocadoBrasilProducts';
+const CFG_KEY='bocadoBrasilConfig';
+
+const DEFAULT_CFG={
+  manualClosed:false,prepTime:45,
+  pickupAddress:'Calle Vindangoz, Bajo 10',pickupArea:'Rochapea · Pamplona',
+  hours:{
+    0:{enabled:false,open:'12:00',close:'21:00'},
+    1:{enabled:true, open:'12:00',close:'21:00'},
+    2:{enabled:true, open:'12:00',close:'21:00'},
+    3:{enabled:true, open:'12:00',close:'21:00'},
+    4:{enabled:true, open:'12:00',close:'21:00'},
+    5:{enabled:true, open:'12:00',close:'22:00'},
+    6:{enabled:true, open:'11:00',close:'22:00'}
+  },
+  deliveryZones:[
+    {postal:'31001',name:'Casco Antiguo',fee:3.00},
+    {postal:'31002',name:'Ensanche',fee:3.00},
+    {postal:'31003',name:'Rochapea',fee:2.00},
+    {postal:'31004',name:'Txantrea',fee:2.50},
+    {postal:'31005',name:'San Juan',fee:3.50},
+    {postal:'31006',name:'Milagrosa',fee:3.50},
+    {postal:'31007',name:'Iturrama',fee:4.00},
+    {postal:'31008',name:'Ermitagaña',fee:4.00},
+    {postal:'31010',name:'Chantrea',fee:3.00},
+    {postal:'31011',name:'Pamplona',fee:3.00},
+    {postal:'31013',name:'Berriozar',fee:5.00},
+    {postal:'31014',name:'Pamplona Norte',fee:3.00},
+    {postal:'31015',name:'Pamplona',fee:3.50}
+  ]
+};
+
+const DEFAULT_PRODUCTS=[
+  {id:1,name:'Combo Coxinha',desc:'2 Coxinhas de frango desfiado + Guaraná gelado.',price:6.90,category:'clasico',popular:false,emoji:'🍗',img:'https://images.unsplash.com/photo-1604882406385-6e7c97b4fce8?w=400&q=80&fit=crop',upsell:{productId:3,discountPct:20,trigger:'always',triggerOnSend:false}},
+  {id:2,name:'Combo Salgados',desc:'4 salgados variados: coxinha, quibe, enroladinho e pastel.',price:9.90,category:'clasico',popular:false,emoji:'🧀',img:'https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=400&q=80&fit=crop',upsell:null},
+  {id:3,name:'Combo Brigadeiro',desc:'4 brigadeiros artesanais con granulado belga.',price:5.90,category:'mas-pedido',popular:true,emoji:'🍫',img:'https://images.unsplash.com/photo-1551024601-bec78aea704b?w=400&q=80&fit=crop',upsell:null},
+  {id:4,name:'Combo Feijoada',desc:'Feijoada completa con arroz, farofa y couve. Para 2 personas.',price:16.90,category:'mas-pedido',popular:true,emoji:'🍲',img:'https://images.unsplash.com/photo-1512058564366-18510be2db19?w=400&q=80&fit=crop',upsell:{productId:5,discountPct:15,trigger:'cart_min',cartMin:15,triggerOnSend:true}},
+  {id:5,name:'Combo Açaí',desc:'Açaí 300ml con granola, banana y miel. Energía pura.',price:7.90,category:'completo',popular:false,emoji:'🫐',img:'https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?w=400&q=80&fit=crop',upsell:null},
+  {id:6,name:'Menú Familiar',desc:'Feijoada grande + 6 salgados + 4 brigadeiros + 2 Guaraná.',price:29.90,category:'completo',popular:false,emoji:'🎉',img:'https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?w=400&q=80&fit=crop',upsell:{productId:3,discountPct:30,trigger:'always',triggerOnSend:true}}
+];
+
+const CATS=[{id:'clasico',label:'Clásico'},{id:'mas-pedido',label:'Más Pedido'},{id:'completo',label:'Completo'}];
+const DAYS_ES=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+const DAYS_CAP=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+
+function loadCfg(){try{const s=localStorage.getItem(CFG_KEY);return s?{...DEFAULT_CFG,...JSON.parse(s)}:DEFAULT_CFG}catch(e){return DEFAULT_CFG}}
+function loadProds(){try{const s=localStorage.getItem(PROD_KEY);return s?JSON.parse(s).map(p=>({category:'clasico',upsell:null,...p})):DEFAULT_PRODUCTS}catch(e){return DEFAULT_PRODUCTS}}
+
+const cfg=loadCfg();
+const products=loadProds();
+const quantities={};const dealPrices={};
+products.forEach(p=>quantities[p.id]=0);
+
+let activeCat='clasico',orderType=null,deliveryFee=0,deliveryZone=null;
+const shownU=new Set();
+let _uId=null,_uPrice=null,_uCb=null;
+
+function s2m(str){const[h,m]=str.split(':').map(Number);return h*60+m}
+function now2m(){const n=new Date();return n.getHours()*60+n.getMinutes()}
+function fmt(v){return '€'+v.toFixed(2).replace('.',',')}
+
+// STATUS
+function getStatus(){
+  if(cfg.manualClosed)return{open:false,text:'Cerrado temporalmente'};
+  const now=new Date(),dh=cfg.hours[now.getDay()],n=now2m();
+  if(dh&&dh.enabled){
+    const o=s2m(dh.open),c=s2m(dh.close);
+    if(n>=o&&n<c)return{open:true,text:'Abierto · hasta las '+dh.close};
+    if(n<o)return{open:false,text:'Cerrado · Abre hoy a las '+dh.open};
+  }
+  for(let i=1;i<=7;i++){const d=new Date();d.setDate(d.getDate()+i);const dh2=cfg.hours[d.getDay()];if(dh2&&dh2.enabled){const when=i===1?'mañana':'el '+DAYS_ES[d.getDay()];return{open:false,text:'Cerrado · Abre '+when+' a las '+dh2.open}}}
+  return{open:false,text:'Cerrado temporalmente'};
+}
+function renderStatus(){const{open,text}=getStatus();const b=document.getElementById('status-badge');b.className='status-badge '+(open?'open':'closed');document.getElementById('status-text').textContent=text}
+
+// SLOTS
+function genSlots(){
+  const now=new Date(),slots=[];
+  for(let day=0;day<=6;day++){
+    const d=new Date();d.setDate(d.getDate()+day);
+    const dh=cfg.hours[d.getDay()];
+    if(!dh||!dh.enabled||cfg.manualClosed)continue;
+    const openM=s2m(dh.open),closeM=s2m(dh.close);
+    let startM=openM;
+    if(day===0){const min=now2m()+cfg.prepTime;startM=Math.max(openM,Math.ceil(min/30)*30)}
+    if(startM>=closeM)continue;
+    for(let m=startM;m<=closeM;m+=30){
+      const h=Math.floor(m/60),mn=m%60;
+      const t=String(h).padStart(2,'0')+':'+String(mn).padStart(2,'0');
+      const dl=day===0?'Hoy':day===1?'Mañana':DAYS_CAP[d.getDay()];
+      slots.push({value:day+'_'+t,label:dl+' · '+t});
+      if(slots.length>=20)break;
+    }
+    if(slots.length>=12)break;
+  }
+  return slots;
+}
+function fillSlot(selId,msgId){
+  const slots=genSlots(),sel=document.getElementById(selId),msg=document.getElementById(msgId);
+  sel.innerHTML='<option value="">Selecciona una hora...</option>'+slots.map(s=>`<option value="${s.value}">${s.label}</option>`).join('');
+  if(!slots.length){sel.style.display='none';msg.style.display='block'}else{sel.style.display='block';msg.style.display='none'}
+}
+
+// TABS
+function renderTabs(){
+  document.getElementById('cat-tabs').innerHTML=CATS.map(c=>`<button class="cat-tab ${c.id===activeCat?'active':''}" onclick="switchCat('${c.id}')">${c.label}</button>`).join('');
+  const cat=CATS.find(c=>c.id===activeCat);
+  document.getElementById('section-title').textContent='Menú '+cat.label;
+  const n=products.filter(p=>p.category===activeCat).length;
+  document.getElementById('section-count').textContent=n+(n===1?' producto':' productos');
+}
+function switchCat(id){activeCat=id;renderTabs();renderGrid()}
+
+// GRID
+function renderGrid(){
+  const list=products.filter(p=>p.category===activeCat);
+  const grid=document.getElementById('product-grid');
+  if(!list.length){grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:40px 20px;color:var(--gray-text);font-size:14px">Sin productos en esta categoría.</div>';return}
+  grid.innerHTML=list.map(p=>{
+    const hasD=dealPrices[p.id]!==undefined,price=hasD?dealPrices[p.id]:p.price,qty=quantities[p.id];
+    return`<div class="card">
+      <div class="card-img-wrap">
+        <div class="img-skeleton" id="sk-${p.id}"></div>
+        <img src="${p.img}" alt="${p.name}" loading="lazy"
+          onload="var e=document.getElementById('sk-${p.id}');if(e)e.style.display='none'"
+          onerror="this.style.display='none';var e=document.getElementById('sk-${p.id}');if(e)e.innerHTML='<div style=\\'display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-size:44px;background:#F2EDED\\'>${p.emoji}</div>'">
+        ${p.popular?'<div class="badge-popular">⭐ Popular</div>':''}${hasD?'<div class="badge-deal">🎁 Oferta</div>':''}
+      </div>
+      <div class="card-body">
+        <div class="card-name">${p.name}</div>
+        <div class="card-desc">${p.desc}</div>
+        <div class="card-footer">
+          <div class="card-price">
+            ${hasD?`<div class="price-old">€${p.price.toFixed(2).replace('.',',')}</div>`:''}
+            <div class="price-main"><sup>€</sup>${price.toFixed(2).replace('.',',')}</div>
+          </div>
+          <div class="qty-ctrl ${qty>0?'has-items':''}" id="qc-${p.id}">
+            <button class="qty-btn" onclick="chQty(${p.id},-1)">−</button>
+            <div class="qty-num" id="qn-${p.id}">${qty}</div>
+            <button class="qty-btn" onclick="chQty(${p.id},+1)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// CART
+function getSub(){return products.reduce((s,p)=>s+(dealPrices[p.id]??p.price)*quantities[p.id],0)}
+function getCount(){return products.reduce((s,p)=>s+quantities[p.id],0)}
+function getGrand(){return getSub()+(orderType==='delivery'?deliveryFee:0)}
+
+function renderCart(){
+  const sub=getSub(),count=getCount(),grand=getGrand();
+  document.getElementById('pill-count').textContent=count;
+  document.getElementById('pill-total').textContent=fmt(grand);
+  const sec=document.getElementById('cart-section');
+  if(!count){sec.style.display='none';updateBtn();return}
+  sec.style.display='block';
+  document.getElementById('cart-badge').textContent=count;
+  document.getElementById('subtotal-val').textContent=fmt(sub);
+  const fr=document.getElementById('fee-row');
+  if(orderType==='delivery'&&deliveryZone){fr.style.display='flex';document.getElementById('fee-val').textContent=fmt(deliveryFee)}else fr.style.display='none';
+  document.getElementById('grand-val').textContent=fmt(grand);
+  document.getElementById('cart-items').innerHTML=products.filter(p=>quantities[p.id]>0).map(p=>{
+    const hasD=dealPrices[p.id]!==undefined,price=hasD?dealPrices[p.id]:p.price;
+    return`<div class="cart-item"><div class="ci-qty">${quantities[p.id]}×</div><div class="ci-name">${p.name}${hasD?'<span class="ci-deal">🎁 oferta</span>':''}</div><div class="ci-price">${fmt(price*quantities[p.id])}</div></div>`;
+  }).join('');
+  updateBtn();
+}
+function scrollToCart(){const s=document.getElementById('cart-section');if(s.style.display!=='none')s.scrollIntoView({behavior:'smooth',block:'start'})}
+
+// ORDER TYPE
+function selectType(type){
+  orderType=type;
+  document.getElementById('btn-pickup').classList.toggle('selected',type==='pickup');
+  document.getElementById('btn-delivery').classList.toggle('selected',type==='delivery');
+  const pd=document.getElementById('pickup-detail'),dd=document.getElementById('delivery-detail');
+  if(type==='pickup'){
+    pd.classList.add('visible');dd.classList.remove('visible');
+    document.getElementById('p-addr-main').textContent=cfg.pickupAddress||DEFAULT_CFG.pickupAddress;
+    document.getElementById('p-addr-sub').textContent=cfg.pickupArea||DEFAULT_CFG.pickupArea;
+    fillSlot('pickup-slot','pickup-closed-msg');
+  }else{dd.classList.add('visible');pd.classList.remove('visible')}
+  renderCart();
+}
+
+// POSTAL
+function validatePostal(code){
+  const zi=document.getElementById('zone-info'),ex=document.getElementById('delivery-extra');
+  code=code.trim();
+  if(code.length<5){zi.className='zone-info';zi.innerHTML='';ex.style.display='none';deliveryZone=null;deliveryFee=0;renderCart();return}
+  const zones=cfg.deliveryZones||DEFAULT_CFG.deliveryZones;
+  const zone=zones.find(z=>z.postal===code);
+  if(zone){
+    deliveryZone=zone;deliveryFee=zone.fee;
+    zi.className='zone-info ok';zi.innerHTML='✅ '+zone.name+' · Envío: '+fmt(zone.fee);
+    ex.style.display='block';fillSlot('delivery-slot','delivery-closed-msg');
+  }else{
+    deliveryZone=null;deliveryFee=0;
+    zi.className='zone-info err';zi.innerHTML='❌ Lo sentimos, no repartimos en esa zona todavía';
+    ex.style.display='none';
+  }
+  renderCart();
+}
+
+// QTY
+function chQty(id,delta){
+  quantities[id]=Math.max(0,quantities[id]+delta);
+  const n=document.getElementById('qn-'+id),c=document.getElementById('qc-'+id);
+  if(n)n.textContent=quantities[id];
+  if(c)quantities[id]>0?c.classList.add('has-items'):c.classList.remove('has-items');
+  renderCart();
+  if(delta>0)setTimeout(()=>checkUAdd(id),350);
+}
+
+// UPSELL
+function checkUAdd(productId){
+  const p=products.find(x=>x.id===productId);if(!p?.upsell)return;
+  const u=p.upsell,key='add_'+productId;if(shownU.has(key))return;
+  const show=u.trigger==='always'||(u.trigger==='cart_min'&&getSub()>=(u.cartMin||0));
+  if(!show)return;shownU.add(key);
+  const t=products.find(x=>x.id===u.productId);if(t&&quantities[t.id]===0)openU(t,u.discountPct,null);
+}
+function checkUSend(){
+  for(const p of products){
+    if(!quantities[p.id]||!p.upsell?.triggerOnSend)continue;
+    const u=p.upsell,key='send_'+p.id;if(shownU.has(key))continue;
+    const show=u.trigger==='always'||(u.trigger==='cart_min'&&getSub()>=(u.cartMin||0));
+    if(!show)continue;shownU.add(key);
+    const t=products.find(x=>x.id===u.productId);
+    if(t&&quantities[t.id]===0){openU(t,u.discountPct,()=>doSend());return false}
+  }return true;
+}
+function openU(p,pct,cb){
+  const disc=+(p.price*(1-pct/100)).toFixed(2),sav=+(p.price-disc).toFixed(2);
+  document.getElementById('u-img').src=p.img;document.getElementById('u-img').style.display='block';
+  document.getElementById('u-fb').style.display='none';document.getElementById('u-emoji').textContent=p.emoji;
+  document.getElementById('u-pct').textContent=pct;document.getElementById('u-name').textContent=p.name;
+  document.getElementById('u-desc').textContent=p.desc;document.getElementById('u-new').textContent=fmt(disc);
+  document.getElementById('u-old').textContent=fmt(p.price);document.getElementById('u-saving').textContent=fmt(sav);
+  document.getElementById('u-add-btn').textContent='Añadir por '+fmt(disc);
+  _uId=p.id;_uPrice=disc;_uCb=cb;
+  document.getElementById('upsell-overlay').classList.add('open');document.body.style.overflow='hidden';
+}
+function acceptU(){quantities[_uId]=1;dealPrices[_uId]=_uPrice;closeU();renderGrid();renderCart();showToast('¡Añadido con descuento! 🎁');if(_uCb){const cb=_uCb;_uCb=null;setTimeout(cb,300)}}
+function declineU(){closeU();if(_uCb){const cb=_uCb;_uCb=null;setTimeout(cb,200)}}
+function closeU(){document.getElementById('upsell-overlay').classList.remove('open');document.body.style.overflow=''}
+function handleUOvl(e){if(e.target===document.getElementById('upsell-overlay'))declineU()}
+
+// BUTTON
+function canSub(){
+  if(!getCount()||!orderType)return false;
+  if(orderType==='pickup')return!!document.getElementById('pickup-slot').value;
+  return deliveryZone&&document.getElementById('delivery-addr').value.trim()&&document.getElementById('delivery-slot').value;
+}
+function updateBtn(){const b=document.getElementById('wa-btn');canSub()?b.classList.remove('disabled'):b.classList.add('disabled')}
+
+// WHATSAPP
+function sendWA(){
+  if(!getCount()){showToast('Añade productos al pedido primero');return}
+  if(!orderType){showToast('Selecciona si recoges o quieres envío');document.querySelector('.order-section').scrollIntoView({behavior:'smooth'});return}
+  if(orderType==='pickup'&&!document.getElementById('pickup-slot').value){showToast('Selecciona una hora de recogida');return}
+  if(orderType==='delivery'){
+    if(!deliveryZone){showToast('Introduce un código postal válido');return}
+    if(!document.getElementById('delivery-addr').value.trim()){showToast('Introduce tu dirección completa');return}
+    if(!document.getElementById('delivery-slot').value){showToast('Selecciona una hora de entrega');return}
+  }
+  if(!checkUSend())return;
+  doSend();
+}
+function doSend(){
+  let sub=0;
+  const lines=products.filter(p=>quantities[p.id]>0).map(p=>{
+    const price=dealPrices[p.id]??p.price,s=price*quantities[p.id];sub+=s;
+    return'• '+quantities[p.id]+'x '+p.name+(dealPrices[p.id]!==undefined?' 🎁':'')+' — '+fmt(s);
+  });
+  let msg='¡Hola! Quiero hacer un pedido:\n\n'+lines.join('\n');
+  if(orderType==='delivery'){
+    const addr=document.getElementById('delivery-addr').value.trim();
+    const cp=document.getElementById('postal-input').value;
+    const slotTxt=document.getElementById('delivery-slot').options[document.getElementById('delivery-slot').selectedIndex]?.text||'';
+    msg+='\n\nSubtotal: '+fmt(sub)+'\nEnvío ('+deliveryZone.name+'): '+fmt(deliveryFee)+'\n*Total: '+fmt(sub+deliveryFee)+'*';
+    msg+='\n\n📦 Envío a domicilio\n📍 Dirección: '+addr+' · CP '+cp+'\n⏰ Hora: '+slotTxt;
+  }else{
+    const slotTxt=document.getElementById('pickup-slot').options[document.getElementById('pickup-slot').selectedIndex]?.text||'';
+    msg+='\n\n*Total: '+fmt(sub)+'*';
+    msg+='\n\n🏪 Recogida en tienda\n📍 '+cfg.pickupAddress+', '+cfg.pickupArea+'\n⏰ Hora: '+slotTxt;
+  }
+  window.open('https://wa.me/'+PHONE+'?text='+encodeURIComponent(msg),'_blank');
+}
+
+let _tt;
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(_tt);_tt=setTimeout(()=>t.classList.remove('show'),2400)}
+
+// INIT
+renderStatus();renderTabs();renderGrid();renderCart();
+const minFee=Math.min(...(cfg.deliveryZones||DEFAULT_CFG.deliveryZones).map(z=>z.fee));
+document.getElementById('delivery-from').textContent='Desde '+fmt(minFee);
+setInterval(renderStatus,60000);
+</script>
+</body>
+</html>
