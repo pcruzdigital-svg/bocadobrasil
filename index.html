@@ -4,7 +4,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Boca do Brasil</title>
+<title>Comida brasileña en Pamplona | Bocado Brasil</title>
+<meta name="description" content="Comida brasileña en Pamplona. Haz tu pedido rápido por WhatsApp. Coxinha, pão de queijo, açaí y más.">
+<meta name="keywords" content="comida brasileña Pamplona, coxinha, pão de queijo, açaí, pedir comida brasileña, Bocado Brasil">
+<meta property="og:title" content="Comida brasileña en Pamplona | Bocado Brasil">
+<meta property="og:description" content="Coxinha, pão de queijo, açaí y mucho más. Pide fácil por WhatsApp.">
+<meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -293,6 +298,14 @@ header{background:var(--white);border-bottom:1px solid var(--gray-light);positio
 .coupon-applied-tag.show{display:flex}
 .coupon-remove{background:none;border:none;color:var(--gray-text);font-size:13px;cursor:pointer;padding:0 2px;line-height:1}
 
+/* FOOTER */
+.site-footer{max-width:600px;margin:20px auto 0;padding:0 16px 8px}
+.site-footer-inner{background:var(--white);border-radius:var(--radius);padding:20px 20px 22px;box-shadow:var(--shadow-sm)}
+.footer-title{font-size:15px;font-weight:800;margin-bottom:12px}
+.site-footer-inner p{font-size:13px;color:var(--gray-text);line-height:1.6;margin-bottom:8px}
+.site-footer-inner p:last-child{margin-bottom:0}
+.site-footer-inner strong{color:var(--dark);font-weight:600}
+
 .img-skeleton{position:absolute;inset:0;background:linear-gradient(90deg,var(--gray-light) 25%,#EBE5E4 50%,var(--gray-light) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite}
 @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
 .toast{position:fixed;top:76px;left:50%;transform:translateX(-50%) translateY(-14px);background:var(--dark);color:#fff;padding:10px 20px;border-radius:30px;font-size:13px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;z-index:500;white-space:nowrap}
@@ -326,6 +339,7 @@ header{background:var(--white);border-bottom:1px solid var(--gray-light);positio
       <div class="hero-tagline">Aqui todo tiene sabor a saudade.</div>
     </div>
     <h1>Los Mejores <em>Bocados de Brasil</em></h1>
+    <div class="hero-sub">Comida brasileña en Pamplona</div>
     <div class="hero-stats">
       <span class="hero-stat">🛵 Entrega a domicilio</span>
       <span class="hero-stat">🏪 Recogida gratis en Rochapea</span>
@@ -437,7 +451,7 @@ header{background:var(--white);border-bottom:1px solid var(--gray-light);positio
 
 <div class="how-section">
   <div class="how-inner">
-    <div class="how-title">¿Cómo funciona?</div>
+    <h2 class="how-title">¿Cómo funciona?</h2>
     <div class="how-steps">
       <div class="how-step"><div class="how-num">1</div><div class="how-txt">Elige tu menú</div></div>
       <div class="how-arrow">→</div>
@@ -449,6 +463,15 @@ header{background:var(--white);border-bottom:1px solid var(--gray-light);positio
     </div>
   </div>
 </div>
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <h2 class="footer-title">Sobre nosotros</h2>
+    <p>Bocado Brasil es el sabor de Brasil en España. Un viaje a Brasil sin salir de aquí.</p>
+    <p>Aquí encuentras <strong>comida brasileña de verdad</strong>: pastel de feira, coxinha, brigadeiro, pão de queijo y mucho más. Todo preparado al momento, con sabor auténtico.</p>
+    <p>Pide fácil, sin complicaciones, y disfruta de la mejor <strong>comida brasileña en Pamplona</strong>.</p>
+  </div>
+</footer>
 
 <!-- WELCOME POPUP -->
 <div class="welcome-overlay" id="welcome-overlay">
@@ -550,7 +573,7 @@ const PHONE='346611878234';
 const PROD_KEY='bocadoBrasilProducts';
 const CFG_KEY='bocadoBrasilConfig';
 
-const DEFAULT_CFG={
+const DEFAULT_CFG=/*[[BOCA_CFG_START]]*/{
   manualClosed:false,prepTime:45,
   minDeliveryOrder:15,
   pickupAddress:'Calle Vindangoz, Bajo 10',pickupArea:'Rochapea · Pamplona',
@@ -584,16 +607,16 @@ const DEFAULT_CFG={
     {postal:'31014',name:'Pamplona Norte',fee:3.00},
     {postal:'31015',name:'Pamplona',fee:3.50}
   ]
-};
+}/*[[BOCA_CFG_END]]*/;
 
-const DEFAULT_PRODUCTS=[
+const DEFAULT_PRODUCTS=/*[[BOCA_PROD_START]]*/[
   {id:1,name:'Combo Coxinha',desc:'2 Coxinhas de frango desfiado + Guaraná gelado.',price:6.90,category:'clasico',popular:false,emoji:'🍗',img:'https://images.unsplash.com/photo-1604882406385-6e7c97b4fce8?w=400&q=80&fit=crop',upsell:{productId:3,discountPct:20,trigger:'always',triggerOnSend:false},pairing:2},
   {id:2,name:'Combo Salgados',desc:'4 salgados variados: coxinha, quibe, enroladinho e pastel.',price:9.90,category:'clasico',popular:false,emoji:'🧀',img:'https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=400&q=80&fit=crop',upsell:null,pairing:3},
   {id:3,name:'Combo Brigadeiro',desc:'4 brigadeiros artesanais con granulado belga.',price:5.90,category:'mas-pedido',popular:true,emoji:'🍫',img:'https://images.unsplash.com/photo-1551024601-bec78aea704b?w=400&q=80&fit=crop',upsell:null,pairing:null},
   {id:4,name:'Combo Feijoada',desc:'Feijoada completa con arroz, farofa y couve. Para 2 personas.',price:16.90,category:'mas-pedido',popular:true,emoji:'🍲',img:'https://images.unsplash.com/photo-1512058564366-18510be2db19?w=400&q=80&fit=crop',upsell:{productId:5,discountPct:15,trigger:'cart_min',cartMin:15,triggerOnSend:true},pairing:3},
   {id:5,name:'Combo Açaí',desc:'Açaí 300ml con granola, banana y miel. Energía pura.',price:7.90,category:'completo',popular:false,emoji:'🫐',img:'https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?w=400&q=80&fit=crop',upsell:null,pairing:2},
   {id:6,name:'Menú Familiar',desc:'Feijoada grande + 6 salgados + 4 brigadeiros + 2 Guaraná.',price:29.90,category:'completo',popular:false,emoji:'🎉',img:'https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?w=400&q=80&fit=crop',upsell:{productId:3,discountPct:30,trigger:'always',triggerOnSend:true},pairing:5}
-];
+]/*[[BOCA_PROD_END]]*/;
 
 const DAYS_ES=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
 const DAYS_CAP=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
@@ -837,7 +860,7 @@ function openDetail(id){
   // image
   const img=document.getElementById('d-img'),fb=document.getElementById('d-fb');
   img.style.display='block';fb.style.display='none';
-  img.src=p.img;img.onerror=()=>{img.style.display='none';fb.style.display='flex'};
+  img.src=p.img;img.alt=p.name;img.onerror=()=>{img.style.display='none';fb.style.display='flex'};
   document.getElementById('d-emoji').textContent=p.emoji;
 
   // text
@@ -1074,7 +1097,7 @@ function checkUSend(){
 }
 function openU(p,pct,cb){
   const disc=+(p.price*(1-pct/100)).toFixed(2),sav=+(p.price-disc).toFixed(2);
-  document.getElementById('u-img').src=p.img;document.getElementById('u-img').style.display='block';
+  const uImg=document.getElementById('u-img');uImg.src=p.img;uImg.alt=p.name;uImg.style.display='block';
   document.getElementById('u-fb').style.display='none';document.getElementById('u-emoji').textContent=p.emoji;
   document.getElementById('u-pct').textContent=pct;document.getElementById('u-name').textContent=p.name;
   document.getElementById('u-desc').textContent=p.desc;document.getElementById('u-new').textContent=fmt(disc);
