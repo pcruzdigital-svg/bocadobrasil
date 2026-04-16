@@ -13,6 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="icon" id="site-favicon" type="image/png" href="">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -47,19 +48,17 @@ header{background:var(--white);border-bottom:1px solid var(--gray-light);positio
 .greeting-inner em{font-style:normal;color:var(--gray-text)}
 
 /* HERO */
-.hero{background:linear-gradient(135deg,#C4362A 0%,#8E1F14 100%);padding:28px 20px 28px;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;top:-70px;right:-70px;width:220px;height:220px;background:rgba(255,255,255,.06);border-radius:50%}
-.hero::after{content:'';position:absolute;bottom:-80px;left:-40px;width:200px;height:200px;background:rgba(255,255,255,.04);border-radius:50%}
+.hero{background:linear-gradient(150deg,#C4362A 0%,#8E1F14 100%);padding:32px 20px 30px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;background:rgba(255,255,255,.07);border-radius:50%}
+.hero::after{content:'';position:absolute;bottom:-70px;left:-30px;width:180px;height:180px;background:rgba(255,255,255,.04);border-radius:50%}
 .hero-inner{max-width:600px;margin:0 auto;position:relative;z-index:1;text-align:center}
-.hero-logo-wrap{margin-bottom:10px}
-.hero-logo-wrap img{height:56px;width:auto;filter:brightness(0) invert(1);display:inline-block}
-.hero-tagline{color:rgba(255,255,255,.85);font-size:13px;font-weight:500;font-style:normal;margin-bottom:16px;letter-spacing:.1px}
-.hero-tag{display:inline-flex;background:rgba(255,255,255,.16);color:#fff;font-size:12px;font-weight:600;padding:5px 12px;border-radius:20px;margin-bottom:12px;text-transform:uppercase;letter-spacing:.4px}
-.hero h1{font-size:28px;font-weight:400;color:#fff;line-height:1.2;letter-spacing:-.2px;margin-bottom:18px}
-.hero h1 em{font-style:normal;color:#FFD166;font-weight:400}
-.hero-stats{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
-.hero-stat{color:rgba(255,255,255,.82);font-size:12px;background:rgba(0,0,0,.15);padding:5px 11px;border-radius:20px;display:inline-flex;align-items:center;gap:5px}
-.hero-stat strong{color:#fff;font-weight:700}
+.hero-logo-wrap{margin-bottom:14px}
+.hero-logo-wrap img{height:52px;width:auto;filter:brightness(0) invert(1);display:inline-block}
+.hero h1{font-size:30px;font-weight:700;color:#fff;line-height:1.18;letter-spacing:-.5px;margin-bottom:6px}
+.hero h1 em{font-style:normal;color:#FFD166;font-weight:700}
+.hero-sub{color:rgba(255,255,255,.78);font-size:14px;font-weight:400;margin-bottom:20px;letter-spacing:.1px}
+.hero-stats{display:flex;flex-wrap:wrap;gap:7px;justify-content:center}
+.hero-stat{color:rgba(255,255,255,.85);font-size:12px;background:rgba(0,0,0,.18);padding:5px 12px;border-radius:20px;display:inline-flex;align-items:center;gap:5px}
 
 /* WELCOME POPUP */
 .welcome-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:500;display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;pointer-events:none;transition:opacity .3s}
@@ -298,6 +297,18 @@ header{background:var(--white);border-bottom:1px solid var(--gray-light);positio
 .coupon-applied-tag.show{display:flex}
 .coupon-remove{background:none;border:none;color:var(--gray-text);font-size:13px;cursor:pointer;padding:0 2px;line-height:1}
 
+/* VARIANTS */
+.d-variants-section{margin-bottom:16px}
+.d-variants-title{font-size:11px;font-weight:700;color:var(--gray-text);text-transform:uppercase;letter-spacing:.5px;margin-bottom:9px}
+.d-flavors-wrap{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:4px}
+.d-flavor-btn{padding:7px 15px;border-radius:20px;font-size:13px;font-weight:600;border:1.5px solid var(--gray-mid);background:var(--white);cursor:pointer;transition:all .2s;font-family:'Poppins',sans-serif;color:var(--dark)}
+.d-flavor-btn.sel{border-color:var(--red);background:#FFF0EE;color:var(--red)}
+.d-extra-item{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--gray-light)}
+.d-extra-item:last-child{border-bottom:none}
+.d-extra-check{width:17px;height:17px;accent-color:var(--red);cursor:pointer;flex-shrink:0}
+.d-extra-label{flex:1;font-size:13px;font-weight:500;cursor:pointer}
+.d-extra-price{font-size:12px;font-weight:700;color:var(--red)}
+
 /* FOOTER */
 .site-footer{max-width:600px;margin:20px auto 0;padding:0 16px 8px}
 .site-footer-inner{background:var(--white);border-radius:var(--radius);padding:20px 20px 22px;box-shadow:var(--shadow-sm)}
@@ -336,14 +347,13 @@ header{background:var(--white);border-bottom:1px solid var(--gray-light);positio
     <div class="hero-logo-wrap">
       <img src="logo.png" alt="Boca do Brasil" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'">
       <span style="display:none;font-size:22px;font-weight:900;color:#fff;letter-spacing:-.5px">Boca do Brasil</span>
-      <div class="hero-tagline">Aqui todo tiene sabor a saudade.</div>
     </div>
     <h1>Los Mejores <em>Bocados de Brasil</em></h1>
     <div class="hero-sub">Comida brasileña en Pamplona</div>
     <div class="hero-stats">
-      <span class="hero-stat">🛵 Entrega a domicilio</span>
-      <span class="hero-stat">🏪 Recogida gratis en Rochapea</span>
-      <span class="hero-stat">Pedido mínimo envío: €15</span>
+      <span class="hero-stat">🛵 Envío desde <span id="hero-delivery-from">€2</span></span>
+      <span class="hero-stat">🏪 Recogida en Rochapea</span>
+      <span class="hero-stat">⏱ Pedido mínimo envío: €15</span>
     </div>
   </div>
 </div>
@@ -524,6 +534,8 @@ header{background:var(--white);border-bottom:1px solid var(--gray-light);positio
         <div class="d-price" id="d-price"></div>
       </div>
 
+      <div id="d-variants-wrap"></div>
+
       <div class="d-pairing" id="d-pairing" style="display:none">
         <div class="d-pairing-lbl">Va bien con...</div>
         <div class="d-pair-row" id="d-pair-row"></div>
@@ -560,6 +572,11 @@ header{background:var(--white);border-bottom:1px solid var(--gray-light);positio
       </div>
     </div>
     <div class="u-actions">
+      <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:10px">
+        <button class="qty-btn" onclick="changeUQty(-1)" style="width:36px;height:36px;font-size:20px;border-radius:10px;border:1.5px solid var(--gray-mid);background:var(--white);cursor:pointer;font-family:'Poppins',sans-serif">−</button>
+        <span id="u-qty-num" style="font-size:18px;font-weight:700;min-width:24px;text-align:center">1</span>
+        <button class="qty-btn" onclick="changeUQty(1)" style="width:36px;height:36px;font-size:20px;border-radius:10px;border:1.5px solid var(--gray-mid);background:var(--white);cursor:pointer;font-family:'Poppins',sans-serif">+</button>
+      </div>
       <button class="u-add" id="u-add-btn" onclick="acceptU()">Añadir</button>
       <button class="u-decline" onclick="declineU()">No, gracias</button>
     </div>
@@ -569,13 +586,54 @@ header{background:var(--white);border-bottom:1px solid var(--gray-light);positio
 <div class="toast" id="toast"></div>
 
 <script>
-const PHONE='346611878234';
+const PHONE='34611878234';
 const PROD_KEY='bocadoBrasilProducts';
 const CFG_KEY='bocadoBrasilConfig';
 
-const DEFAULT_CFG=/*[[BOCA_CFG_START]]*/{"manualClosed":false,"prepTime":45,"logoUrl":"","siteUrl":"file:///Users/cash/Documents/Claude/Projects/Painel%20de%20Controle%20-%20BB/index.html?cupom=BRASIL","coupons":[{"code":"BRASIL","type":"pct","value":30}],"pickupAddress":"Calle Vindangoz, Bajo 10","pickupArea":"Rochapea · Pamplona","hours":{"0":{"enabled":false,"open":"12:00","close":"21:00","enabled2":false,"open2":"18:00","close2":"22:00"},"1":{"enabled":true,"open":"12:00","close":"21:00","enabled2":false,"open2":"18:00","close2":"22:00"},"2":{"enabled":true,"open":"12:00","close":"21:00","enabled2":false,"open2":"18:00","close2":"22:00"},"3":{"enabled":true,"open":"12:00","close":"21:00","enabled2":false,"open2":"18:00","close2":"22:00"},"4":{"enabled":false,"open":"12:00","close":"21:00","enabled2":false,"open2":"18:00","close2":"22:00"},"5":{"enabled":false,"open":"12:00","close":"21:00","enabled2":false,"open2":"18:00","close2":"22:00"},"6":{"enabled":true,"open":"12:00","close":"21:00","enabled2":false,"open2":"18:00","close2":"22:00"}},"deliveryZones":[{"postal":"31001","name":"Casco Antiguo","fee":3},{"postal":"31002","name":"Ensanche","fee":3},{"postal":"31003","name":"Rochapea","fee":2},{"postal":"31004","name":"San Juan","fee":3.5},{"postal":"31005","name":"Chantrea","fee":3.5},{"postal":"31006","name":"Milagrosa","fee":3},{"postal":"31007","name":"Ermitagaña","fee":3.5},{"postal":"31008","name":"Mendillorri","fee":4},{"postal":"31009","name":"Buztintxuri","fee":4},{"postal":"31010","name":"Donibane","fee":4},{"postal":"31011","name":"Etxabakoitz","fee":4},{"postal":"31012","name":"Ansoáin","fee":4.5},{"postal":"31013","name":"Berrioplano","fee":5}],"paymentMethods":["Efectivo","Tarjeta","Bizum"],"categories":[{"id":"clasico","label":"Clásico"},{"id":"mas-pedido","label":"Más Pedido"},{"id":"completo","label":"Completo"}]}/*[[BOCA_CFG_END]]*/;
+const DEFAULT_CFG=/*[[BOCA_CFG_START]]*/{
+  manualClosed:false,prepTime:45,
+  minDeliveryOrder:15,
+  pickupAddress:'Calle Vindangoz, Bajo 10',pickupArea:'Rochapea · Pamplona',
+  hours:{
+    0:{enabled:false,open:'12:00',close:'21:00'},
+    1:{enabled:true, open:'12:00',close:'21:00'},
+    2:{enabled:true, open:'12:00',close:'21:00'},
+    3:{enabled:true, open:'12:00',close:'21:00'},
+    4:{enabled:true, open:'12:00',close:'21:00'},
+    5:{enabled:true, open:'12:00',close:'22:00'},
+    6:{enabled:true, open:'11:00',close:'22:00'}
+  },
+  categories:[
+    {id:'clasico',label:'Clásico'},
+    {id:'mas-pedido',label:'Más Pedido'},
+    {id:'completo',label:'Completo'}
+  ],
+  paymentMethods:['Efectivo','Tarjeta','Bizum'],
+  deliveryZones:[
+    {postal:'31001',name:'Casco Antiguo',fee:3.00},
+    {postal:'31002',name:'Ensanche',fee:3.00},
+    {postal:'31003',name:'Rochapea',fee:2.00},
+    {postal:'31004',name:'Txantrea',fee:2.50},
+    {postal:'31005',name:'San Juan',fee:3.50},
+    {postal:'31006',name:'Milagrosa',fee:3.50},
+    {postal:'31007',name:'Iturrama',fee:4.00},
+    {postal:'31008',name:'Ermitagaña',fee:4.00},
+    {postal:'31010',name:'Chantrea',fee:3.00},
+    {postal:'31011',name:'Pamplona',fee:3.00},
+    {postal:'31013',name:'Berriozar',fee:5.00},
+    {postal:'31014',name:'Pamplona Norte',fee:3.00},
+    {postal:'31015',name:'Pamplona',fee:3.50}
+  ]
+}/*[[BOCA_CFG_END]]*/;
 
-const DEFAULT_PRODUCTS=/*[[BOCA_PROD_START]]*/[{"promo":null,"codigo":null,"ofertaDoDia":false,"flavors":[],"extras":[],"id":1,"name":"Combo Coxinha","desc":"2 Coxinhas de frango desfiado + Guaraná gelado.","price":6.9,"category":"clasico","popular":false,"emoji":"🍗","img":"https://images.unsplash.com/photo-1604882406385-6e7c97b4fce8?w=400&q=80&fit=crop","upsell":{"productId":6,"discountPct":20,"trigger":"always","cartMin":0,"triggerOnSend":false},"pairing":3,"variants":[{"id":"vg_1776372264682","title":"Sabor","type":"radio","options":[{"name":"carne","price":2},{"name":"pizza","price":1}]}]},{"promo":null,"codigo":null,"ofertaDoDia":false,"flavors":[],"extras":[],"id":2,"name":"Combo Salgados","desc":"4 salgados variados: coxinha, quibe, enroladinho e pastel.","price":9.9,"category":"clasico","popular":false,"emoji":"🧀","img":"https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=400&q=80&fit=crop","upsell":null},{"promo":null,"codigo":null,"ofertaDoDia":true,"flavors":[],"extras":[],"id":3,"name":"Combo Brigadeiro","desc":"4 brigadeiros artesanais con granulado belga.","price":5.9,"category":"mas-pedido","popular":true,"emoji":"🍫","img":"https://images.unsplash.com/photo-1551024601-bec78aea704b?w=400&q=80&fit=crop","upsell":null,"pairing":null},{"promo":null,"codigo":null,"ofertaDoDia":false,"flavors":[],"extras":[],"id":4,"name":"Combo Feijoada","desc":"Feijoada completa con arroz, farofa y couve. Para 2 personas.","price":16.9,"category":"mas-pedido","popular":true,"emoji":"🍲","img":"https://images.unsplash.com/photo-1512058564366-18510be2db19?w=400&q=80&fit=crop","upsell":{"productId":5,"discountPct":15,"trigger":"cart_min","cartMin":15,"triggerOnSend":true}},{"promo":null,"codigo":null,"ofertaDoDia":false,"flavors":[],"extras":[],"id":5,"name":"Combo Açaí","desc":"Açaí 300ml con granola, banana y miel. Energía pura.","price":7.9,"category":"completo","popular":false,"emoji":"🫐","img":"https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?w=400&q=80&fit=crop","upsell":null},{"promo":null,"codigo":"comb1","ofertaDoDia":false,"flavors":[],"extras":[],"id":6,"name":"Menú Familiar","desc":"Feijoada grande + 6 salgados + 4 brigadeiros + 2 Guaraná.","price":29.9,"category":"completo","popular":false,"emoji":"🎉","img":"https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?w=400&q=80&fit=crop","upsell":{"productId":3,"discountPct":30,"trigger":"cart_min","cartMin":0,"triggerOnSend":true},"pairing":2}]/*[[BOCA_PROD_END]]*/;
+const DEFAULT_PRODUCTS=/*[[BOCA_PROD_START]]*/[
+  {id:1,name:'Combo Coxinha',desc:'2 Coxinhas de frango desfiado + Guaraná gelado.',price:6.90,category:'clasico',popular:false,emoji:'🍗',img:'https://images.unsplash.com/photo-1604882406385-6e7c97b4fce8?w=400&q=80&fit=crop',upsell:{productId:3,discountPct:20,trigger:'always',triggerOnSend:false},pairing:2},
+  {id:2,name:'Combo Salgados',desc:'4 salgados variados: coxinha, quibe, enroladinho e pastel.',price:9.90,category:'clasico',popular:false,emoji:'🧀',img:'https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=400&q=80&fit=crop',upsell:null,pairing:3},
+  {id:3,name:'Combo Brigadeiro',desc:'4 brigadeiros artesanais con granulado belga.',price:5.90,category:'mas-pedido',popular:true,emoji:'🍫',img:'https://images.unsplash.com/photo-1551024601-bec78aea704b?w=400&q=80&fit=crop',upsell:null,pairing:null},
+  {id:4,name:'Combo Feijoada',desc:'Feijoada completa con arroz, farofa y couve. Para 2 personas.',price:16.90,category:'mas-pedido',popular:true,emoji:'🍲',img:'https://images.unsplash.com/photo-1512058564366-18510be2db19?w=400&q=80&fit=crop',upsell:{productId:5,discountPct:15,trigger:'cart_min',cartMin:15,triggerOnSend:true},pairing:3},
+  {id:5,name:'Combo Açaí',desc:'Açaí 300ml con granola, banana y miel. Energía pura.',price:7.90,category:'completo',popular:false,emoji:'🫐',img:'https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?w=400&q=80&fit=crop',upsell:null,pairing:2},
+  {id:6,name:'Menú Familiar',desc:'Feijoada grande + 6 salgados + 4 brigadeiros + 2 Guaraná.',price:29.90,category:'completo',popular:false,emoji:'🎉',img:'https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?w=400&q=80&fit=crop',upsell:{productId:3,discountPct:30,trigger:'always',triggerOnSend:true},pairing:5}
+]/*[[BOCA_PROD_END]]*/;
 
 const DAYS_ES=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
 const DAYS_CAP=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
@@ -592,25 +650,30 @@ products.forEach(p=>quantities[p.id]=0);
 
 /* ── CART PERSISTENCE */
 const CART_KEY='bocadoBrasilCart';
-function saveCart(){try{localStorage.setItem(CART_KEY,JSON.stringify(quantities))}catch(e){}}
+function saveCart(){try{localStorage.setItem(CART_KEY,JSON.stringify({q:quantities,s:selections}))}catch(e){}}
 function loadCart(){
   try{
     const s=localStorage.getItem(CART_KEY);
     if(!s)return;
     const saved=JSON.parse(s);
-    products.forEach(p=>{if(saved[p.id]>0)quantities[p.id]=saved[p.id]});
+    // support old format (plain quantities object) and new format
+    const savedQ=saved.q||saved;
+    const savedS=saved.s||{};
+    products.forEach(p=>{
+      if(savedQ[p.id]>0){quantities[p.id]=savedQ[p.id];if(savedS[p.id])selections[p.id]=savedS[p.id]}
+    });
   }catch(e){}
 }
 function clearCart(){
   if(!confirm('¿Seguro que quieres limpiar el pedido?'))return;
-  products.forEach(p=>{quantities[p.id]=0});
+  products.forEach(p=>{quantities[p.id]=0;delete selections[p.id]});
   localStorage.removeItem(CART_KEY);
   appliedCoupon=null;
   const ci=document.getElementById('coupon-input');if(ci)ci.value='';
   renderCart();renderAll();renderOferta();
 }
 function resetCartAfterSend(){
-  products.forEach(p=>{quantities[p.id]=0});
+  products.forEach(p=>{quantities[p.id]=0;delete selections[p.id]});
   localStorage.removeItem(CART_KEY);
   appliedCoupon=null;
   const ci=document.getElementById('coupon-input');if(ci)ci.value='';
@@ -822,6 +885,10 @@ function openDetail(id){
   img.src=p.img;img.alt=p.name;img.onerror=()=>{img.style.display='none';fb.style.display='flex'};
   document.getElementById('d-emoji').textContent=p.emoji;
 
+  // init selections (one entry per qty, minimum 1)
+  ensureSelections(p.id, Math.max(1, quantities[p.id]||0));
+  renderDetailVariants(id);
+
   // text
   const catLabel=CATS.find(c=>c.id===p.category)?.label||CAT_LABELS_MAP[p.category]||p.category;
   document.getElementById('d-cat').textContent=catLabel;
@@ -851,9 +918,11 @@ function openDetail(id){
         <div class="d-pair-desc">${pair.desc}</div>
         <div class="d-pair-price">${fmt(pair.price)}</div>
       </div>
-      <button class="d-pair-add ${pairQty>0?'added':''}" id="pair-add-btn" onclick="addPairProduct(${pair.id})">
-        ${pairQty>0?'✓ Añadido':'+ Añadir'}
-      </button>`;
+      <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+        <button class="qty-btn" onclick="addPairProduct(${pair.id},-1)" style="width:30px;height:30px;font-size:16px;border-radius:8px;border:1.5px solid var(--gray-mid);background:var(--white);cursor:pointer">−</button>
+        <span id="pair-qty-num" style="font-size:14px;font-weight:700;min-width:18px;text-align:center">${pairQty}</span>
+        <button class="qty-btn" onclick="addPairProduct(${pair.id},1)" style="width:30px;height:30px;font-size:16px;border-radius:8px;border:1.5px solid var(--gray-mid);background:var(--white);cursor:pointer">+</button>
+      </div>`;
   } else {
     pairSec.style.display='none';
   }
@@ -867,6 +936,7 @@ function closeDetail(){
   document.body.style.overflow='';
   _detailId=null;
   renderOferta();renderAll();renderCart();
+  if(window._variantCb){const cb=window._variantCb;window._variantCb=null;setTimeout(cb,300)}
 }
 
 function handleDOvl(e){if(e.target===document.getElementById('detail-overlay'))closeDetail()}
@@ -878,6 +948,7 @@ function detailQty(delta){
   const qn=document.getElementById('d-qty-num'),qc=document.getElementById('d-qty-ctrl');
   if(qn)qn.textContent=qty;
   if(qc)qty>0?qc.classList.add('has-items'):qc.classList.remove('has-items');
+  renderDetailVariants(_detailId);
   updateDetailBtn();
   saveCart();
 }
@@ -885,15 +956,33 @@ function detailQty(delta){
 function updateDetailBtn(){
   const qty=_detailId?quantities[_detailId]:0;
   const btn=document.getElementById('d-done-btn');
-  if(qty>0){btn.classList.remove('empty');btn.textContent='Listo ('+qty+' en pedido)'}
-  else{btn.classList.add('empty');btn.textContent='Añadir al pedido'}
+  const p=products.find(x=>x.id===_detailId);
+  const baseTotal=p?promoTotal(p,qty):0;
+  const selTotal=p?getSelectionTotal(p):0;
+  let pairTotal=0;
+  if(p&&p.pairing){const pair=products.find(x=>x.id===p.pairing);if(pair){const pq=quantities[pair.id]||0;pairTotal=promoTotal(pair,pq)+getSelectionTotal(pair)}}
+  if(qty>0){
+    const total=baseTotal+selTotal+(pairTotal||0);
+    btn.classList.remove('empty');
+    if(qty===1&&!pairTotal&&!selTotal){const u=p?promoUnitPrice(p):0;btn.textContent='Listo · 1 × '+fmt(u)+' = '+fmt(u)}
+    else btn.textContent=pairTotal?'Listo · '+fmt(total)+' (incl. sugerido)':'Listo · '+fmt(total);
+  }else{btn.classList.add('empty');btn.textContent='Añadir al pedido'}
 }
 
-function addPairProduct(id){
-  quantities[id]=(quantities[id]||0)+1;
-  const btn=document.getElementById('pair-add-btn');
-  if(btn){btn.textContent='✓ Añadido';btn.classList.add('added')}
-  showToast('Añadido al pedido');
+function addPairProduct(id,delta){
+  delta=delta||1;
+  const p=products.find(x=>x.id===id);
+  if(delta>0&&p&&p.variants&&p.variants.length){
+    // open detail modal so user selects variants
+    closeDetail();
+    setTimeout(()=>openDetail(id),300);
+    return;
+  }
+  quantities[id]=Math.max(0,(quantities[id]||0)+delta);
+  const num=document.getElementById('pair-qty-num');
+  if(num)num.textContent=quantities[id];
+  saveCart();renderCart();updateDetailBtn();
+  if(delta>0)showToast('Añadido al pedido');
 }
 
 /* ── COUPON */
@@ -924,7 +1013,7 @@ function applyCouponInput(){
 function removeCoupon(){appliedCoupon=null;document.getElementById('coupon-input').value='';renderCart()}
 
 /* ── CART */
-function getSub(){return products.reduce((s,p)=>s+promoTotal(p,quantities[p.id]),0)}
+function getSub(){return products.reduce((s,p)=>s+(promoTotal(p,quantities[p.id])+getSelectionTotal(p)),0)}
 function getCount(){return products.reduce((s,p)=>s+quantities[p.id],0)}
 function getGrand(){return Math.max(0,getSub()-getCouponDiscount())+(orderType==='delivery'?deliveryFee:0)}
 
@@ -944,7 +1033,7 @@ function renderCart(){
   }else{alert.style.display='none'}
 
   const clrBtn=document.getElementById('clear-btn');
-  if(clrBtn)count>0?clrBtn.classList.add('visible'):clrBtn.classList.remove('visible');
+  if(clrBtn)clrBtn.style.display=count>0?'flex':'none';
   const sec=document.getElementById('cart-section');
   if(!count){sec.style.display='none';updateBtn();return}
   sec.style.display='block';
@@ -968,7 +1057,9 @@ function renderCart(){
     const total=promoTotal(p,qty);
     const hasD=dealPrices[p.id]!==undefined;
     const badge=hasD?'<span class="ci-deal">🎁 oferta</span>':p.promo?.type==='2x1'?'<span class="ci-deal">2×1</span>':promoBadgeText(p)?`<span class="ci-deal">${promoBadgeText(p)}</span>`:'';
-    return`<div class="cart-item"><div class="ci-qty">${qty}×</div><div class="ci-name">${p.name}${badge}</div><div class="ci-price">${fmt(total)}</div></div>`;
+    const sels=Array.isArray(selections[p.id])?selections[p.id]:[];
+    const selTxt=p.variants&&sels.length?sels.slice(0,qty).map((sel,si)=>{const parts=p.variants.map(g=>{const v=sel[g.id];return Array.isArray(v)?v.join(', '):(v||'')}).filter(Boolean).join(' · ');return qty>1&&parts?`${si+1}: ${parts}`:parts}).filter(Boolean).join(' / '):'';
+    return`<div class="cart-item"><div class="ci-qty">${qty}×</div><div class="ci-name">${p.name}${badge}${selTxt?`<div style="font-size:11px;color:var(--gray-text);font-weight:400;margin-top:2px">${selTxt}</div>`:''}</div><div class="ci-price">${fmt(total)}</div></div>`;
   }).join('');
   updateBtn();
 }
@@ -1055,17 +1146,42 @@ function checkUSend(){
   }return true;
 }
 function openU(p,pct,cb){
+  _uQty=1;
   const disc=+(p.price*(1-pct/100)).toFixed(2),sav=+(p.price-disc).toFixed(2);
   const uImg=document.getElementById('u-img');uImg.src=p.img;uImg.alt=p.name;uImg.style.display='block';
   document.getElementById('u-fb').style.display='none';document.getElementById('u-emoji').textContent=p.emoji;
   document.getElementById('u-pct').textContent=pct;document.getElementById('u-name').textContent=p.name;
   document.getElementById('u-desc').textContent=p.desc;document.getElementById('u-new').textContent=fmt(disc);
   document.getElementById('u-old').textContent=fmt(p.price);document.getElementById('u-saving').textContent=fmt(sav);
-  document.getElementById('u-add-btn').textContent='Añadir por '+fmt(disc);
+  document.getElementById('u-qty-num').textContent=1;
+  document.getElementById('u-add-btn').textContent='Añadir 1 por '+fmt(disc);
   _uId=p.id;_uPrice=disc;_uCb=cb;
   document.getElementById('upsell-overlay').classList.add('open');document.body.style.overflow='hidden';
 }
-function acceptU(){quantities[_uId]=1;dealPrices[_uId]=_uPrice;saveCart();closeU();renderAll();renderCart();showToast('¡Añadido con descuento! 🎁');if(_uCb){const cb=_uCb;_uCb=null;setTimeout(cb,300)}}
+let _uQty=1;
+function changeUQty(delta){
+  _uQty=Math.max(1,_uQty+delta);
+  document.getElementById('u-qty-num').textContent=_uQty;
+  document.getElementById('u-add-btn').textContent='Añadir '+_uQty+' por '+fmt(_uPrice*_uQty);
+}
+function acceptU(){
+  quantities[_uId]=_uQty;dealPrices[_uId]=_uPrice;
+  const p=products.find(x=>x.id===_uId);
+  if(p&&p.variants&&p.variants.length){
+    // product has variants — open detail modal for selection; hold send callback
+    const savedCb=_uCb;_uCb=null;
+    saveCart();closeU();renderAll();renderCart();
+    setTimeout(()=>{
+      // patch closeDetail to fire the send callback after user confirms variants
+      const _origClose=closeDetail;
+      window._variantCb=savedCb;
+    },50);
+    setTimeout(()=>openDetail(_uId),300);
+    showToast('¡Selecciona las opciones! 🎛️');
+    return;
+  }
+  saveCart();closeU();renderAll();renderCart();showToast('¡Añadido con descuento! 🎁');if(_uCb){const cb=_uCb;_uCb=null;setTimeout(cb,300)}
+}
 function declineU(){closeU();if(_uCb){const cb=_uCb;_uCb=null;setTimeout(cb,200)}}
 function closeU(){document.getElementById('upsell-overlay').classList.remove('open');document.body.style.overflow=''}
 function handleUOvl(e){if(e.target===document.getElementById('upsell-overlay'))declineU()}
@@ -1105,10 +1221,13 @@ function sendWA(){
 function doSend(){
   let sub=0;
   const lines=products.filter(p=>quantities[p.id]>0).map(p=>{
-    const qty=quantities[p.id],total=promoTotal(p,qty);sub+=total;
+    const qty=quantities[p.id],total=promoTotal(p,qty);
+    const selTotal=getSelectionTotal(p);sub+=total+selTotal;
     const code=p.codigo?` [${p.codigo}]`:'';
     const promTag=dealPrices[p.id]!==undefined?' 🎁':p.promo?.type==='2x1'?' (2×1)':promoBadgeText(p)?` (${promoBadgeText(p)})` :'';
-    return`• ${qty}x ${p.name}${code}${promTag} — ${fmt(total)}`;
+    const sels=Array.isArray(selections[p.id])?selections[p.id]:[];
+    const selLine=p.variants&&sels.length?sels.slice(0,qty).map((sel,si)=>{const parts=p.variants.map(g=>{const v=sel[g.id];return Array.isArray(v)?v.join(', '):(v||'')}).filter(Boolean).join('+');return qty>1&&parts?`${si+1}:${parts}`:parts}).filter(Boolean).join(' / '):'';
+    return`• ${qty}x ${p.name}${code}${promTag}${selLine?' ('+selLine+')':''} — ${fmt(total+selTotal)}`;
   });
   const customerName=getCustomerName();
   const greeting=customerName?'¡Hola! Soy '+customerName+', quiero hacer un pedido:':'¡Hola! Quiero hacer un pedido:';
@@ -1166,8 +1285,17 @@ function renderGreeting(){
   if(Math.random()<0.4&&products.length){
     const pool=promos.length?promos:products;
     const pick=pool[Math.floor(Math.random()*pool.length)];
-    const badge=pick.promo?promoBadgeText(pick):'';
-    extra=` <em>Hoy te recomendamos <strong>${pick.name}</strong>${badge?' ('+badge+')':''}. ¡Está muy bueno!</em>`;
+    let msgs=[];
+    if(pick.ofertaDoDia){
+      msgs=[`El <strong>${pick.name}</strong> es la oferta del día — échale un vistazo antes de pedir!`,`Oferta del día: <strong>${pick.name}</strong>. ¡No te lo pierdas!`];
+    }else if(pick.promo){
+      const badge=promoBadgeText(pick);
+      if(pick.promo.type==='2x1')msgs=[`El <strong>${pick.name}</strong> está en 2×1 ahora mismo — ¡aprovecha!`];
+      else msgs=[`El <strong>${pick.name}</strong> con ${badge} solo hoy. ¡No te lo pierdas!`,`El <strong>${pick.name}</strong> tiene ${badge} — ¡pídelo hoy!`];
+    }else{
+      msgs=[`El <strong>${pick.name}</strong> es de los más pedidos hoy. ¿Lo añades?`,`Hoy muchos clientes están eligiendo el <strong>${pick.name}</strong>. ¿Lo pruebas?`,`El <strong>${pick.name}</strong> tiene muy buena pinta hoy. ¡Échale un vistazo!`];
+    }
+    extra=` <em>${msgs[Math.floor(Math.random()*msgs.length)]}</em>`;
   }
   txt.innerHTML=`${saludo}, <strong>${name}</strong>! 👋${extra}`;
   bar.classList.add('visible');
@@ -1176,6 +1304,8 @@ function renderGreeting(){
 /* ── LOGO FROM CONFIG */
 function applyLogo(){
   const url=cfg.logoUrl||'';
+  const favicon=cfg.faviconUrl||'';
+  if(favicon){const el=document.getElementById('site-favicon');if(el)el.href=favicon;}
   // Header logo
   const hImg=document.querySelector('header .logo img');
   if(hImg&&url){hImg.src=url;hImg.style.display='block';hImg.nextElementSibling.style.display='none'}
@@ -1188,12 +1318,93 @@ function applyLogo(){
   if(wImg&&url){wImg.src=url;wImg.style.display='block';if(wFb)wFb.style.display='none'}
 }
 
+/* ── VARIANTS (grupos dinâmicos — uma seleção por item) */
+const selections={};
+
+function _mkDefaultSel(p){
+  const s={};
+  (p.variants||[]).forEach(g=>{s[g.id]=g.type==='radio'?(g.options&&g.options.length?g.options[0].name:''):[]});
+  return s;
+}
+function ensureSelections(pid,qty){
+  const p=products.find(x=>x.id===pid);
+  if(!p||!p.variants||!p.variants.length)return [];
+  if(!Array.isArray(selections[pid]))selections[pid]=[];
+  const arr=selections[pid];
+  while(arr.length<qty)arr.push(_mkDefaultSel(p));
+  if(arr.length>qty&&qty>0)arr.splice(qty);
+  return arr;
+}
+function getSelectionTotal(p){
+  const qty=quantities[p.id]||0;
+  if(!qty||!p.variants||!p.variants.length)return 0;
+  const arr=ensureSelections(p.id,qty);
+  let total=0;
+  arr.forEach(sel=>{
+    (p.variants||[]).forEach(g=>{
+      const val=sel[g.id];if(!val)return;
+      if(g.type==='radio'){const opt=(g.options||[]).find(o=>o.name===val);if(opt)total+=opt.price||0}
+      else{const a=Array.isArray(val)?val:[];a.forEach(n=>{const opt=(g.options||[]).find(o=>o.name===n);if(opt)total+=opt.price||0})}
+    });
+  });
+  return total;
+}
+function setVariantRadio(pid,itemIdx,groupId,optName){
+  ensureSelections(pid,Math.max(1,quantities[pid]||0));
+  if(selections[pid]&&selections[pid][itemIdx])selections[pid][itemIdx][groupId]=optName;
+  renderDetailVariants(_detailId);updateDetailBtn();
+}
+function toggleVariantCheckbox(pid,itemIdx,groupId,optName){
+  ensureSelections(pid,Math.max(1,quantities[pid]||0));
+  if(!selections[pid]||!selections[pid][itemIdx])return;
+  if(!Array.isArray(selections[pid][itemIdx][groupId]))selections[pid][itemIdx][groupId]=[];
+  const a=selections[pid][itemIdx][groupId];
+  const idx=a.indexOf(optName);
+  if(idx>=0)a.splice(idx,1);else a.push(optName);
+  renderDetailVariants(_detailId);updateDetailBtn();
+}
+function renderDetailVariants(id){
+  const wrap=document.getElementById('d-variants-wrap');
+  if(!wrap)return;
+  const p=products.find(x=>x.id===id);
+  if(!p||!p.variants||!p.variants.length){wrap.innerHTML='';return}
+  const qty=Math.max(1,quantities[p.id]||0);
+  const arr=ensureSelections(p.id,qty);
+  let html='';
+  arr.forEach((sel,ii)=>{
+    if(qty>1)html+=`<div style="font-size:11px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.5px;margin:${ii>0?'14px':0} 0 8px">Item ${ii+1}</div>`;
+    p.variants.forEach(g=>{
+      if(!g.options||!g.options.length)return;
+      html+=`<div class="d-variants-section"><div class="d-variants-title">${g.title||'Variantes'}</div>`;
+      if(g.type==='radio'){
+        html+=`<div class="d-flavors-wrap">`;
+        g.options.forEach(o=>{
+          const active=sel[g.id]===o.name;
+          const lbl=o.price>0?o.name+' (+'+fmt(o.price)+')':o.name;
+          html+=`<button class="d-flavor-btn ${active?'sel':''}" onclick="setVariantRadio(${p.id},${ii},'${g.id}','${o.name.replace(/'/g,"\\'")}')">${lbl}</button>`;
+        });
+        html+=`</div>`;
+      }else{
+        const checked=Array.isArray(sel[g.id])?sel[g.id]:[];
+        g.options.forEach((o,oi)=>{
+          const isChecked=checked.includes(o.name);
+          html+=`<div class="d-extra-item"><input class="d-extra-check" type="checkbox" id="ex-${g.id}-${ii}-${oi}" ${isChecked?'checked':''} onchange="toggleVariantCheckbox(${p.id},${ii},'${g.id}','${o.name.replace(/'/g,"\\'")}')" ><label class="d-extra-label" for="ex-${g.id}-${ii}-${oi}">${o.name}</label>${o.price>0?`<span class="d-extra-price">+${fmt(o.price)}</span>`:''}</div>`;
+        });
+      }
+      html+=`</div>`;
+    });
+  });
+  wrap.innerHTML=html;
+}
+
 /* ── INIT */
 loadCart();
 renderStatus();renderTabs();renderOferta();renderAll();renderCart();
 applyLogo();
 const minFee=Math.min(...(cfg.deliveryZones||DEFAULT_CFG.deliveryZones).map(z=>z.fee));
 document.getElementById('delivery-from').textContent='Desde '+fmt(minFee);
+const heroFrom=document.getElementById('hero-delivery-from');
+if(heroFrom)heroFrom.textContent=fmt(minFee);
 setInterval(renderStatus,60000);
 // Auto-apply coupon from URL
 const _urlCupom=new URLSearchParams(window.location.search).get('cupom');
