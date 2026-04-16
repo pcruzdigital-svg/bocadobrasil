@@ -573,50 +573,9 @@ const PHONE='346611878234';
 const PROD_KEY='bocadoBrasilProducts';
 const CFG_KEY='bocadoBrasilConfig';
 
-const DEFAULT_CFG=/*[[BOCA_CFG_START]]*/{
-  manualClosed:false,prepTime:45,
-  minDeliveryOrder:15,
-  pickupAddress:'Calle Vindangoz, Bajo 10',pickupArea:'Rochapea · Pamplona',
-  hours:{
-    0:{enabled:false,open:'12:00',close:'21:00'},
-    1:{enabled:true, open:'12:00',close:'21:00'},
-    2:{enabled:true, open:'12:00',close:'21:00'},
-    3:{enabled:true, open:'12:00',close:'21:00'},
-    4:{enabled:true, open:'12:00',close:'21:00'},
-    5:{enabled:true, open:'12:00',close:'22:00'},
-    6:{enabled:true, open:'11:00',close:'22:00'}
-  },
-  categories:[
-    {id:'clasico',label:'Clásico'},
-    {id:'mas-pedido',label:'Más Pedido'},
-    {id:'completo',label:'Completo'}
-  ],
-  paymentMethods:['Efectivo','Tarjeta','Bizum'],
-  deliveryZones:[
-    {postal:'31001',name:'Casco Antiguo',fee:3.00},
-    {postal:'31002',name:'Ensanche',fee:3.00},
-    {postal:'31003',name:'Rochapea',fee:2.00},
-    {postal:'31004',name:'Txantrea',fee:2.50},
-    {postal:'31005',name:'San Juan',fee:3.50},
-    {postal:'31006',name:'Milagrosa',fee:3.50},
-    {postal:'31007',name:'Iturrama',fee:4.00},
-    {postal:'31008',name:'Ermitagaña',fee:4.00},
-    {postal:'31010',name:'Chantrea',fee:3.00},
-    {postal:'31011',name:'Pamplona',fee:3.00},
-    {postal:'31013',name:'Berriozar',fee:5.00},
-    {postal:'31014',name:'Pamplona Norte',fee:3.00},
-    {postal:'31015',name:'Pamplona',fee:3.50}
-  ]
-}/*[[BOCA_CFG_END]]*/;
+const DEFAULT_CFG=/*[[BOCA_CFG_START]]*/{"manualClosed":false,"prepTime":45,"logoUrl":"","siteUrl":"file:///Users/cash/Documents/Claude/Projects/Painel%20de%20Controle%20-%20BB/index.html?cupom=BRASIL","coupons":[{"code":"BRASIL","type":"pct","value":30}],"pickupAddress":"Calle Vindangoz, Bajo 10","pickupArea":"Rochapea · Pamplona","hours":{"0":{"enabled":false,"open":"12:00","close":"21:00","enabled2":false,"open2":"18:00","close2":"22:00"},"1":{"enabled":true,"open":"12:00","close":"21:00","enabled2":false,"open2":"18:00","close2":"22:00"},"2":{"enabled":true,"open":"12:00","close":"21:00","enabled2":false,"open2":"18:00","close2":"22:00"},"3":{"enabled":true,"open":"12:00","close":"21:00","enabled2":false,"open2":"18:00","close2":"22:00"},"4":{"enabled":false,"open":"12:00","close":"21:00","enabled2":false,"open2":"18:00","close2":"22:00"},"5":{"enabled":false,"open":"12:00","close":"21:00","enabled2":false,"open2":"18:00","close2":"22:00"},"6":{"enabled":true,"open":"12:00","close":"21:00","enabled2":false,"open2":"18:00","close2":"22:00"}},"deliveryZones":[{"postal":"31001","name":"Casco Antiguo","fee":3},{"postal":"31002","name":"Ensanche","fee":3},{"postal":"31003","name":"Rochapea","fee":2},{"postal":"31004","name":"San Juan","fee":3.5},{"postal":"31005","name":"Chantrea","fee":3.5},{"postal":"31006","name":"Milagrosa","fee":3},{"postal":"31007","name":"Ermitagaña","fee":3.5},{"postal":"31008","name":"Mendillorri","fee":4},{"postal":"31009","name":"Buztintxuri","fee":4},{"postal":"31010","name":"Donibane","fee":4},{"postal":"31011","name":"Etxabakoitz","fee":4},{"postal":"31012","name":"Ansoáin","fee":4.5},{"postal":"31013","name":"Berrioplano","fee":5}],"paymentMethods":["Efectivo","Tarjeta","Bizum"],"categories":[{"id":"clasico","label":"Clásico"},{"id":"mas-pedido","label":"Más Pedido"},{"id":"completo","label":"Completo"}]}/*[[BOCA_CFG_END]]*/;
 
-const DEFAULT_PRODUCTS=/*[[BOCA_PROD_START]]*/[
-  {id:1,name:'Combo Coxinha',desc:'2 Coxinhas de frango desfiado + Guaraná gelado.',price:6.90,category:'clasico',popular:false,emoji:'🍗',img:'https://images.unsplash.com/photo-1604882406385-6e7c97b4fce8?w=400&q=80&fit=crop',upsell:{productId:3,discountPct:20,trigger:'always',triggerOnSend:false},pairing:2},
-  {id:2,name:'Combo Salgados',desc:'4 salgados variados: coxinha, quibe, enroladinho e pastel.',price:9.90,category:'clasico',popular:false,emoji:'🧀',img:'https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=400&q=80&fit=crop',upsell:null,pairing:3},
-  {id:3,name:'Combo Brigadeiro',desc:'4 brigadeiros artesanais con granulado belga.',price:5.90,category:'mas-pedido',popular:true,emoji:'🍫',img:'https://images.unsplash.com/photo-1551024601-bec78aea704b?w=400&q=80&fit=crop',upsell:null,pairing:null},
-  {id:4,name:'Combo Feijoada',desc:'Feijoada completa con arroz, farofa y couve. Para 2 personas.',price:16.90,category:'mas-pedido',popular:true,emoji:'🍲',img:'https://images.unsplash.com/photo-1512058564366-18510be2db19?w=400&q=80&fit=crop',upsell:{productId:5,discountPct:15,trigger:'cart_min',cartMin:15,triggerOnSend:true},pairing:3},
-  {id:5,name:'Combo Açaí',desc:'Açaí 300ml con granola, banana y miel. Energía pura.',price:7.90,category:'completo',popular:false,emoji:'🫐',img:'https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?w=400&q=80&fit=crop',upsell:null,pairing:2},
-  {id:6,name:'Menú Familiar',desc:'Feijoada grande + 6 salgados + 4 brigadeiros + 2 Guaraná.',price:29.90,category:'completo',popular:false,emoji:'🎉',img:'https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?w=400&q=80&fit=crop',upsell:{productId:3,discountPct:30,trigger:'always',triggerOnSend:true},pairing:5}
-]/*[[BOCA_PROD_END]]*/;
+const DEFAULT_PRODUCTS=/*[[BOCA_PROD_START]]*/[{"promo":null,"codigo":null,"ofertaDoDia":false,"id":1,"name":"Combo Coxinha","desc":"2 Coxinhas de frango desfiado + Guaraná gelado.","price":6.9,"category":"clasico","popular":false,"emoji":"🍗","img":"https://images.unsplash.com/photo-1604882406385-6e7c97b4fce8?w=400&q=80&fit=crop","upsell":{"productId":3,"discountPct":20,"trigger":"always","cartMin":0,"triggerOnSend":false},"pairing":3},{"promo":null,"codigo":null,"ofertaDoDia":false,"id":2,"name":"Combo Salgados","desc":"4 salgados variados: coxinha, quibe, enroladinho e pastel.","price":9.9,"category":"clasico","popular":false,"emoji":"🧀","img":"https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=400&q=80&fit=crop","upsell":null},{"promo":null,"codigo":null,"ofertaDoDia":true,"id":3,"name":"Combo Brigadeiro","desc":"4 brigadeiros artesanais con granulado belga.","price":5.9,"category":"mas-pedido","popular":true,"emoji":"🍫","img":"https://images.unsplash.com/photo-1551024601-bec78aea704b?w=400&q=80&fit=crop","upsell":null,"pairing":null},{"promo":null,"codigo":null,"ofertaDoDia":false,"id":4,"name":"Combo Feijoada","desc":"Feijoada completa con arroz, farofa y couve. Para 2 personas.","price":16.9,"category":"mas-pedido","popular":true,"emoji":"🍲","img":"https://images.unsplash.com/photo-1512058564366-18510be2db19?w=400&q=80&fit=crop","upsell":{"productId":5,"discountPct":15,"trigger":"cart_min","cartMin":15,"triggerOnSend":true}},{"promo":null,"codigo":null,"ofertaDoDia":false,"id":5,"name":"Combo Açaí","desc":"Açaí 300ml con granola, banana y miel. Energía pura.","price":7.9,"category":"completo","popular":false,"emoji":"🫐","img":"https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?w=400&q=80&fit=crop","upsell":null},{"promo":null,"codigo":null,"ofertaDoDia":false,"id":6,"name":"Menú Familiar","desc":"Feijoada grande + 6 salgados + 4 brigadeiros + 2 Guaraná.","price":29.9,"category":"completo","popular":false,"emoji":"🎉","img":"https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?w=400&q=80&fit=crop","upsell":{"productId":3,"discountPct":30,"trigger":"always","triggerOnSend":true}}]/*[[BOCA_PROD_END]]*/;
 
 const DAYS_ES=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
 const DAYS_CAP=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
