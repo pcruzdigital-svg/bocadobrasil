@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta name="build-version" content="2026-04-17T07:08:03.408Z">
+<meta name="build-version" content="2026-04-17T07:19:24.490Z">
 <title>Comida brasileña en Pamplona | Bocado Brasil</title>
 <meta name="description" content="Comida brasileña en Pamplona. Haz tu pedido rápido por WhatsApp. Coxinha, pão de queijo, açaí y más.">
 <meta name="keywords" content="comida brasileña Pamplona, coxinha, pão de queijo, açaí, pedir comida brasileña, Bocado Brasil">
@@ -606,7 +606,10 @@ const DAYS_CAP=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sáb
 const CAT_LABELS_MAP={'clasico':'Clásico','mas-pedido':'Más Pedido','completo':'Completo'};
 
 function loadCfg(){try{const s=localStorage.getItem(CFG_KEY);return s?{...DEFAULT_CFG,...JSON.parse(s)}:DEFAULT_CFG}catch(e){return DEFAULT_CFG}}
-function loadProds(){try{const s=localStorage.getItem(PROD_KEY);return s?JSON.parse(s).map(p=>({category:'clasico',upsell:null,pairing:null,...p})):DEFAULT_PRODUCTS}catch(e){return DEFAULT_PRODUCTS}}
+function loadProds(){
+  const norm=p=>({category:'clasico',upsell:null,pairing:null,promo:null,ofertaDoDia:false,menuVisible:true,variants:[],...p,price:+(+(p.price??0))||0});
+  try{const s=localStorage.getItem(PROD_KEY);return s?JSON.parse(s).map(norm):DEFAULT_PRODUCTS.map(norm)}catch(e){return DEFAULT_PRODUCTS.map(norm)}
+}
 const DEFAULT_UPSELLS=/*[[BOCA_UPSELL_START]]*/[{"id":1776392236038,"productId":2,"discountPct":3,"cartMin":12,"showBeforeSend":false},{"id":1776393039430,"productId":1,"discountPct":24,"cartMin":15,"showBeforeSend":false},{"id":1776393060851,"productId":2,"discountPct":5,"cartMin":45,"showBeforeSend":true}]/*[[BOCA_UPSELL_END]]*/;
 function loadUpsells(){try{const s=localStorage.getItem(UPSELL_KEY);return s?JSON.parse(s):DEFAULT_UPSELLS}catch(e){return DEFAULT_UPSELLS}}
 
@@ -657,28 +660,36 @@ let _detailId=null;
 
 function s2m(str){const[h,m]=str.split(':').map(Number);return h*60+m}
 function now2m(){const n=new Date();return n.getHours()*60+n.getMinutes()}
-function fmt(v){return '€'+v.toFixed(2).replace('.',',')}
+/* ── SAFE NUMBER HELPERS ────────────────────────────────────────────── */
+// num: any value → safe finite number (undefined/null/NaN/Infinity → 0)
+function num(v){const n=+(v??0);return isFinite(n)?n:0}
+// fmt: any value → "€X,XX" — never throws
+function fmt(v){return'€'+num(v).toFixed(2).replace('.',',')}
 
 /* ── PROMO PRICE HELPERS */
 function promoUnitPrice(p){
-  if(dealPrices[p.id]!==undefined)return dealPrices[p.id];
-  if(!p.promo)return p.price;
-  if(p.promo.type==='pct')return+(p.price*(1-p.promo.value/100)).toFixed(2);
-  if(p.promo.type==='eur')return+Math.max(0,p.price-p.promo.value).toFixed(2);
-  return p.price; // 2x1: show original unit price, discount at total
+  const base=num(p.price);
+  if(dealPrices[p.id]!==undefined)return num(dealPrices[p.id]);
+  if(!p.promo)return base;
+  const val=num(p.promo.value);
+  if(p.promo.type==='pct')return+Math.max(0,base*(1-val/100)).toFixed(2);
+  if(p.promo.type==='eur')return+Math.max(0,base-val).toFixed(2);
+  return base; // 2x1: show original unit price, discount at total
 }
 function promoTotal(p,qty){
-  if(dealPrices[p.id]!==undefined)return dealPrices[p.id]*qty;
-  if(!p.promo)return p.price*qty;
-  if(p.promo.type==='pct')return+(p.price*(1-p.promo.value/100)*qty).toFixed(2);
-  if(p.promo.type==='eur')return+Math.max(0,p.price-p.promo.value)*qty;
-  if(p.promo.type==='2x1')return+Math.ceil(qty/2)*p.price;
-  return p.price*qty;
+  const base=num(p.price),q=num(qty);
+  if(dealPrices[p.id]!==undefined)return num(dealPrices[p.id])*q;
+  if(!p.promo)return base*q;
+  const val=num(p.promo.value);
+  if(p.promo.type==='pct')return+Math.max(0,base*(1-val/100)*q).toFixed(2);
+  if(p.promo.type==='eur')return+Math.max(0,base-val)*q;
+  if(p.promo.type==='2x1')return+Math.ceil(q/2)*base;
+  return base*q;
 }
 function promoBadgeText(p){
   if(!p.promo)return null;
-  if(p.promo.type==='pct')return'-'+p.promo.value+'%';
-  if(p.promo.type==='eur')return'-€'+p.promo.value.toFixed(2).replace('.',',');
+  if(p.promo.type==='pct')return'-'+num(p.promo.value)+'%';
+  if(p.promo.type==='eur')return'-€'+num(p.promo.value).toFixed(2).replace('.',',');
   if(p.promo.type==='2x1')return'2×1';
   return null;
 }
@@ -691,7 +702,7 @@ function renderOferta(){
   const qty=quantities[oferta.id];
   const unitP=promoUnitPrice(oferta);
   const hasDisc=unitP<oferta.price;
-  const saving=hasDisc?+(oferta.price-unitP).toFixed(2):0;
+  const saving=hasDisc?+Math.max(0,num(oferta.price)-num(unitP)).toFixed(2):0;
   el.innerHTML=`<div class="oferta-section">
     <div class="oferta-card" onclick="openDetail(${oferta.id})">
       <div class="oferta-img-wrap">
@@ -813,7 +824,7 @@ function renderCard(p){
       <div class="card-footer">
         <div class="card-price">
           ${showOld?`<div class="price-old">${fmt(p.price)}</div>`:''}
-          <div class="price-main"><sup>€</sup>${unitP.toFixed(2).replace('.',',')}</div>
+          <div class="price-main"><sup>€</sup>${num(unitP).toFixed(2).replace('.',',')}</div>
         </div>
         <div class="qty-ctrl ${qty>0?'has-items':''}" id="qc-${p.id}" onclick="event.stopPropagation()">
           <button class="qty-btn" onclick="event.stopPropagation();chQty(${p.id},-1)">−</button>
@@ -966,8 +977,8 @@ let appliedCoupon=null;
 function getCouponDiscount(){
   if(!appliedCoupon)return 0;
   const sub=products.reduce((s,p)=>s+promoTotal(p,quantities[p.id]),0);
-  if(appliedCoupon.type==='pct')return+(sub*appliedCoupon.value/100).toFixed(2);
-  if(appliedCoupon.type==='eur')return+Math.min(appliedCoupon.value,sub).toFixed(2);
+  if(appliedCoupon.type==='pct')return+Math.max(0,sub*num(appliedCoupon.value)/100).toFixed(2);
+  if(appliedCoupon.type==='eur')return+Math.min(num(appliedCoupon.value),sub).toFixed(2);
   return 0;
 }
 function applyCouponCode(code){
@@ -1191,7 +1202,8 @@ function checkUSend(){
 }
 function openU(p,pct,cb){
   _uQty=1;
-  const disc=+(p.price*(1-pct/100)).toFixed(2),sav=+(p.price-disc).toFixed(2);
+  const base=num(p.price),discount=num(pct);
+  const disc=+Math.max(0,base*(1-discount/100)).toFixed(2),sav=+Math.max(0,base-disc).toFixed(2);
   const uImg=document.getElementById('u-img');uImg.src=p.img;uImg.alt=p.name;uImg.style.display='block';
   document.getElementById('u-fb').style.display='none';document.getElementById('u-emoji').textContent=p.emoji;
   document.getElementById('u-pct').textContent=pct;document.getElementById('u-name').textContent=p.name;
