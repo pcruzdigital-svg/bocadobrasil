@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta name="build-version" content="2026-04-17T07:08:03.408Z">
 <title>Comida brasileña en Pamplona | Bocado Brasil</title>
 <meta name="description" content="Comida brasileña en Pamplona. Haz tu pedido rápido por WhatsApp. Coxinha, pão de queijo, açaí y más.">
 <meta name="keywords" content="comida brasileña Pamplona, coxinha, pão de queijo, açaí, pedir comida brasileña, Bocado Brasil">
@@ -1300,8 +1302,8 @@ function showToast(msg){const t=document.getElementById('toast');t.textContent=m
 
 /* ── CUSTOMER NAME & WELCOME POPUP */
 const CUSTOMER_KEY='bocadoBrasilCustomer';
-function getCustomerName(){return localStorage.getItem(CUSTOMER_KEY)||''}
-function saveCustomerName(name){localStorage.setItem(CUSTOMER_KEY,name.trim())}
+function getCustomerName(){try{return localStorage.getItem(CUSTOMER_KEY)||''}catch(e){return''}}
+function saveCustomerName(name){try{localStorage.setItem(CUSTOMER_KEY,name.trim())}catch(e){}}
 function confirmWelcome(){
   const n=document.getElementById('welcome-name-input').value.trim();
   if(n){saveCustomerName(n)}
@@ -1447,20 +1449,29 @@ function renderDetailVariants(id){
 }
 
 /* ── INIT */
-loadCart();
-renderStatus();renderTabs();renderOferta();renderAll();renderCart();
-applyLogo();
-const minFee=Math.min(...(cfg.deliveryZones||DEFAULT_CFG.deliveryZones).map(z=>z.fee));
-document.getElementById('delivery-from').textContent='Desde '+fmt(minFee);
-const heroFrom=document.getElementById('hero-delivery-from');
-if(heroFrom)heroFrom.textContent=fmt(minFee);
-setInterval(renderStatus,60000);
-// Auto-apply coupon from URL
-const _urlCupom=new URLSearchParams(window.location.search).get('cupom');
-if(_urlCupom)applyCouponCode(_urlCupom);
-// Welcome popup & greeting
-if(!getCustomerName()){setTimeout(openWelcome,800)}
-else{renderGreeting()}
+try{
+  loadCart();
+  renderStatus();renderTabs();renderOferta();renderAll();renderCart();
+  applyLogo();
+  const minFee=Math.min(...(cfg.deliveryZones||DEFAULT_CFG.deliveryZones).map(z=>z.fee));
+  const dfEl=document.getElementById('delivery-from');if(dfEl)dfEl.textContent='Desde '+fmt(minFee);
+  const heroFrom=document.getElementById('hero-delivery-from');
+  if(heroFrom)heroFrom.textContent=fmt(minFee);
+  setInterval(renderStatus,60000);
+  // Auto-apply coupon from URL
+  const _urlCupom=new URLSearchParams(window.location.search).get('cupom');
+  if(_urlCupom)applyCouponCode(_urlCupom);
+  // Welcome popup & greeting
+  if(!getCustomerName()){setTimeout(openWelcome,800)}
+  else{renderGreeting()}
+}catch(initErr){
+  console.error('[BocadoBrasil] Init error:',initErr);
+  // Show visible error banner so problems are diagnosable
+  const errBanner=document.createElement('div');
+  errBanner.style.cssText='position:fixed;top:0;left:0;right:0;background:#C4362A;color:#fff;padding:12px 16px;font-size:13px;font-weight:600;z-index:9999;text-align:center';
+  errBanner.textContent='⚠️ Error al cargar la página: '+initErr.message+' — Abre la consola del navegador para más detalles.';
+  document.body.appendChild(errBanner);
+}
 </script>
 <div class="wa-float">
   <div class="wa-float-tip">Quiero hablar con alguien</div>
