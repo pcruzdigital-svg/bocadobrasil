@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta name="build-version" content="2026-04-18T21:21:53.861Z">
+<meta name="build-version" content="2026-04-18T21:46:30.147Z">
 <title>Comida brasileña en Pamplona | Bocado Brasil</title>
 <meta name="description" content="Comida brasileña en Pamplona. Haz tu pedido rápido por WhatsApp. Coxinha, pão de queijo, açaí y más.">
 <meta name="keywords" content="comida brasileña Pamplona, coxinha, pão de queijo, açaí, pedir comida brasileña, Bocado Brasil">
@@ -654,7 +654,7 @@ header{background:var(--white);border-bottom:1px solid var(--gray-light);positio
       <div id="d-add-also-wrap"></div>
 
       <div class="d-pairing" id="d-pairing" style="display:none">
-        <div class="d-pairing-lbl">Completa tu pedido</div>
+        <div class="d-pairing-lbl">Perfecto con</div>
         <div class="d-pair-row" id="d-pair-row"></div>
         <div id="d-pair-variants"></div>
       </div>
@@ -1282,8 +1282,8 @@ function renderCart(){
     const badge=hasD?'<span class="ci-deal">🎁 oferta</span>':is2x1?`<span class="ci-deal">2×1</span>`+
       (freeName2x1?`<span class="ci-deal" style="background:#E8F8F0;color:#1A7A4A">+${freeName2x1} grátis</span>`:''):
       promoBadgeText(p)?`<span class="ci-deal">${promoBadgeText(p)}</span>`:'';
-    const discLine=hasDiscount?`<div style="display:flex;align-items:center;gap:6px;margin-top:2px"><span style="font-size:11px;color:var(--gray-text);text-decoration:line-through">${fmt(origTotal)}</span><span style="font-size:11px;font-weight:700;color:#1A9E5A">−${fmt(origTotal-total)} dto.</span></div>`:
-      is2x1&&saving2x1>0?`<div style="display:flex;align-items:center;gap:6px;margin-top:2px"><span style="font-size:11px;font-weight:700;color:#1A9E5A">Levas ${Math.floor(qty/2)} ${freeName2x1||'producto'} grátis · ahorras ${fmt(saving2x1)}</span></div>`:'';
+    const discLine=is2x1&&saving2x1>0?`<div style="display:flex;align-items:center;gap:6px;margin-top:2px"><span style="font-size:11px;font-weight:700;color:#1A9E5A">Llevas ${Math.floor(qty/2)} ${freeName2x1||'producto'} gratis · ahorras ${fmt(saving2x1)}</span></div>`:
+      hasDiscount&&!is2x1?`<div style="display:flex;align-items:center;gap:6px;margin-top:2px"><span style="font-size:11px;color:var(--gray-text);text-decoration:line-through">${fmt(origTotal)}</span><span style="font-size:11px;font-weight:700;color:#1A9E5A">−${fmt(origTotal-total)} dto.</span></div>`:'';
     const sel=selections[p.id]||{};
     const hasVariants=p.variants&&p.variants.length;
     const controls=(id,withEdit)=>`<div style="display:flex;align-items:center;gap:6px;margin-top:8px">
@@ -1709,7 +1709,7 @@ function renderAddAlso(id){
   if(!p||!p.addAlsoIds||!p.addAlsoIds.length){wrap.innerHTML='';return;}
   const complements=p.addAlsoIds.map(cid=>products.find(x=>x.id==cid)).filter(Boolean);
   if(!complements.length){wrap.innerHTML='';return;}
-  let html=`<div class="d-add-also"><div class="d-add-also-lbl"><span class="mi" style="font-size:14px">add_shopping_cart</span> Añadir al pedido</div>`;
+  let html=`<div class="d-add-also"><div class="d-add-also-lbl"><span class="mi" style="font-size:14px">auto_awesome</span> Mejora tu pedido</div>`;
   complements.forEach(cp=>{
     const qty=quantities[cp.id]||0;
     const price=promoUnitPrice(cp);
@@ -1743,11 +1743,8 @@ function setVariantQty(pid,gid,name,delta){
   const used=getGroupUsed(pid,gid);
   const cur=getVarOptQty(pid,gid,name);
   if(delta>0&&maxPerUnit>0&&used>=budget){
-    // Auto-increase product qty to accommodate another variant selection
-    quantities[pid]=(quantities[pid]||0)+1;
-    const qn=document.getElementById('d-qty-num'),qc=document.getElementById('d-qty-ctrl');
-    if(qn)qn.textContent=quantities[pid];
-    if(qc)qc.classList.add('has-items');
+    // Block: max per unit reached, do not add more
+    return;
   }
   const nv=Math.max(0,cur+delta);
   if(nv===0)delete selections[pid][gid][name];
