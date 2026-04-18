@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta name="build-version" content="2026-04-18T11:13:17.306Z">
+<meta name="build-version" content="2026-04-18T11:40:16.970Z">
 <title>Comida brasileña en Pamplona | Bocado Brasil</title>
 <meta name="description" content="Comida brasileña en Pamplona. Haz tu pedido rápido por WhatsApp. Coxinha, pão de queijo, açaí y más.">
 <meta name="keywords" content="comida brasileña Pamplona, coxinha, pão de queijo, açaí, pedir comida brasileña, Bocado Brasil">
@@ -269,6 +269,19 @@ header{background:var(--white);border-bottom:1px solid var(--gray-light);positio
 .var-progress-bar{height:4px;border-radius:2px;background:var(--gray-light);margin-top:6px;overflow:hidden}
 .var-progress-fill{height:100%;border-radius:2px;transition:width .25s,background .25s}
 .var-group-hint{font-size:11px;font-weight:600;margin-top:4px;margin-bottom:6px;display:flex;align-items:center;gap:4px}
+
+/* COMBO QTY SELECTOR */
+.d-combo-qty-inner{display:flex;align-items:center;justify-content:space-between;background:var(--gray-light);border-radius:14px;padding:14px 18px;margin-bottom:18px}
+.d-combo-qty-label{font-size:14px;font-weight:700;color:var(--dark)}
+.d-combo-qty-ctrl{display:flex;align-items:center;gap:0;background:var(--white);border-radius:11px;overflow:hidden;box-shadow:var(--shadow-sm)}
+.d-combo-btn{width:44px;height:44px;font-size:22px;font-weight:300;border:none;background:none;cursor:pointer;color:var(--dark);transition:background .15s}
+.d-combo-btn:hover{background:var(--gray-light)}
+.d-combo-num{min-width:36px;text-align:center;font-size:18px;font-weight:800;color:var(--red)}
+/* VARIANT LOCK overlay for combo when qty=0 */
+#d-variants-wrap.combo-locked{opacity:.35;pointer-events:none;user-select:none}
+.d-combo-lock-msg{text-align:center;font-size:13px;font-weight:600;color:var(--gray-text);padding:12px 0 4px;display:none}
+#d-variants-wrap.combo-locked + .d-combo-lock-msg,
+.d-combo-lock-msg.visible{display:block}
 
 /* D-PRICE LIVE */
 .d-price-extra{display:none!important}
@@ -618,7 +631,20 @@ header{background:var(--white);border-bottom:1px solid var(--gray-light);positio
         <span class="d-price-extra" id="d-price-extra" style="display:none"></span>
       </div>
 
+      <!-- QTY SELECTOR for Combo type — shown at top before variants -->
+      <div id="d-combo-qty" style="display:none">
+        <div class="d-combo-qty-inner">
+          <span class="d-combo-qty-label">¿Cuántos quieres?</span>
+          <div class="d-combo-qty-ctrl">
+            <button class="d-combo-btn" onclick="detailQty(-1)">−</button>
+            <span class="d-combo-num" id="d-combo-num">0</span>
+            <button class="d-combo-btn" onclick="detailQty(+1)">+</button>
+          </div>
+        </div>
+      </div>
+
       <div id="d-variants-wrap"></div>
+      <div class="d-combo-lock-msg" id="d-combo-lock-msg">Elige la cantidad para elegir las opciones ↑</div>
 
       <div id="d-add-also-wrap"></div>
 
@@ -977,10 +1003,15 @@ function openDetail(id){
   const po=document.getElementById('d-price-old');
   po.textContent=hasD?fmt(p.price):'';po.style.display=hasD?'block':'none';
 
-  // qty
+  // qty + combo/simple layout
   const qn=document.getElementById('d-qty-num'),qc=document.getElementById('d-qty-ctrl');
   qn.textContent=qty;
   qty>0?qc.classList.add('has-items'):qc.classList.remove('has-items');
+  const isCombo=p.productType==='combo';
+  document.getElementById('d-combo-qty').style.display=isCombo?'block':'none';
+  document.getElementById('d-combo-num').textContent=qty;
+  qc.style.display=isCombo?'none':'flex'; // hide footer qty for combos
+  _applyComboLock(isCombo,qty);
   updateDetailBtn();
 
   // pairing
@@ -1046,11 +1077,27 @@ function detailQty(delta){
   const qty=quantities[_detailId];
   const qn=document.getElementById('d-qty-num'),qc=document.getElementById('d-qty-ctrl');
   if(qn)qn.textContent=qty;
+  const cn=document.getElementById('d-combo-num');
+  if(cn)cn.textContent=qty;
   if(qc)qty>0?qc.classList.add('has-items'):qc.classList.remove('has-items');
   // If qty zeroed out, clear variant selections so they don't pre-fill next time
   if(qty===0&&selections[_detailId])delete selections[_detailId];
+  const p=products.find(x=>x.id===_detailId);
+  _applyComboLock(p?.productType==='combo',qty);
   renderDetailVariants(_detailId);
   updateDetailBtn();
+}
+function _applyComboLock(isCombo,qty){
+  const wrap=document.getElementById('d-variants-wrap');
+  const msg=document.getElementById('d-combo-lock-msg');
+  if(!wrap||!msg)return;
+  if(isCombo&&qty===0){
+    wrap.classList.add('combo-locked');
+    msg.classList.add('visible');
+  }else{
+    wrap.classList.remove('combo-locked');
+    msg.classList.remove('visible');
+  }
 }
 
 function updateDetailBtn(){
@@ -1744,14 +1791,6 @@ function renderDetailVariants(id){
     html+=`<span>${g.title||'Variantes'}</span>`;
     if(g.required)html+=`<span style="font-size:10px;font-weight:600;color:var(--red);padding:0">Elige una opción</span>`;
     html+=`</div>`;
-    // Progress & hint
-    if(maxPerUnit>0){
-      const hintColor=done?'#1A9E5A':used>0?'#B45309':'var(--gray-text)';
-      const hintIcon=done?'check_circle':'radio_button_unchecked';
-      const hintText=done?'¡Listo! Selección completa':used>0?`Elige ${budget-used} más (${used}/${budget})`:`Elige ${budget} opción${budget>1?'es':''}`;
-      html+=`<div class="var-group-hint" style="color:${hintColor}"><span class="mi" style="font-size:14px">${hintIcon}</span>${hintText}</div>`;
-      html+=`<div class="var-progress-bar"><div class="var-progress-fill" style="width:${pct}%;background:${barColor}"></div></div>`;
-    }
     g.options.forEach(o=>{
       const qty=getVarOptQty(p.id,g.id,o.name);
       const safeN=o.name.replace(/'/g,"\\'");
