@@ -1,61 +1,326 @@
-[
-  {
-    "id": 1,
-    "name": "Menú 1 – Clásico",
-    "price": 5.5,
-    "category": "menu",
-    "desc": "Pastel de feira media luna 20x12 + bebida fría",
-    "shortDesc": "Pastel de feira media luna 20x12 + bebida fría",
-    "fullDesc": "Pastel de feira media luna (20x12), recién hecho, dorado y crujiente, con relleno abundante que se nota en cada mordida.\nAcompañado de una bebida bien fría a tu elección.\nSimple, directo y difícil de olvidar.",
-    "microcopy": "Crujiente por fuera, relleno que sorprende",
-    "img": "https://raw.githubusercontent.com/pcruzdigital-svg/bocadobrasil/main/images/produtos/4_1776678107753.png",
-    "emoji": "🥟",
-    "popular": false,
-    "menuVisible": true,
-    "badgeText": "",
-    "productType": "simple"
-  },
-  {
-    "id": 15,
-    "name": "Pão de queijo con goiabada (10 unidades · 30g)",
-    "price": 9.9,
-    "category": "pao-de-queijo",
-    "desc": "10 unidades de pão de queijo con goiabada, dulce y salado en equilibrio",
-    "shortDesc": "10 unidades de pão de queijo con goiabada, dulce y salado en equilibrio",
-    "fullDesc": "10 unidades de pão de queijo (30g cada uno) con relleno de goiabada, combinando el sabor salado del queso con un toque dulce que sorprende desde el primer bocado.\nCrujientes por fuera y suaves por dentro.\nPuedes elegirlos recién horneados o congelados para disfrutarlos cuando quieras.",
-    "microcopy": "Dulce y salado que sorprende",
-    "img": "https://raw.githubusercontent.com/pcruzdigital-svg/bocadobrasil/main/images/produtos/27_1776677322344.png",
-    "emoji": "🧀",
-    "popular": false,
-    "menuVisible": true,
-    "variants": [
+{
+  "version": "2026-04-20T16:04:02.822Z",
+  "products": [],
+  "config": {
+    "manualClosed": false,
+    "prepTime": 45,
+    "logoUrl": "https://raw.githubusercontent.com/pcruzdigital-svg/bocadobrasil/main/images/BOCADO_BRASIL__8_x_10_cm___10_x_8_cm___2_1776696145018.png",
+    "faviconUrl": "https://raw.githubusercontent.com/pcruzdigital-svg/bocadobrasil/main/images/BOCADO_BRASIL__8_x_10_cm___10_x_8_cm___2_1776696152458.png",
+    "siteUrl": "",
+    "coupons": [],
+    "pickupAddress": "Calle Vindangoz, Bajo 10",
+    "pickupArea": "Rochapea · Pamplona",
+    "hours": {
+      "0": {
+        "enabled": false,
+        "open": "12:00",
+        "close": "21:00",
+        "enabled2": false,
+        "open2": "18:00",
+        "close2": "22:00"
+      },
+      "1": {
+        "enabled": false,
+        "open": "12:00",
+        "close": "21:00",
+        "enabled2": false,
+        "open2": "18:00",
+        "close2": "22:00"
+      },
+      "2": {
+        "enabled": true,
+        "open": "12:00",
+        "close": "21:00",
+        "enabled2": false,
+        "open2": "18:00",
+        "close2": "22:00"
+      },
+      "3": {
+        "enabled": true,
+        "open": "12:00",
+        "close": "21:00",
+        "enabled2": false,
+        "open2": "18:00",
+        "close2": "22:00"
+      },
+      "4": {
+        "enabled": true,
+        "open": "12:00",
+        "close": "21:00",
+        "enabled2": false,
+        "open2": "18:00",
+        "close2": "22:00"
+      },
+      "5": {
+        "enabled": true,
+        "open": "12:00",
+        "close": "21:00",
+        "enabled2": false,
+        "open2": "18:00",
+        "close2": "22:00"
+      },
+      "6": {
+        "enabled": true,
+        "open": "12:00",
+        "close": "21:00",
+        "enabled2": false,
+        "open2": "18:00",
+        "close2": "22:00"
+      }
+    },
+    "deliveryZones": [
       {
-        "title": "Preparación",
-        "required": true,
-        "maxPerUnit": 1,
-        "options": [
-          { "name": "Horneado", "price": 1 },
-          { "name": "Congelado", "price": 0 }
-        ]
+        "postal": "31001",
+        "name": "Casco Antiguo",
+        "fee": 3
+      },
+      {
+        "postal": "31002",
+        "name": "Ensanche",
+        "fee": 3
+      },
+      {
+        "postal": "31003",
+        "name": "Rochapea",
+        "fee": 2
+      },
+      {
+        "postal": "31004",
+        "name": "San Juan",
+        "fee": 3.5
+      },
+      {
+        "postal": "31005",
+        "name": "Chantrea",
+        "fee": 3.5
+      },
+      {
+        "postal": "31006",
+        "name": "Milagrosa",
+        "fee": 3
+      },
+      {
+        "postal": "31007",
+        "name": "Ermitagaña",
+        "fee": 3.5
+      },
+      {
+        "postal": "31008",
+        "name": "Mendillorri",
+        "fee": 4
+      },
+      {
+        "postal": "31009",
+        "name": "Buztintxuri",
+        "fee": 4
+      },
+      {
+        "postal": "31010",
+        "name": "Donibane",
+        "fee": 4
+      },
+      {
+        "postal": "31011",
+        "name": "Etxabakoitz",
+        "fee": 4
+      },
+      {
+        "postal": "31012",
+        "name": "Ansoáin",
+        "fee": 4.5
+      },
+      {
+        "postal": "31013",
+        "name": "Berrioplano",
+        "fee": 5
       }
     ],
-    "productType": "combo"
+    "categories": [
+      {
+        "id": "menu",
+        "label": "Menú"
+      },
+      {
+        "id": "salgados",
+        "label": "Fritos y Pastel de Feira"
+      },
+      {
+        "id": "dulces",
+        "label": "Dulces"
+      },
+      {
+        "id": "pao-de-queijo",
+        "label": "Pão de Queijo"
+      },
+      {
+        "id": "bebidas",
+        "label": "Bebidas"
+      }
+    ],
+    "paymentMethods": [
+      "Efectivo",
+      "Tarjeta",
+      "Bizum"
+    ],
+    "gaId": "",
+    "gtmId": "",
+    "pixelId": ""
   },
-  {
-    "id": 16,
-    "name": "Guaraná",
-    "price": 2.5,
-    "category": "bebidas",
-    "desc": "Refresco brasileño",
-    "shortDesc": "Refresco brasileño",
-    "fullDesc": "Bebida típica de Brasil, refrescante.",
-    "microcopy": "El clásico brasileño",
-    "img": "https://raw.githubusercontent.com/pcruzdigital-svg/bocadobrasil/main/images/produtos/0b4dbec55ed48e8dba7c441719dc3c276bca5c32_1776677840885.jpeg",
-    "emoji": "🟢",
-    "popular": false,
-    "menuVisible": true,
-    "badgeText": "Favorito",
-    "badgeColor": "#daae10",
-    "productType": "simple"
-  }
-]
+  "upsells": [],
+  "promos": [],
+  "badges": [],
+  "varGroups": [
+    {
+      "id": "vgl_1776693916597_qhl4",
+      "title": "Sabor del pastel",
+      "maxPerUnit": 1,
+      "required": true,
+      "options": [
+        {
+          "name": "Carne",
+          "priceExtra": 0
+        },
+        {
+          "name": "Frango",
+          "priceExtra": 0
+        },
+        {
+          "name": "Queijo",
+          "priceExtra": 0
+        },
+        {
+          "name": "Carne + queijo",
+          "priceExtra": 0
+        },
+        {
+          "name": "Frango + queijo",
+          "priceExtra": 0
+        }
+      ]
+    },
+    {
+      "id": "vgl_1776693916597_nb9s",
+      "title": "Salsa",
+      "maxPerUnit": 1,
+      "required": true,
+      "options": [
+        {
+          "name": "Goiaba",
+          "priceExtra": 0
+        },
+        {
+          "name": "Aioli",
+          "priceExtra": 0
+        }
+      ]
+    },
+    {
+      "id": "vgl_1776693916597_6xln",
+      "title": "Bebida",
+      "maxPerUnit": 1,
+      "required": true,
+      "options": [
+        {
+          "name": "Guaraná",
+          "priceExtra": 0
+        },
+        {
+          "name": "Zumo",
+          "priceExtra": 1
+        }
+      ]
+    },
+    {
+      "id": "vgl_1776693916597_6lie",
+      "title": "Sabor da coxinha",
+      "maxPerUnit": 1,
+      "required": true,
+      "options": [
+        {
+          "name": "Frango",
+          "priceExtra": 0
+        },
+        {
+          "name": "Costilla",
+          "priceExtra": 0
+        }
+      ]
+    },
+    {
+      "id": "vgl_1776693916597_lz03",
+      "title": "Dulce",
+      "maxPerUnit": 1,
+      "required": true,
+      "options": [
+        {
+          "name": "Brigadeiro",
+          "priceExtra": 0
+        },
+        {
+          "name": "Beijinho",
+          "priceExtra": 0
+        }
+      ]
+    },
+    {
+      "id": "vgl_1776693916597_dxnn",
+      "title": "Añadir bolo (opcional)",
+      "maxPerUnit": 1,
+      "required": false,
+      "options": [
+        {
+          "name": "Bolo Chocolate",
+          "priceExtra": 3.5
+        },
+        {
+          "name": "Bolo Cenoura",
+          "priceExtra": 3.5
+        }
+      ]
+    },
+    {
+      "id": "vgl_1776693916597_6g2q",
+      "title": "Sabor",
+      "maxPerUnit": 1,
+      "required": true,
+      "options": [
+        {
+          "name": "Carne",
+          "priceExtra": 0
+        },
+        {
+          "name": "Frango",
+          "priceExtra": 0
+        },
+        {
+          "name": "Queijo",
+          "priceExtra": 0
+        },
+        {
+          "name": "Carne + queijo",
+          "priceExtra": 0
+        },
+        {
+          "name": "Frango + queijo",
+          "priceExtra": 0
+        }
+      ]
+    },
+    {
+      "id": "vgl_1776693916597_awr2",
+      "title": "Preparación",
+      "maxPerUnit": 1,
+      "required": true,
+      "options": [
+        {
+          "name": "Horneado",
+          "priceExtra": 0
+        },
+        {
+          "name": "Congelado",
+          "priceExtra": 0
+        }
+      ]
+    }
+  ]
+}
