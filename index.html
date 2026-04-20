@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta name="build-version" content="2026-04-20T11:52:20.969Z">
+<meta name="build-version" content="2026-04-20T11:58:38.131Z">
 <title>Comida brasileña en Pamplona | Bocado Brasil</title>
 <meta name="description" content="Comida brasileña en Pamplona. Haz tu pedido rápido por WhatsApp. Coxinha, pão de queijo, açaí y más.">
 <meta name="keywords" content="comida brasileña Pamplona, coxinha, pão de queijo, açaí, pedir comida brasileña, Bocado Brasil">
@@ -88,11 +88,12 @@ header{background:var(--white);border-bottom:1px solid var(--gray-light);positio
 .oferta-section{max-width:600px;margin:18px auto 0;padding:0 16px}
 .oferta-card{background:var(--white);border-radius:var(--radius);overflow:hidden;box-shadow:0 4px 20px rgba(196,54,42,.18);border:2px solid var(--red);cursor:pointer;transition:transform .15s}
 .oferta-card:active{transform:scale(.99)}
-.oferta-img-wrap{position:relative;width:100%;aspect-ratio:1/1;overflow:hidden;background:var(--gray-light)}
+.oferta-img-wrap{position:relative;width:140px;flex-shrink:0;aspect-ratio:1/1;overflow:hidden;background:var(--gray-light)}
+.oferta-card{display:flex;align-items:stretch}
 .oferta-img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
 .oferta-card:hover .oferta-img-wrap img{transform:scale(1.03)}
 .oferta-badge{position:absolute;top:12px;left:12px;background:var(--red);color:#fff;font-size:12px;font-weight:700;padding:5px 12px;border-radius:20px;letter-spacing:.3px;display:flex;align-items:center;gap:5px}
-.oferta-body{padding:14px 16px 16px}
+.oferta-body{padding:14px 16px 16px;flex:1;min-width:0}
 .oferta-name{font-family:'League Spartan',sans-serif;font-size:18px;font-weight:800;color:var(--dark);margin-bottom:4px;line-height:1.2}
 .oferta-desc{font-size:13px;color:var(--gray-text);line-height:1.45;margin-bottom:12px}
 .oferta-footer{display:flex;align-items:center;justify-content:space-between;gap:10px}
