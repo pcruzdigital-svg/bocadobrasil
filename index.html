@@ -405,6 +405,7 @@ header{background:var(--white);border-bottom:1px solid var(--gray-light);positio
 .review-leave-btn:hover{border-color:var(--red);color:var(--red)}
 </style>
 
+
 <!-- Google Analytics 4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-945ZSC18R6"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-945ZSC18R6');</script>
@@ -732,7 +733,7 @@ function loadProds(){
   const norm=p=>({category:'menu',upsell:null,pairing:null,promo:null,ofertaDoDia:false,menuVisible:true,variants:[],...p,price:+(+(p.price??0))||0});
   try{const s=localStorage.getItem(PROD_KEY);return s?JSON.parse(s).map(norm):DEFAULT_PRODUCTS.map(norm)}catch(e){return DEFAULT_PRODUCTS.map(norm)}
 }
-const DEFAULT_UPSELLS=/*[[BOCA_UPSELL_START]]*/[{"id":1776681358884,"productId":9,"discountPct":10,"cartMin":25,"trigger":"cart_min","triggerProductId":null,"showBeforeSend":false},{"id":1776681406556,"productId":10,"discountPct":5,"cartMin":0,"trigger":"on_add","triggerProductId":13,"showBeforeSend":false},{"id":1776681452069,"productId":15,"discountPct":15,"cartMin":0,"trigger":"on_add","triggerProductId":14,"showBeforeSend":false},{"id":1776681487310,"productId":7,"discountPct":10,"cartMin":0,"trigger":"on_add","triggerProductId":6,"showBeforeSend":false},{"id":1776681508619,"productId":8,"discountPct":10,"cartMin":30,"trigger":"cart_min","triggerProductId":null,"showBeforeSend":false},{"id":1776681567604,"productId":14,"discountPct":5,"cartMin":0,"trigger":"viewed_not_added","triggerProductId":15,"showBeforeSend":true},{"id":1776681667764,"productId":1776590591958,"discountPct":10,"cartMin":25,"trigger":"before_send","triggerProductId":null,"showBeforeSend":true},{"id":1776681718335,"productId":8,"discountPct":10,"cartMin":0,"trigger":"on_add","triggerProductId":6,"showBeforeSend":false},{"id":1776681784843,"productId":7,"discountPct":10,"cartMin":0,"trigger":"viewed_not_added","triggerProductId":7,"showBeforeSend":true}]/*[[BOCA_UPSELL_END]]*/;
+const DEFAULT_UPSELLS=/*[[BOCA_UPSELL_START]]*/[]/*[[BOCA_UPSELL_END]]*/;
 function loadUpsells(){try{const s=localStorage.getItem(UPSELL_KEY);return s?JSON.parse(s):DEFAULT_UPSELLS}catch(e){return DEFAULT_UPSELLS}}
 const DEFAULT_REVIEWS=/*[[BOCA_REVIEWS_START]]*/[]/*[[BOCA_REVIEWS_END]]*/;
 function loadReviews(){try{const s=localStorage.getItem('bocadoBrasilReviews');const r=s?JSON.parse(s):DEFAULT_REVIEWS;return r.filter(x=>x.status==='approved')}catch(e){return DEFAULT_REVIEWS.filter(x=>x.status==='approved')}}
