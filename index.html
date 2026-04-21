@@ -735,7 +735,7 @@ function loadProds(){
 }
 const DEFAULT_UPSELLS=/*[[BOCA_UPSELL_START]]*/[]/*[[BOCA_UPSELL_END]]*/;
 function loadUpsells(){try{const s=localStorage.getItem(UPSELL_KEY);return s?JSON.parse(s):DEFAULT_UPSELLS}catch(e){return DEFAULT_UPSELLS}}
-const DEFAULT_REVIEWS=/*[[BOCA_REVIEWS_START]]*/[]/*[[BOCA_REVIEWS_END]]*/;
+const DEFAULT_REVIEWS=/*[[BOCA_REVIEWS_START]]*/[{"id":"r_1776766087847","name":"Emilia Chuina","stars":5,"comment":"Atendimento e comida muito boa! bolo de cenoura fofinho e pastel de feira crocante. Recomendo 👏","productId":"13","productName":"Bizcocho de zanahoria con chocolate","status":"approved","source":"manual","createdAt":"2026-04-21T10:08:07.847Z","approvedAt":"2026-04-21T10:08:07.847Z"}]/*[[BOCA_REVIEWS_END]]*/;
 function loadReviews(){try{const s=localStorage.getItem('bocadoBrasilReviews');const r=s?JSON.parse(s):DEFAULT_REVIEWS;return r.filter(x=>x.status==='approved')}catch(e){return DEFAULT_REVIEWS.filter(x=>x.status==='approved')}}
 
 const cfg=loadCfg();
