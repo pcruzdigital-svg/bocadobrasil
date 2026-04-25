@@ -693,6 +693,16 @@ header{background:var(--white);border-bottom:1px solid var(--gray-light);positio
           </div>
         </div>
       </div>
+      <button class="auth-btn-secondary" onclick="toggleEditProfile()" style="margin-bottom:8px">
+        <span class="material-symbols-outlined" style="font-size:17px">edit</span> Editar perfil
+      </button>
+      <div id="as-edit-form" style="display:none;margin-bottom:12px">
+        <input class="auth-input" id="as-edit-name" placeholder="Nombre completo" style="margin-bottom:8px">
+        <input class="auth-input" id="as-edit-phone" type="tel" placeholder="Teléfono (+34...)" style="margin-bottom:8px">
+        <label style="font-size:11px;color:var(--gray-text);font-weight:600;display:block;margin-bottom:4px">Fecha de nacimiento</label>
+        <input class="auth-input" id="as-edit-birthday" type="date" style="margin-bottom:8px">
+        <button class="auth-btn-primary" onclick="saveProfile()">💾 Guardar cambios</button>
+      </div>
       <button class="auth-btn-secondary" onclick="fbAuth.signOut();closeAuthSheet()">
         <span class="material-symbols-outlined" style="font-size:17px">logout</span> Cerrar sesión
       </button>
@@ -759,6 +769,13 @@ header{background:var(--white);border-bottom:1px solid var(--gray-light);positio
       <button class="auth-btn-secondary" onclick="guestAndSend()">
         <span class="material-symbols-outlined" style="font-size:17px">person_outline</span> Continuar como invitado
       </button>
+    </div>
+    <div id="co-guest-phone" style="display:none">
+      <div style="font-size:14px;font-weight:700;margin-bottom:10px;text-align:center">📱 ¿Tu número de teléfono?</div>
+      <div style="font-size:12px;color:var(--gray-text);text-align:center;margin-bottom:14px">Para avisarte cuando tu pedido esté listo</div>
+      <input class="auth-input" id="co-phone-input" type="tel" placeholder="+34 600 000 000" style="margin-bottom:10px">
+      <button class="auth-btn-primary" onclick="confirmGuestPhone()">Continuar →</button>
+      <button class="auth-btn-secondary" onclick="skipGuestPhone()" style="margin-top:6px">Saltar</button>
     </div>
   </div>
 </div>
@@ -2223,6 +2240,32 @@ fbAuth.onAuthStateChanged(async user=>{
 /* ─ Auth UI ─ */
 function openAuthSheet(){_renderAuthSheet();document.getElementById('auth-overlay').classList.add('open');}
 function closeAuthSheet(){document.getElementById('auth-overlay').classList.remove('open');}
+function toggleEditProfile(){
+  const f=document.getElementById('as-edit-form');
+  if(!f)return;
+  const open=f.style.display==='block';
+  if(!open&&fbCustomer){
+    document.getElementById('as-edit-name').value=fbCustomer.name||fbUser?.displayName||'';
+    document.getElementById('as-edit-phone').value=fbCustomer.phone||'';
+    document.getElementById('as-edit-birthday').value=fbCustomer.birthday||'';
+  }
+  f.style.display=open?'none':'block';
+}
+async function saveProfile(){
+  if(!fbUser)return;
+  const name=document.getElementById('as-edit-name').value.trim();
+  const phone=document.getElementById('as-edit-phone').value.trim();
+  const birthday=document.getElementById('as-edit-birthday').value||'';
+  if(!name){showToast('Insere o teu nome');return;}
+  try{
+    await db.collection('customers').doc(fbUser.uid).update({name,phone,birthday});
+    fbCustomer={...fbCustomer,name,phone,birthday};
+    document.getElementById('as-edit-form').style.display='none';
+    _renderAuthSheet();
+    renderAcctBtn();
+    showToast('Perfil guardado ✓');
+  }catch(e){showToast('Erro: '+e.message);}
+}
 function _renderAuthSheet(){
   if(fbUser){
     document.getElementById('as-logged').style.display='block';
@@ -2302,10 +2345,24 @@ function _fbErr(code){
 
 /* ─ Checkout modal ─ */
 function openCheckoutModal(){
+  document.getElementById('co-choice').style.display='block';
+  document.getElementById('co-guest-phone').style.display='none';
   document.getElementById('checkout-modal-overlay').classList.add('open');
 }
 function closeCheckoutModal(){document.getElementById('checkout-modal-overlay').classList.remove('open');}
 function guestAndSend(){
+  // Show phone step
+  document.getElementById('co-choice').style.display='none';
+  document.getElementById('co-guest-phone').style.display='block';
+  const inp=document.getElementById('co-phone-input');if(inp)inp.value='';
+}
+function confirmGuestPhone(){
+  const ph=(document.getElementById('co-phone-input')?.value||'').trim();
+  guestInfo={name:getCustomerName()||'',phone:ph};
+  closeCheckoutModal();
+  doSend();
+}
+function skipGuestPhone(){
   guestInfo={name:getCustomerName()||'',phone:''};
   closeCheckoutModal();
   doSend();
