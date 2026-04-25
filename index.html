@@ -1824,6 +1824,8 @@ async function sendWA(){
   doSend();
 }
 async function doSend(){
+  // Open window synchronously NOW (before any await) — browsers block window.open after async
+  const _waWin=window.open('','_blank');
   let sub=0;
   const items=[];
   const lines=products.filter(p=>quantities[p.id]>0).map(p=>{
@@ -1868,7 +1870,7 @@ async function doSend(){
   try{
     const ss=await db.collection('orderSlots').doc(slotKey).get();
     const cnt=(ss.exists?ss.data().count:0)||0;
-    if(cnt>=appCfg.maxOrdersPerSlot){showToast('¡Este horario está lleno! Por favor elige otro.');await _fillSlotsWithCapacity();return;}
+    if(cnt>=appCfg.maxOrdersPerSlot){showToast('¡Este horario está lleno! Por favor elige otro.');await _fillSlotsWithCapacity();if(_waWin)_waWin.close();return;}
   }catch(e){}
   // Calc points
   let pointsEarned=0;
@@ -1881,7 +1883,8 @@ async function doSend(){
     msg+='\n\n🔗 Seguimiento de tu pedido:\n'+SITE_URL()+'/track.html?id='+orderId;
     if(pointsEarned>0)msg+='\n⭐ Ganas +'+pointsEarned+' puntos con este pedido';
   }catch(e){console.warn('Order save failed',e);}
-  window.open('https://wa.me/'+PHONE+'?text='+encodeURIComponent(msg),'_blank');
+  if(_waWin)_waWin.location.href='https://wa.me/'+PHONE+'?text='+encodeURIComponent(msg);
+  else window.open('https://wa.me/'+PHONE+'?text='+encodeURIComponent(msg),'_blank');
   guestInfo=null;
   setTimeout(resetCartAfterSend,1000);
 }
