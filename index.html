@@ -1823,9 +1823,7 @@ async function sendWA(){
   if(!fbUser&&!guestInfo){openCheckoutModal();return;}
   doSend();
 }
-async function doSend(){
-  // Open window synchronously NOW (before any await) — browsers block window.open after async
-  const _waWin=window.open('','_blank');
+function doSend(){
   let sub=0;
   const items=[];
   const lines=products.filter(p=>quantities[p.id]>0).map(p=>{
@@ -1863,30 +1861,28 @@ async function doSend(){
     msg+='\n\n'+(disc>0?'Subtotal: '+fmt(sub)+'\nDescuento: -'+fmt(disc)+(couponLine?couponLine:'')+'\n':'')+'*Total: '+fmt(grand)+'*';
     msg+='\n\n🏪 Recogida en tienda\n📍 '+cfg.pickupAddress+', '+cfg.pickupArea+'\n⏰ Hora: '+slotLabel+payLine;
   }
-  // Fetch app config (capacity + points) in one call
-  let appCfg={maxOrdersPerSlot:99,pointsPerEuro:0,minOrderForPoints:0};
-  try{const cs=await db.collection('config').doc('app').get();if(cs.exists)appCfg={...appCfg,...cs.data()};}catch(e){}
-  // Check slot capacity
-  try{
-    const ss=await db.collection('orderSlots').doc(slotKey).get();
-    const cnt=(ss.exists?ss.data().count:0)||0;
-    if(cnt>=appCfg.maxOrdersPerSlot){showToast('¡Este horario está lleno! Por favor elige otro.');await _fillSlotsWithCapacity();if(_waWin)_waWin.close();return;}
-  }catch(e){}
-  // Calc points
-  let pointsEarned=0;
-  if(appCfg.pointsPerEuro>0&&total>=(appCfg.minOrderForPoints||0))pointsEarned=Math.floor(total*appCfg.pointsPerEuro);
-  // Build order
-  const orderData={items,total,type:orderType,customerId:fbUser?fbUser.uid:null,customerName:customerName||'Invitado',customerPhone,customerEmail:fbUser?fbUser.email:'',address:orderType==='delivery'?document.getElementById('delivery-addr').value.trim():'',postalCode:orderType==='delivery'?document.getElementById('postal-input').value:'',zone:deliveryZone?.name||'',deliveryFee:orderType==='delivery'?deliveryFee:0,slotKey,slotLabel,coupon:appliedCoupon&&disc>0?{code:appliedCoupon.code,discount:disc}:null,payment:selectedPayment||'',pointsEarned};
-  // Save to Firestore
-  try{
-    const orderId=await _saveOrder(orderData);
-    msg+='\n\n🔗 Seguimiento de tu pedido:\n'+SITE_URL()+'/track.html?id='+orderId;
-    if(pointsEarned>0)msg+='\n⭐ Ganas +'+pointsEarned+' puntos con este pedido';
-  }catch(e){console.warn('Order save failed',e);}
-  if(_waWin)_waWin.location.href='https://wa.me/'+PHONE+'?text='+encodeURIComponent(msg);
-  else window.open('https://wa.me/'+PHONE+'?text='+encodeURIComponent(msg),'_blank');
+  // Capacity check using real-time cache (no await needed)
+  const cachedCnt=_slotCounts[slotKey]||0;
+  if(cachedCnt>=_slotMax){showToast('¡Este horario está lleno! Por favor elige otro.');return;}
+  // Pre-generate Firestore ID synchronously (no network call)
+  const orderRef=db.collection('orders').doc();
+  const orderId=orderRef.id;
+  // Calc points from cached config
+  const pointsPerEuro=_appCfg?.pointsPerEuro||0;
+  const minForPoints=_appCfg?.minOrderForPoints||0;
+  const pointsEarned=pointsPerEuro>0&&total>=minForPoints?Math.floor(total*pointsPerEuro):0;
+  msg+='\n\n🔗 Seguimiento de tu pedido:\n'+SITE_URL()+'/track.html?id='+orderId;
+  if(pointsEarned>0)msg+='\n⭐ Ganas +'+pointsEarned+' puntos con este pedido';
+  // Open WhatsApp NOW — synchronous, browser allows it (no await has run)
+  window.open('https://wa.me/'+PHONE+'?text='+encodeURIComponent(msg),'_blank');
   guestInfo=null;
   setTimeout(resetCartAfterSend,1000);
+  // Save order to Firestore in background (non-blocking)
+  const orderData={items,total,type:orderType,customerId:fbUser?fbUser.uid:null,customerName:customerName||'Invitado',customerPhone,customerEmail:fbUser?fbUser.email:'',address:orderType==='delivery'?document.getElementById('delivery-addr')?.value.trim()||'':'',postalCode:orderType==='delivery'?document.getElementById('postal-input')?.value||'':'',zone:deliveryZone?.name||'',deliveryFee:orderType==='delivery'?deliveryFee:0,slotKey,slotLabel,coupon:appliedCoupon&&disc>0?{code:appliedCoupon.code,discount:disc}:null,payment:selectedPayment||'',pointsEarned};
+  orderRef.set({...orderData,status:'Pendiente',createdAt:firebase.firestore.FieldValue.serverTimestamp(),updatedAt:firebase.firestore.FieldValue.serverTimestamp()})
+    .then(()=>db.collection('orderSlots').doc(slotKey).set({count:firebase.firestore.FieldValue.increment(1),date:slotKey.split('_')[0],time:slotKey.split('_')[1]},{merge:true}))
+    .then(()=>{if(fbUser&&pointsEarned>0){const ref=db.collection('customers').doc(fbUser.uid);return ref.update({points:firebase.firestore.FieldValue.increment(pointsEarned),totalOrders:firebase.firestore.FieldValue.increment(1),totalSpent:firebase.firestore.FieldValue.increment(total)});}})
+    .catch(e=>console.warn('Order save error',e));
 }
 
 let _tt;
@@ -2332,13 +2328,13 @@ function slotToKey(slotVal){
   return dt.toISOString().slice(0,10)+'_'+t;
 }
 
-let _slotListener=null, _slotCounts={}, _slotMax=99;
+let _slotListener=null, _slotCounts={}, _slotMax=99, _appCfg={};
 
 async function _fillSlotsWithCapacity(){
   // Load max from config once
   try{
     const snap=await db.collection('config').doc('app').get();
-    if(snap.exists)_slotMax=snap.data().maxOrdersPerSlot||99;
+    if(snap.exists){_appCfg=snap.data();_slotMax=_appCfg.maxOrdersPerSlot||99;}
   }catch(e){}
   // Apply immediately with whatever counts we have (may be empty — shows all slots)
   _applyCapacityFromCache('pickup-slot','pickup-closed-msg');
