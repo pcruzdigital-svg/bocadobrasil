@@ -1922,7 +1922,8 @@ function renderGreeting(){
   const name=getCustomerName();
   const bar=document.getElementById('greeting-bar');
   const txt=document.getElementById('greeting-text');
-  if(!name){bar.classList.remove('visible');return}
+  // If Firebase user is logged in, the welcome-back popup handles greeting
+  if(!name||fbUser){bar.classList.remove('visible');return}
   const h=new Date().getHours();
   const saludo=h<12?'¡Buenos días':h<18?'¡Buenas tardes':'¡Buenas noches';
   // Occasionally suggest a product or promotion
@@ -2177,6 +2178,9 @@ const _wbMsgs=[
 function _showWelcomeBack(name,pts){
   if(sessionStorage.getItem('wb_shown'))return;
   sessionStorage.setItem('wb_shown','1');
+  // Hide the generic greeting bar — the popup replaces it
+  const bar=document.getElementById('greeting-bar');
+  if(bar)bar.classList.remove('visible');
   const m=_wbMsgs[Math.floor(Math.random()*_wbMsgs.length)];
   document.getElementById('wb-emoji').textContent=m.e;
   document.getElementById('wb-title').textContent=`${m.t} ${name}`;
@@ -2245,7 +2249,11 @@ function renderAcctBtn(){
     const pts=fbCustomer?.points||0;
     btn.classList.add('authed');
     btn.innerHTML=`<span>${n[0].toUpperCase()}</span>`;
-    if(ptsEl&&ptsVal){ptsVal.textContent=pts;ptsEl.style.display=pts>0?'block':'none';}
+    if(ptsEl&&ptsVal){
+      ptsVal.textContent=pts;
+      ptsEl.style.display='block';
+      ptsEl.title=pts>0?`Tienes ${pts} puntos acumulados`:'Acumula puntos con cada pedido';
+    }
   }else{
     btn.classList.remove('authed');
     btn.innerHTML='<span class="material-symbols-outlined" style="font-size:18px">person</span>';
