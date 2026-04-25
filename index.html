@@ -456,10 +456,6 @@ header{background:var(--white);border-bottom:1px solid var(--gray-light);positio
 </style>
 
 
-
-
-
-
 <!-- Google Analytics 4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-945ZSC18R6"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-945ZSC18R6');</script>
@@ -481,9 +477,12 @@ header{background:var(--white);border-bottom:1px solid var(--gray-light);positio
       <div class="status-dot"></div>
       <span id="status-text">Cargando...</span>
     </div>
-    <button class="account-btn" id="account-btn" onclick="openAuthSheet()" title="Mi cuenta">
-      <span class="material-symbols-outlined" style="font-size:18px">person</span>
-    </button>
+    <div style="display:flex;align-items:center;gap:6px">
+      <div id="header-pts" style="display:none;background:#FFF8E1;color:#7A5500;font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;white-space:nowrap;cursor:pointer" onclick="openAuthSheet()">🏆 <span id="header-pts-val">0</span> pts</div>
+      <button class="account-btn" id="account-btn" onclick="openAuthSheet()" title="Mi cuenta">
+        <span class="material-symbols-outlined" style="font-size:18px">person</span>
+      </button>
+    </div>
   </div>
 </header>
 
@@ -727,6 +726,18 @@ header{background:var(--white);border-bottom:1px solid var(--gray-light);positio
   </div>
 </div>
 
+<!-- WELCOME BACK POPUP -->
+<div class="welcome-overlay" id="wb-overlay" onclick="if(event.target===this)closeWelcomeBack()" style="z-index:900">
+  <div class="welcome-box" style="position:relative">
+    <button onclick="closeWelcomeBack()" style="position:absolute;top:12px;right:14px;background:none;border:none;font-size:20px;cursor:pointer;color:var(--gray-text)">✕</button>
+    <div class="welcome-emoji" id="wb-emoji">👋</div>
+    <div class="welcome-title" id="wb-title"></div>
+    <div class="welcome-sub" id="wb-sub"></div>
+    <div id="wb-pts" style="display:none;background:#FFF8E1;border-radius:12px;padding:10px 14px;margin-bottom:18px;font-size:13px;font-weight:600;color:#7A5500;text-align:center"></div>
+    <button class="welcome-btn" onclick="closeWelcomeBack()">¡Vamos allá! 🚀</button>
+  </div>
+</div>
+
 <!-- CHECKOUT MODAL -->
 <div class="checkout-modal-overlay" id="checkout-modal-overlay" onclick="if(event.target===this)closeCheckoutModal()">
   <div class="checkout-modal-box">
@@ -741,6 +752,10 @@ header{background:var(--white);border-bottom:1px solid var(--gray-light);positio
       </button>
     </div>
     <div id="co-guest" style="display:none">
+      <div style="background:#FFF8E1;border-radius:12px;padding:10px 14px;margin-bottom:14px;display:flex;align-items:flex-start;gap:8px">
+        <span style="font-size:18px">🏆</span>
+        <div style="font-size:12px;color:#7A5500;line-height:1.5"><strong>¡Acumula puntos y gana productos gratis!</strong><br>Crea tu cuenta ahora y cada pedido te acerca a un regalo.</div>
+      </div>
       <div style="font-size:13px;font-weight:600;color:var(--dark);margin-bottom:10px">Tus datos de contacto:</div>
       <input class="auth-input" type="text" id="guest-name" placeholder="Tu nombre *" maxlength="50">
       <input class="auth-input" type="tel" id="guest-phone" placeholder="Teléfono WhatsApp * (ej: +34600...)" maxlength="20">
@@ -2147,9 +2162,37 @@ const fbAuth=firebase.auth();
 
 /* ─ State ─ */
 let fbUser=null,fbCustomer=null,guestInfo=null,_pendingCheckout=false;
+let _authFirstLoad=true;
+
+/* ─ Welcome back popup ─ */
+const _wbMsgs=[
+  {e:'🎉',t:'¡Cuánto tiempo!',s:'Nos alegra verte de nuevo. Tienes el mejor gusto.'},
+  {e:'🔥',t:'¡De vuelta por más!',s:'Sabemos que no puedes resistirte. Y te entendemos.'},
+  {e:'🥰',t:'¡Te echábamos de menos!',s:'El sabor brasileño te ha llamado y aquí estás.'},
+  {e:'🤤',t:'¡El hambre manda!',s:'Buena elección. Estás en el lugar correcto.'},
+  {e:'🇧🇷',t:'¡Bienvenido de nuevo!',s:'Brasil siempre te espera con los brazos abiertos.'},
+  {e:'😎',t:'¡El cliente VIP ha llegado!',s:'Sabemos que tienes buen gusto. Por eso vuelves.'},
+  {e:'⚡',t:'¡Listo para pedir?',s:'Tu antojo brasileño favorito está a un clic.'},
+];
+function _showWelcomeBack(name,pts){
+  if(sessionStorage.getItem('wb_shown'))return;
+  sessionStorage.setItem('wb_shown','1');
+  const m=_wbMsgs[Math.floor(Math.random()*_wbMsgs.length)];
+  document.getElementById('wb-emoji').textContent=m.e;
+  document.getElementById('wb-title').textContent=`${m.t} ${name}`;
+  document.getElementById('wb-sub').textContent=m.s;
+  const ptsBox=document.getElementById('wb-pts');
+  if(pts>0){ptsBox.style.display='block';ptsBox.innerHTML=`🏆 Tienes <strong>${pts} puntos</strong> acumulados — ¡sigue pidiendo para ganar productos gratis!`;}
+  else{ptsBox.style.display='none';}
+  const ov=document.getElementById('wb-overlay');
+  ov.classList.add('open');
+  setTimeout(()=>ov.classList.contains('open')&&closeWelcomeBack(),5000);
+}
+function closeWelcomeBack(){document.getElementById('wb-overlay').classList.remove('open');}
 
 /* ─ Auth state listener ─ */
 fbAuth.onAuthStateChanged(async user=>{
+  const wasNull=fbUser===null;
   fbUser=user;
   if(user){
     try{
@@ -2160,7 +2203,14 @@ fbAuth.onAuthStateChanged(async user=>{
         await db.collection('customers').doc(user.uid).set(fbCustomer);
       }
     }catch(e){console.warn('customer load',e);}
+    // Show welcome back popup on first load if already logged in
+    if(_authFirstLoad){
+      const name=fbCustomer?.name||user.displayName||user.email||'';
+      const firstName=name.split(' ')[0];
+      if(firstName)setTimeout(()=>_showWelcomeBack(firstName,fbCustomer?.points||0),800);
+    }
   }else{fbCustomer=null;}
+  _authFirstLoad=false;
   renderAcctBtn();
   _fillSlotsWithCapacity();
 });
@@ -2188,14 +2238,18 @@ function switchAuthTab(t){
 }
 function renderAcctBtn(){
   const btn=document.getElementById('account-btn');if(!btn)return;
+  const ptsEl=document.getElementById('header-pts');
+  const ptsVal=document.getElementById('header-pts-val');
   if(fbUser){
     const n=fbCustomer?.name||fbUser.displayName||fbUser.email||'U';
     const pts=fbCustomer?.points||0;
     btn.classList.add('authed');
-    btn.innerHTML=`<span>${n[0].toUpperCase()}</span>${pts>0?`<span class="acct-pts">⭐${pts}</span>`:''}`;
+    btn.innerHTML=`<span>${n[0].toUpperCase()}</span>`;
+    if(ptsEl&&ptsVal){ptsVal.textContent=pts;ptsEl.style.display=pts>0?'block':'none';}
   }else{
     btn.classList.remove('authed');
     btn.innerHTML='<span class="material-symbols-outlined" style="font-size:18px">person</span>';
+    if(ptsEl)ptsEl.style.display='none';
   }
 }
 async function doLogin(){
