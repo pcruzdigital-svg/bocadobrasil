@@ -15,6 +15,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@700;800;900&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 <link rel="icon" id="site-favicon" type="image/png" href="">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -84,23 +87,29 @@ header{background:var(--white);border-bottom:1px solid var(--gray-light);positio
 .cat-tab{flex-shrink:0;padding:7px 20px;border-radius:20px;font-size:14px;font-weight:600;border:none;cursor:pointer;transition:all .2s;background:var(--gray-light);color:var(--dark)}
 .cat-tab.active{background:var(--red);color:#fff}
 
-/* OFERTA DEL DÍA */
-.oferta-section{max-width:600px;margin:18px auto 0;padding:0 16px}
-.oferta-card{background:var(--white);border-radius:var(--radius);overflow:hidden;box-shadow:0 4px 20px rgba(196,54,42,.18);border:2px solid var(--red);cursor:pointer;transition:transform .15s}
+/* DESTAQUE HERO */
+.oferta-section{max-width:600px;margin:14px auto 0;padding:0 16px}
+.oferta-card{background:var(--white);border-radius:var(--radius);overflow:hidden;box-shadow:0 6px 28px rgba(196,54,42,.22);border:2px solid var(--red);cursor:pointer;transition:transform .15s}
 .oferta-card:active{transform:scale(.99)}
-.oferta-img-wrap{position:relative;width:140px;flex-shrink:0;aspect-ratio:1/1;overflow:hidden;background:var(--gray-light)}
-.oferta-card{display:flex;align-items:stretch}
+.oferta-img-wrap{position:relative;width:100%;aspect-ratio:16/7;overflow:hidden;background:var(--gray-light)}
 .oferta-img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
-.oferta-card:hover .oferta-img-wrap img{transform:scale(1.03)}
-.oferta-badge{position:absolute;top:12px;left:12px;background:var(--red);color:#fff;font-size:12px;font-weight:700;padding:5px 12px;border-radius:20px;letter-spacing:.3px;display:flex;align-items:center;gap:5px}
-.oferta-body{padding:14px 16px 16px;flex:1;min-width:0}
-.oferta-name{font-family:'League Spartan',sans-serif;font-size:18px;font-weight:800;color:var(--dark);margin-bottom:4px;line-height:1.2}
-.oferta-desc{font-size:13px;color:var(--gray-text);line-height:1.45;margin-bottom:12px}
+.oferta-card:hover .oferta-img-wrap img{transform:scale(1.04)}
+.oferta-badge{position:absolute;top:10px;left:10px;font-size:12px;font-weight:700;padding:5px 13px;border-radius:20px;letter-spacing:.3px}
+.oferta-promo-badge{position:absolute;top:10px;right:10px;background:rgba(0,0,0,.55);color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;backdrop-filter:blur(4px)}
+.oferta-urgency-bar{background:linear-gradient(90deg,#B71C1C,#C4362A,#D84315);color:#fff;font-size:13px;font-weight:800;padding:11px 16px;text-align:center;letter-spacing:.6px;display:flex;align-items:center;justify-content:center;gap:6px;animation:urgency-pulse 1.4s ease-in-out infinite,urgency-shake 4s ease-in-out infinite;text-transform:uppercase}
+@keyframes urgency-pulse{0%,100%{opacity:1}50%{opacity:.88}}
+@keyframes urgency-shake{0%,88%,100%{transform:none}90%{transform:translateX(-3px)}92%{transform:translateX(3px)}94%{transform:translateX(-2px)}96%{transform:translateX(2px)}98%{transform:translateX(-1px)}}
+.oferta-body{padding:14px 16px 16px}
+.oferta-name{font-family:'League Spartan',sans-serif;font-size:20px;font-weight:800;color:var(--dark);margin-bottom:3px;line-height:1.2}
+.oferta-desc{font-size:13px;color:var(--gray-text);line-height:1.45;margin-bottom:10px}
+.oferta-promo-info{font-size:12px;font-weight:700;color:#1A9E5A;margin-bottom:10px}
 .oferta-footer{display:flex;align-items:center;justify-content:space-between;gap:10px}
 .oferta-prices{display:flex;align-items:baseline;gap:8px}
-.oferta-price{font-family:'League Spartan',sans-serif;font-size:26px;font-weight:600;color:var(--red);letter-spacing:-1px}
+.oferta-price{font-family:'League Spartan',sans-serif;font-size:26px;font-weight:800;color:var(--red);letter-spacing:-1px}
 .oferta-old{font-size:14px;color:var(--gray-text);text-decoration:line-through}
 .oferta-saving{background:#EDFAF3;color:#1A9E5A;font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px}
+.oferta-cta{background:var(--red);color:#fff !important;border:none;border-radius:12px;font-size:15px;font-weight:800;padding:12px 24px;cursor:pointer;font-family:'League Spartan',sans-serif;letter-spacing:.3px;box-shadow:0 3px 10px rgba(196,54,42,.35);white-space:nowrap}
+.badge-urgency{font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;display:inline-block}
 
 /* PROMO BADGES on cards */
 .badge-promo{position:absolute;top:9px;right:9px;font-size:12px;font-weight:800;padding:5px 11px;border-radius:20px;letter-spacing:.2px;box-shadow:0 2px 8px rgba(0,0,0,.18)}
@@ -126,7 +135,21 @@ header{background:var(--white);border-bottom:1px solid var(--gray-light);positio
 .card:hover .card-img-wrap img{transform:scale(1.05)}
 .badge-popular{position:absolute;top:9px;left:9px;background:var(--red);color:#fff;font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px;text-transform:uppercase}
 .badge-custom{position:absolute;top:9px;left:9px;color:#fff;font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.3px;box-shadow:0 2px 6px rgba(0,0,0,.18)}
-.badge-deal{position:absolute;top:9px;right:9px;background:#FFD166;color:#7A5500;font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px}
+.badge-deal{position:absolute;top:9px;right:9px;font-size:10px;font-weight:800;padding:4px 9px;border-radius:20px;display:flex;align-items:center;gap:3px}
+.badge-deal--default{background:#FFD166;color:#7A5500}
+.badge-deal--agota{background:#C4362A;color:#fff;animation:badge-pulse 1.1s ease-in-out infinite}
+.badge-deal--hoy{background:#1565C0;color:#fff}
+.badge-deal--termina{background:#E65100;color:#fff;animation:badge-pulse 1.3s ease-in-out infinite}
+.badge-deal--popular{background:#2E7D32;color:#fff}
+@keyframes badge-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+.card--urgent{border:2px solid rgba(196,54,42,.55)!important;animation:card-glow 2s ease-in-out infinite}
+@keyframes card-glow{0%,100%{box-shadow:0 0 0 0 rgba(196,54,42,.08),var(--shadow-sm)}50%{box-shadow:0 0 0 4px rgba(196,54,42,.18),0 6px 24px rgba(196,54,42,.28)}}
+.urgency-strip{height:3px;background:linear-gradient(90deg,#B71C1C 0%,#FF5722 50%,#B71C1C 100%);background-size:200% 100%;animation:strip-flow 1.1s linear infinite}
+@keyframes strip-flow{0%{background-position:100% 0}100%{background-position:-100% 0}}
+.social-proof-line{display:flex;align-items:center;gap:3px;font-size:10px;font-weight:700;color:#B71C1C;margin-top:4px;letter-spacing:.1px}
+.social-proof-line .material-symbols-outlined{font-size:12px;font-variation-settings:'FILL' 1}
+.countdown-chip{display:inline-flex;align-items:center;gap:6px;background:#1A237E;color:#fff;font-size:12px;font-weight:800;padding:6px 14px;border-radius:20px;margin-bottom:10px;letter-spacing:.3px}
+.countdown-chip .material-symbols-outlined{font-size:15px;font-variation-settings:'FILL' 1}
 .card-microcopy{font-size:11px;color:#B45309;font-weight:600;font-style:italic;line-height:1.3;margin-top:2px}
 .card-body{padding:11px;flex:1;display:flex;flex-direction:column;gap:3px}
 .card-name{font-family:'League Spartan',sans-serif;font-size:16px;font-weight:700;color:var(--dark);letter-spacing:-.2px;line-height:1.2}
@@ -403,10 +426,34 @@ header{background:var(--white);border-bottom:1px solid var(--gray-light);positio
 .review-date{font-size:11px;color:var(--gray-text)}
 .review-leave-btn{display:inline-flex;align-items:center;gap:6px;margin-top:14px;padding:9px 18px;background:var(--white);border:1.5px solid var(--gray-mid);border-radius:20px;font-size:13px;font-weight:600;color:var(--dark);text-decoration:none;transition:border-color .2s,color .2s}
 .review-leave-btn:hover{border-color:var(--red);color:var(--red)}
+/* ── FIREBASE AUTH ── */
+.auth-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:800;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}
+.auth-overlay.open{opacity:1;pointer-events:all}
+.auth-sheet{background:var(--white);border-radius:24px 24px 0 0;padding:24px 20px 40px;width:100%;max-width:440px;transform:translateY(100%);transition:transform .36s cubic-bezier(.22,.68,0,1.2);max-height:90vh;overflow-y:auto}
+.auth-overlay.open .auth-sheet{transform:translateY(0)}
+.auth-tabs{display:flex;gap:3px;background:var(--gray-light);border-radius:11px;padding:4px;margin-bottom:18px}
+.auth-tab{flex:1;padding:8px;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;background:transparent;color:var(--gray-text);transition:all .2s;font-family:'Work Sans',sans-serif}
+.auth-tab.active{background:var(--white);color:var(--dark);box-shadow:0 1px 4px rgba(0,0,0,.1)}
+.auth-panel{display:none}.auth-panel.active{display:block}
+.auth-input{width:100%;padding:13px 14px;border:1.5px solid var(--gray-mid);border-radius:12px;font-size:14px;font-family:'Work Sans',sans-serif;outline:none;margin-bottom:10px;box-sizing:border-box;transition:border-color .2s;-webkit-appearance:none;background:var(--white)}
+.auth-input:focus{border-color:var(--red)}
+.auth-btn-primary{width:100%;padding:14px;background:var(--red);color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;font-family:'Work Sans',sans-serif;cursor:pointer;margin-bottom:10px;transition:background .2s;display:flex;align-items:center;justify-content:center;gap:8px}
+.auth-btn-primary:hover{background:var(--red-dark)}
+.auth-btn-secondary{width:100%;padding:12px 14px;background:transparent;color:var(--gray-text);border:1.5px solid var(--gray-mid);border-radius:12px;font-size:14px;font-weight:600;font-family:'Work Sans',sans-serif;cursor:pointer;margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:8px;transition:background .2s}
+.auth-btn-secondary:hover{background:var(--gray-light)}
+.auth-divider{text-align:center;font-size:12px;color:var(--gray-text);margin:2px 0 10px;position:relative}
+.auth-divider::before,.auth-divider::after{content:'';position:absolute;top:50%;width:43%;height:1px;background:var(--gray-mid)}
+.auth-divider::before{left:0}.auth-divider::after{right:0}
+.auth-err{color:#C4362A;font-size:13px;font-weight:600;margin-bottom:8px;display:none;padding:8px 12px;background:#FFF5F5;border-radius:8px}
+.auth-err.show{display:block}
+.account-btn{width:34px;height:34px;border-radius:50%;background:var(--gray-light);border:1.5px solid var(--gray-mid);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:var(--dark);position:relative;flex-shrink:0;transition:all .2s;font-family:'League Spartan',sans-serif}
+.account-btn.authed{background:var(--red);border-color:var(--red);color:#fff}
+.acct-pts{position:absolute;top:-6px;right:-6px;background:#FFD166;color:#7A5500;font-size:9px;font-weight:800;padding:2px 5px;border-radius:10px;white-space:nowrap;line-height:1.3;pointer-events:none}
+.checkout-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:800;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .3s}
+.checkout-modal-overlay.open{opacity:1;pointer-events:all}
+.checkout-modal-box{background:var(--white);border-radius:24px;padding:28px 22px 24px;max-width:360px;width:100%;transform:scale(.93);transition:transform .3s}
+.checkout-modal-overlay.open .checkout-modal-box{transform:scale(1)}
 </style>
-
-
-
 
 
 <!-- Google Analytics 4 -->
@@ -430,6 +477,9 @@ header{background:var(--white);border-bottom:1px solid var(--gray-light);positio
       <div class="status-dot"></div>
       <span id="status-text">Cargando...</span>
     </div>
+    <button class="account-btn" id="account-btn" onclick="openAuthSheet()" title="Mi cuenta">
+      <span class="material-symbols-outlined" style="font-size:18px">person</span>
+    </button>
   </div>
 </header>
 
@@ -611,6 +661,90 @@ header{background:var(--white);border-bottom:1px solid var(--gray-light);positio
       onkeydown="if(event.key==='Enter')confirmWelcome()">
     <button class="welcome-btn" onclick="confirmWelcome()">¡Empezar a pedir!</button>
     <button class="welcome-skip" onclick="skipWelcome()">Continuar sin nombre</button>
+  </div>
+</div>
+
+<!-- AUTH SHEET -->
+<div class="auth-overlay" id="auth-overlay" onclick="if(event.target===this)closeAuthSheet()">
+  <div class="auth-sheet">
+    <div style="text-align:center;margin-bottom:18px">
+      <div style="width:36px;height:4px;background:var(--gray-mid);border-radius:4px;margin:0 auto 14px"></div>
+      <div style="font-family:'League Spartan',sans-serif;font-size:21px;font-weight:800">Mi cuenta</div>
+    </div>
+    <!-- Logged in -->
+    <div id="as-logged" style="display:none">
+      <div style="text-align:center;margin-bottom:20px">
+        <div id="as-avatar" style="width:64px;height:64px;background:var(--red);border-radius:50%;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-family:'League Spartan',sans-serif;font-size:26px;font-weight:800;color:#fff"></div>
+        <div id="as-name" style="font-family:'League Spartan',sans-serif;font-size:18px;font-weight:800;margin-bottom:2px"></div>
+        <div id="as-email" style="font-size:13px;color:var(--gray-text);margin-bottom:14px"></div>
+        <div style="display:inline-flex;align-items:center;gap:10px;background:#FFFAE6;border:1.5px solid #FFD166;border-radius:14px;padding:10px 20px">
+          <span style="font-size:22px">⭐</span>
+          <div style="text-align:left">
+            <div style="font-size:20px;font-weight:800;font-family:'League Spartan',sans-serif;color:var(--dark)" id="as-pts">0</div>
+            <div style="font-size:10px;color:var(--gray-text);font-weight:700;text-transform:uppercase;letter-spacing:.4px">Pontos</div>
+          </div>
+        </div>
+      </div>
+      <button class="auth-btn-secondary" onclick="fbAuth.signOut();closeAuthSheet()">
+        <span class="material-symbols-outlined" style="font-size:17px">logout</span> Cerrar sesión
+      </button>
+    </div>
+    <!-- Anonymous -->
+    <div id="as-anon">
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-tab="login" onclick="switchAuthTab('login')">Entrar</button>
+        <button class="auth-tab" data-tab="register" onclick="switchAuthTab('register')">Registrarse</button>
+      </div>
+      <div class="auth-panel active" id="ap-login">
+        <div class="auth-err" id="as-login-err"></div>
+        <input class="auth-input" type="email" id="as-email-in" placeholder="Email" autocomplete="email" onkeydown="if(event.key==='Enter')doLogin()">
+        <input class="auth-input" type="password" id="as-pass-in" placeholder="Contraseña" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+        <button class="auth-btn-primary" onclick="doLogin()">Entrar</button>
+        <div class="auth-divider">o</div>
+        <button class="auth-btn-secondary" onclick="doGoogleAuth()" style="border-color:var(--gray-mid)">
+          <svg width="17" height="17" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Continuar con Google
+        </button>
+      </div>
+      <div class="auth-panel" id="ap-register">
+        <div class="auth-err" id="as-reg-err"></div>
+        <input class="auth-input" type="text" id="as-reg-name" placeholder="Nombre *" autocomplete="name">
+        <input class="auth-input" type="tel" id="as-reg-phone" placeholder="Teléfono WhatsApp">
+        <input class="auth-input" type="email" id="as-reg-email" placeholder="Email *" autocomplete="email">
+        <input class="auth-input" type="password" id="as-reg-pass" placeholder="Contraseña (mín. 6 caracteres) *" autocomplete="new-password">
+        <button class="auth-btn-primary" onclick="doRegister()">Crear cuenta</button>
+        <div class="auth-divider">o</div>
+        <button class="auth-btn-secondary" onclick="doGoogleAuth()" style="border-color:var(--gray-mid)">
+          <svg width="17" height="17" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Continuar con Google
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CHECKOUT MODAL -->
+<div class="checkout-modal-overlay" id="checkout-modal-overlay" onclick="if(event.target===this)closeCheckoutModal()">
+  <div class="checkout-modal-box">
+    <div style="font-family:'League Spartan',sans-serif;font-size:20px;font-weight:800;text-align:center;margin-bottom:5px">¿Cómo quieres pedir?</div>
+    <div style="font-size:13px;color:var(--gray-text);text-align:center;margin-bottom:20px;line-height:1.45">Inicia sesión para acumular puntos o continúa como invitado</div>
+    <div id="co-choice">
+      <button class="auth-btn-primary" onclick="checkoutGoLogin()">
+        <span class="material-symbols-outlined" style="font-size:17px">account_circle</span> Entrar / Crear cuenta
+      </button>
+      <button class="auth-btn-secondary" onclick="showGuestForm()">
+        <span class="material-symbols-outlined" style="font-size:17px">person_outline</span> Continuar como invitado
+      </button>
+    </div>
+    <div id="co-guest" style="display:none">
+      <div style="font-size:13px;font-weight:600;color:var(--dark);margin-bottom:10px">Tus datos de contacto:</div>
+      <input class="auth-input" type="text" id="guest-name" placeholder="Tu nombre *" maxlength="50">
+      <input class="auth-input" type="tel" id="guest-phone" placeholder="Teléfono WhatsApp * (ej: +34600...)" maxlength="20">
+      <button class="auth-btn-primary" onclick="confirmGuest()">
+        <span class="material-symbols-outlined" style="font-size:17px">send</span> Confirmar y enviar pedido
+      </button>
+      <button class="auth-btn-secondary" onclick="document.getElementById('co-guest').style.display='none';document.getElementById('co-choice').style.display='block'">← Atrás</button>
+    </div>
   </div>
 </div>
 
@@ -830,43 +964,98 @@ function promoBadgeText(p){
   return null;
 }
 
+/* ── helpers promoção destaque */
+function _promoLabel(pr){
+  if(!pr)return null;
+  if(pr.type==='2x1')return'🔁 2×1';
+  if(pr.type==='pct')return`-${pr.value}%`;
+  if(pr.type==='eur')return`-€${(+pr.value).toFixed(2).replace('.',',')}`;
+  if(pr.type==='add1')return`💥 Añade +1 por €${pr.add1Price||1}`;
+  if(pr.type==='extra_combo')return'⚡ Extra gratis en combos';
+  if(pr.type==='before_time')return`⏳ Pedido antes de ${pr.beforeTimeHour||''} lleva ${pr.beforeTimeBenefit||'extra'}`;
+  if(pr.type==='upgrade')return`🔥 Haz tu pedido más grande por +€${pr.upgradePrice||0}`;
+  if(pr.type==='pack')return`🥟 Añade ${pr.packQty||2} por €${pr.packPrice||0}`;
+  if(pr.type==='urgency')return pr.urgencyLabel==='agota'?'⏳ ¡Se agota rápido!':'⚡ ¡Disponible hoy!';
+  return null;
+}
+function _isUrgency(pr,pu){return !!(pu?.urgencyLabel);}
+function _urgencyText(pu){
+  const l=pu?.urgencyLabel;
+  const ic=(n)=>`<span class="material-symbols-outlined" style="font-size:17px;vertical-align:-4px;font-variation-settings:'FILL' 1">${n}</span>`;
+  if(l==='agota')  return ic('local_fire_department')+' ¡ÚLTIMAS UNIDADES! Date prisa antes de que se acabe';
+  if(l==='termina')return ic('timer')+' ¡TERMINA PRONTO! No pierdas esta oportunidad';
+  if(l==='popular')return ic('trending_up')+' ¡ESTÁ ARRASANDO! Mucha gente lo pide ahora';
+  return ic('bolt')+' ¡SOLO DISPONIBLE HOY! No te quedes sin el tuyo';
+}
+function _urgencyCardText(pu){
+  const l=pu?.urgencyLabel;
+  const ic=(n)=>`<span class="material-symbols-outlined" style="font-size:11px;vertical-align:-2px;font-variation-settings:'FILL' 1">${n}</span>`;
+  if(l==='agota')  return ic('local_fire_department')+' Últimas';
+  if(l==='termina')return ic('timer')+' Termina';
+  if(l==='popular')return ic('trending_up')+' Popular';
+  return ic('bolt')+' Solo hoy';
+}
+let _cdTimer=null;
+function _startCountdown(timeStr,elId){
+  if(_cdTimer)clearInterval(_cdTimer);
+  const tick=()=>{
+    const el=document.getElementById(elId);
+    if(!el){clearInterval(_cdTimer);return;}
+    const now=new Date();
+    const[h,m]=timeStr.split(':').map(Number);
+    const t=new Date();t.setHours(h,m,0,0);
+    const d=t-now;
+    if(d<=0){el.closest('.countdown-chip').style.display='none';clearInterval(_cdTimer);return;}
+    const hh=Math.floor(d/3600000),mm=Math.floor((d%3600000)/60000),ss=Math.floor((d%60000)/1000);
+    el.textContent=(hh>0?hh+'h ':'')+mm+'m '+ss+'s';
+  };
+  tick();_cdTimer=setInterval(tick,1000);
+}
+
 /* ── DESTAQUE */
 function renderOferta(){
   const el=document.getElementById('oferta-section');
   const oferta=cfg.destaqueProductId?products.find(p=>p.id===cfg.destaqueProductId):null;
   if(!oferta){el.innerHTML='';return}
-  const qty=quantities[oferta.id];
   const unitP=promoUnitPrice(oferta);
   const hasDisc=unitP<oferta.price;
   const saving=hasDisc?+Math.max(0,num(oferta.price)-num(unitP)).toFixed(2):0;
-  const _pb=oferta.promo?.type==='2x1'?'2×1':oferta.promo?.type==='pct'?`-${oferta.promo.value}%`:oferta.promo?.type==='eur'?`-€${(+oferta.promo.value).toFixed(2).replace('.',',')}`:null;
+  const promoLbl=_promoLabel(oferta.promo);
+  const pu=oferta.promoUrgency;
+  const pbt=oferta.promoBeforeTime;
+  const isUrgency=_isUrgency(oferta.promo,pu);
+  const simpleDisc=oferta.promo&&(oferta.promo.type==='2x1'||oferta.promo.type==='pct'||oferta.promo.type==='eur');
+  const discBadge=simpleDisc?promoLbl:null;
+  const promoInfoLine=(!simpleDisc&&promoLbl)?`<div class="oferta-promo-info">${promoLbl}</div>`:'';
+  const cdId='oferta-cd-val';
+  const btInfoLine=pbt?.beforeTimeHour?`<div class="oferta-promo-info"><span class="material-symbols-outlined" style="font-size:14px;vertical-align:-3px;font-variation-settings:'FILL' 1">timer</span> Pedido antes de ${pbt.beforeTimeHour} lleva ${pbt.beforeTimeBenefit||'extra'}</div><div class="countdown-chip"><span class="material-symbols-outlined">schedule</span><span id="${cdId}">calculando...</span></div>`:'';
   el.innerHTML=`<div class="oferta-section">
-    <div class="oferta-card" onclick="openDetail(${oferta.id})">
-      <div class="oferta-img-wrap">
+    <div class="oferta-card">
+      ${isUrgency?`<div class="oferta-urgency-bar">${_urgencyText(pu)}</div>`:''}
+      <div class="oferta-img-wrap" onclick="openDetail(${oferta.id})">
         <div class="img-skeleton" id="sk-of"></div>
         <img src="${oferta.img}" alt="${oferta.name}" loading="lazy"
           onload="var e=document.getElementById('sk-of');if(e)e.style.display='none'"
           onerror="this.style.display='none';var e=document.getElementById('sk-of');if(e)e.innerHTML='<div style=\\'display:flex;align-items:center;justify-content:center;height:100%;font-size:64px\\'>${oferta.emoji}</div>'">
         ${oferta.badgeText?`<div class="oferta-badge" style="background:${oferta.badgeColor||'var(--red)'};color:${oferta.badgeTextColor||'#fff'}">★ ${oferta.badgeText}</div>`:''}
-        ${_pb?`<div class="oferta-promo-badge">${_pb}</div>`:''}
+        ${discBadge?`<div class="oferta-promo-badge">${discBadge}</div>`:''}
       </div>
       <div class="oferta-body">
         <div class="oferta-name">${oferta.name}</div>
-        <div class="oferta-desc">${oferta.desc}</div>
+        <div class="oferta-desc">${oferta.shortDesc||oferta.desc}</div>
+        ${promoInfoLine}${btInfoLine}
+        ${oferta.promoSocialProof?`<div class="social-proof-line" style="font-size:12px;margin-bottom:8px"><span class="material-symbols-outlined" style="font-size:14px">people</span>${oferta.promoSocialProof} personas pidieron este plato hoy</div>`:''}
         <div class="oferta-footer">
           <div class="oferta-prices">
             <div class="oferta-price">${fmt(unitP)}</div>
             ${hasDisc?`<div class="oferta-old">${fmt(oferta.price)}</div><div class="oferta-saving">Ahorras ${fmt(saving)}</div>`:''}
           </div>
-          <div class="qty-ctrl ${qty>0?'has-items':''}" id="qc-of-${oferta.id}" onclick="event.stopPropagation()">
-            <button class="qty-btn" onclick="event.stopPropagation();chQty(${oferta.id},-1)">−</button>
-            <div class="qty-num" id="qn-of-${oferta.id}">${qty}</div>
-            <button class="qty-btn" onclick="event.stopPropagation();chQty(${oferta.id},+1)">+</button>
-          </div>
+          <button class="oferta-cta" onclick="openDetail(${oferta.id})">🛒 Pedir ahora</button>
         </div>
       </div>
     </div>
   </div>`;
+  if(pbt?.beforeTimeHour)_startCountdown(pbt.beforeTimeHour,cdId);
 }
 
 /* ── STATUS */
@@ -947,19 +1136,22 @@ function renderCard(p){
   const unitP=promoUnitPrice(p),qty=quantities[p.id];
   const showOld=hasD||(p.promo&&p.promo.type!=='2x1');
   const badge=promoBadgeText(p);
-  return`<div class="card" onclick="openDetail(${p.id})">
+  const isUrg=_isUrgency(p.promo,p.promoUrgency);
+  return`<div class="card${isUrg?' card--urgent':''}" onclick="openDetail(${p.id})">
+    ${isUrg?'<div class="urgency-strip"></div>':''}
     <div class="card-img-wrap">
       <div class="img-skeleton" id="sk-${p.id}"></div>
       <img src="${p.img}" alt="${p.name}" loading="lazy"
         onload="var e=document.getElementById('sk-${p.id}');if(e)e.style.display='none'"
         onerror="this.style.display='none';var e=document.getElementById('sk-${p.id}');if(e)e.innerHTML='<div style=\\'display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-size:44px;background:#F2EDED\\'>${p.emoji}</div>'">
       ${p.badgeText?`<div class="badge-custom" style="background:${p.badgeColor||'var(--red)'};color:${p.badgeTextColor||'#fff'}">★ ${p.badgeText}</div>`:p.popular?'<div class="badge-popular">⭐ Popular</div>':''}
-      ${hasD?'<div class="badge-deal">🎁 Oferta</div>':p.promo?.type==='2x1'?'<div class="badge-promo b2x1">2×1</div>':badge?`<div class="badge-promo bdisc">${badge}</div>`:''}
+      ${isUrg?`<div class="badge-deal badge-deal--${p.promoUrgency.urgencyLabel||'hoy'}">${_urgencyCardText(p.promoUrgency)}</div>`:hasD?`<div class="badge-deal badge-deal--default"><span class="material-symbols-outlined" style="font-size:11px;vertical-align:-2px;font-variation-settings:'FILL' 1">local_offer</span> Oferta</div>`:p.promo?.type==='2x1'?'<div class="badge-promo b2x1">2×1</div>':badge?`<div class="badge-promo bdisc">${badge}</div>`:''}
     </div>
     <div class="card-body">
       <div class="card-name">${p.name}</div>
       ${p.microcopy?`<div class="card-microcopy">${p.microcopy}</div>`:''}
       <div class="card-desc">${p.shortDesc||p.desc}</div>
+      ${p.promoSocialProof?`<div class="social-proof-line"><span class="material-symbols-outlined">people</span>${p.promoSocialProof} personas pidieron hoy</div>`:''}
       <div class="card-footer">
         <div class="card-price">
           ${showOld?`<div class="price-old">${fmt(p.price)}</div>`:''}
@@ -1599,7 +1791,7 @@ function canSub(){
 function updateBtn(){const b=document.getElementById('wa-btn');canSub()?b.classList.remove('disabled'):b.classList.add('disabled')}
 
 /* ── WHATSAPP */
-function sendWA(){
+async function sendWA(){
   if(!getCount()){showToast('Añade productos al pedido primero');return}
   if(!orderType){showToast('Selecciona si recoges o quieres envío');document.querySelector('.order-section').scrollIntoView({behavior:'smooth'});return}
   if(orderType==='pickup'&&!document.getElementById('pickup-slot').value){showToast('Selecciona una hora de recogida');return}
@@ -1613,10 +1805,12 @@ function sendWA(){
   const unfilledReq=products.find(p=>quantities[p.id]>0&&hasRequiredUnfilled(p));
   if(unfilledReq){showToast('Completa las variantes de "'+unfilledReq.name+'"');setTimeout(()=>openDetail(unfilledReq.id),400);return;}
   if(!checkUSend())return;
+  if(!fbUser&&!guestInfo){openCheckoutModal();return;}
   doSend();
 }
-function doSend(){
+async function doSend(){
   let sub=0;
+  const items=[];
   const lines=products.filter(p=>quantities[p.id]>0).map(p=>{
     const qty=quantities[p.id],total=promoTotal(p,qty);
     const selTotal=getSelectionTotal(p);sub+=total+selTotal;
@@ -1624,27 +1818,56 @@ function doSend(){
     const promTag=dealPrices[p.id]!==undefined?' 🎁':p.promo?.type==='2x1'?' (2×1)':promoBadgeText(p)?` (${promoBadgeText(p)})` :'';
     const sel=selections[p.id]||{};
     const selLine=p.variants&&p.variants.length?p.variants.map(g=>{const gSel=sel[g.id]||{};const parts=Object.entries(gSel).filter(([,n])=>n>0).map(([nm,n])=>n>1?`${nm}×${n}`:nm).join('+');return parts?`${g.title}: ${parts}`:''}).filter(Boolean).join(' / '):'';
+    items.push({id:p.id,name:p.name,qty,unitPrice:promoUnitPrice(p),total:total+selTotal,promo:p.promo?.type||null,selections:selLine});
     return`• ${qty}x ${p.name}${code}${promTag}${selLine?' ('+selLine+')':''} — ${fmt(total+selTotal)}`;
   });
-  const customerName=getCustomerName();
+  const disc=getCouponDiscount();
+  const grand=Math.max(0,sub-disc);
+  const customerName=fbUser?(fbCustomer?.name||fbUser.displayName||fbUser.email||''):guestInfo?.name||getCustomerName();
+  const customerPhone=fbUser?(fbCustomer?.phone||''):guestInfo?.phone||'';
   const greeting=customerName?'Soy '+customerName+', quiero hacer un pedido:':'Quiero hacer un pedido:';
   let msg='#pedido_bb\n\n'+greeting+'\n\n'+lines.join('\n');
-  const disc=getCouponDiscount();
   const couponLine=appliedCoupon&&disc>0?'\n🎟️ Cupón: '+appliedCoupon.code+' (-'+fmt(disc)+')':'';
   const payLine=selectedPayment?'\n💳 Pago: '+selectedPayment:'';
-  const grand=Math.max(0,sub-disc);
+  let slotKey='',slotLabel='',total=grand;
   if(orderType==='delivery'){
     const addr=document.getElementById('delivery-addr').value.trim();
     const cp=document.getElementById('postal-input').value;
-    const slotTxt=document.getElementById('delivery-slot').options[document.getElementById('delivery-slot').selectedIndex]?.text||'';
-    msg+='\n\nSubtotal: '+fmt(sub)+(disc>0?'\nDescuento: -'+fmt(disc):'')+(couponLine?couponLine:'')+'\nEnvío ('+deliveryZone.name+'): '+fmt(deliveryFee)+'\n*Total: '+fmt(grand+deliveryFee)+'*';
-    msg+='\n\n📦 Envío a domicilio\n📍 Dirección: '+addr+' · CP '+cp+'\n⏰ Hora: '+slotTxt+payLine;
+    const slotEl=document.getElementById('delivery-slot');
+    slotLabel=slotEl.options[slotEl.selectedIndex]?.text||'';
+    slotKey=slotToKey(slotEl.value);
+    total=grand+deliveryFee;
+    msg+='\n\nSubtotal: '+fmt(sub)+(disc>0?'\nDescuento: -'+fmt(disc):'')+(couponLine)+'\nEnvío ('+deliveryZone.name+'): '+fmt(deliveryFee)+'\n*Total: '+fmt(total)+'*';
+    msg+='\n\n📦 Envío a domicilio\n📍 Dirección: '+addr+' · CP '+cp+'\n⏰ Hora: '+slotLabel+payLine;
   }else{
-    const slotTxt=document.getElementById('pickup-slot').options[document.getElementById('pickup-slot').selectedIndex]?.text||'';
+    const slotEl=document.getElementById('pickup-slot');
+    slotLabel=slotEl.options[slotEl.selectedIndex]?.text||'';
+    slotKey=slotToKey(slotEl.value);
     msg+='\n\n'+(disc>0?'Subtotal: '+fmt(sub)+'\nDescuento: -'+fmt(disc)+(couponLine?couponLine:'')+'\n':'')+'*Total: '+fmt(grand)+'*';
-    msg+='\n\n🏪 Recogida en tienda\n📍 '+cfg.pickupAddress+', '+cfg.pickupArea+'\n⏰ Hora: '+slotTxt+payLine;
+    msg+='\n\n🏪 Recogida en tienda\n📍 '+cfg.pickupAddress+', '+cfg.pickupArea+'\n⏰ Hora: '+slotLabel+payLine;
   }
+  // Fetch app config (capacity + points) in one call
+  let appCfg={maxOrdersPerSlot:99,pointsPerEuro:0,minOrderForPoints:0};
+  try{const cs=await db.collection('config').doc('app').get();if(cs.exists)appCfg={...appCfg,...cs.data()};}catch(e){}
+  // Check slot capacity
+  try{
+    const ss=await db.collection('orderSlots').doc(slotKey).get();
+    const cnt=(ss.exists?ss.data().count:0)||0;
+    if(cnt>=appCfg.maxOrdersPerSlot){showToast('¡Este horario está lleno! Por favor elige otro.');await _fillSlotsWithCapacity();return;}
+  }catch(e){}
+  // Calc points
+  let pointsEarned=0;
+  if(appCfg.pointsPerEuro>0&&total>=(appCfg.minOrderForPoints||0))pointsEarned=Math.floor(total*appCfg.pointsPerEuro);
+  // Build order
+  const orderData={items,total,type:orderType,customerId:fbUser?fbUser.uid:null,customerName:customerName||'Invitado',customerPhone,customerEmail:fbUser?fbUser.email:'',address:orderType==='delivery'?document.getElementById('delivery-addr').value.trim():'',postalCode:orderType==='delivery'?document.getElementById('postal-input').value:'',zone:deliveryZone?.name||'',deliveryFee:orderType==='delivery'?deliveryFee:0,slotKey,slotLabel,coupon:appliedCoupon&&disc>0?{code:appliedCoupon.code,discount:disc}:null,payment:selectedPayment||'',pointsEarned};
+  // Save to Firestore
+  try{
+    const orderId=await _saveOrder(orderData);
+    msg+='\n\n🔗 Seguimiento de tu pedido:\n'+SITE_URL()+'/track.html?id='+orderId;
+    if(pointsEarned>0)msg+='\n⭐ Ganas +'+pointsEarned+' puntos con este pedido';
+  }catch(e){console.warn('Order save failed',e);}
   window.open('https://wa.me/'+PHONE+'?text='+encodeURIComponent(msg),'_blank');
+  guestInfo=null;
   setTimeout(resetCartAfterSend,1000);
 }
 
@@ -1901,6 +2124,181 @@ try{
   errBanner.style.cssText='position:fixed;top:0;left:0;right:0;background:#C4362A;color:#fff;padding:12px 16px;font-size:13px;font-weight:600;z-index:9999;text-align:center';
   errBanner.textContent='⚠️ Error al cargar la página: '+initErr.message+' — Abre la consola del navegador para más detalles.';
   document.body.appendChild(errBanner);
+}
+
+/* ══════════════════════════════════════════════
+   FIREBASE INTEGRATION
+══════════════════════════════════════════════ */
+const BB_FB_CFG={
+  apiKey:'AIzaSyAZk2mEPXR-VQOOEJWfcdhqoJOhHWjzda4',
+  authDomain:'bocado-brasil.firebaseapp.com',
+  projectId:'bocado-brasil',
+  storageBucket:'bocado-brasil.firebasestorage.app',
+  messagingSenderId:'1083383234261',
+  appId:'1:1083383234261:web:b73a9e9f7df73233d6ec5c'
+};
+firebase.initializeApp(BB_FB_CFG);
+const db=firebase.firestore();
+const fbAuth=firebase.auth();
+
+/* ─ State ─ */
+let fbUser=null,fbCustomer=null,guestInfo=null,_pendingCheckout=false;
+
+/* ─ Auth state listener ─ */
+fbAuth.onAuthStateChanged(async user=>{
+  fbUser=user;
+  if(user){
+    try{
+      const snap=await db.collection('customers').doc(user.uid).get();
+      if(snap.exists){fbCustomer=snap.data();}
+      else{
+        fbCustomer={name:user.displayName||'',email:user.email||'',phone:'',points:0,totalOrders:0,totalSpent:0,createdAt:firebase.firestore.FieldValue.serverTimestamp()};
+        await db.collection('customers').doc(user.uid).set(fbCustomer);
+      }
+    }catch(e){console.warn('customer load',e);}
+  }else{fbCustomer=null;}
+  renderAcctBtn();
+  _fillSlotsWithCapacity();
+});
+
+/* ─ Auth UI ─ */
+function openAuthSheet(){_renderAuthSheet();document.getElementById('auth-overlay').classList.add('open');}
+function closeAuthSheet(){document.getElementById('auth-overlay').classList.remove('open');}
+function _renderAuthSheet(){
+  if(fbUser){
+    document.getElementById('as-logged').style.display='block';
+    document.getElementById('as-anon').style.display='none';
+    const n=fbCustomer?.name||fbUser.displayName||fbUser.email||'';
+    document.getElementById('as-avatar').textContent=n?n[0].toUpperCase():'U';
+    document.getElementById('as-name').textContent=n;
+    document.getElementById('as-email').textContent=fbUser.email||'';
+    document.getElementById('as-pts').textContent=fbCustomer?.points||0;
+  }else{
+    document.getElementById('as-logged').style.display='none';
+    document.getElementById('as-anon').style.display='block';
+  }
+}
+function switchAuthTab(t){
+  document.querySelectorAll('.auth-tab').forEach(el=>el.classList.toggle('active',el.dataset.tab===t));
+  document.querySelectorAll('.auth-panel').forEach(el=>el.classList.toggle('active',el.id==='ap-'+t));
+}
+function renderAcctBtn(){
+  const btn=document.getElementById('account-btn');if(!btn)return;
+  if(fbUser){
+    const n=fbCustomer?.name||fbUser.displayName||fbUser.email||'U';
+    const pts=fbCustomer?.points||0;
+    btn.classList.add('authed');
+    btn.innerHTML=`<span>${n[0].toUpperCase()}</span>${pts>0?`<span class="acct-pts">⭐${pts}</span>`:''}`;
+  }else{
+    btn.classList.remove('authed');
+    btn.innerHTML='<span class="material-symbols-outlined" style="font-size:18px">person</span>';
+  }
+}
+async function doLogin(){
+  const em=document.getElementById('as-email-in').value.trim();
+  const pw=document.getElementById('as-pass-in').value;
+  const err=document.getElementById('as-login-err');
+  err.classList.remove('show');
+  try{
+    await fbAuth.signInWithEmailAndPassword(em,pw);
+    closeAuthSheet();
+    if(_pendingCheckout){_pendingCheckout=false;doSend();}
+  }catch(e){err.textContent=_fbErr(e.code);err.classList.add('show');}
+}
+async function doRegister(){
+  const n=document.getElementById('as-reg-name').value.trim();
+  const ph=document.getElementById('as-reg-phone').value.trim();
+  const em=document.getElementById('as-reg-email').value.trim();
+  const pw=document.getElementById('as-reg-pass').value;
+  const err=document.getElementById('as-reg-err');
+  err.classList.remove('show');
+  if(!n||!em||!pw){err.textContent='Completa nombre, email y contraseña.';err.classList.add('show');return;}
+  try{
+    const c=await fbAuth.createUserWithEmailAndPassword(em,pw);
+    await c.user.updateProfile({displayName:n});
+    await db.collection('customers').doc(c.user.uid).set({name:n,phone:ph,email:em,points:0,totalOrders:0,totalSpent:0,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+    closeAuthSheet();
+    if(_pendingCheckout){_pendingCheckout=false;doSend();}
+  }catch(e){err.textContent=_fbErr(e.code);err.classList.add('show');}
+}
+async function doGoogleAuth(){
+  try{
+    await fbAuth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+    closeAuthSheet();closeCheckoutModal();
+    if(_pendingCheckout){_pendingCheckout=false;doSend();}
+  }catch(e){console.warn('google auth',e);}
+}
+function _fbErr(code){
+  return({'auth/user-not-found':'Email no registrado.','auth/wrong-password':'Contraseña incorrecta.','auth/invalid-credential':'Email o contraseña incorrectos.','auth/email-already-in-use':'Email ya registrado.','auth/weak-password':'Contraseña muy corta (mín. 6 caracteres).','auth/invalid-email':'Email no válido.'})[code]||'Error al autenticar. Inténtalo de nuevo.';
+}
+
+/* ─ Checkout modal ─ */
+function openCheckoutModal(){
+  document.getElementById('co-choice').style.display='block';
+  document.getElementById('co-guest').style.display='none';
+  document.getElementById('checkout-modal-overlay').classList.add('open');
+}
+function closeCheckoutModal(){document.getElementById('checkout-modal-overlay').classList.remove('open');}
+function showGuestForm(){
+  document.getElementById('co-choice').style.display='none';
+  document.getElementById('co-guest').style.display='block';
+  setTimeout(()=>document.getElementById('guest-name').focus(),100);
+}
+function confirmGuest(){
+  const n=document.getElementById('guest-name').value.trim();
+  const p=document.getElementById('guest-phone').value.trim();
+  if(!n||!p){showToast('Por favor completa tu nombre y teléfono');return;}
+  guestInfo={name:n,phone:p};
+  closeCheckoutModal();doSend();
+}
+function checkoutGoLogin(){_pendingCheckout=true;closeCheckoutModal();openAuthSheet();}
+
+/* ─ Slots with capacity ─ */
+function slotToKey(slotVal){
+  const[d,t]=slotVal.split('_');
+  const dt=new Date();dt.setDate(dt.getDate()+parseInt(d));
+  return dt.toISOString().slice(0,10)+'_'+t;
+}
+async function _fillSlotsWithCapacity(){
+  try{
+    const snap=await db.collection('config').doc('app').get();
+    const max=snap.exists?(snap.data().maxOrdersPerSlot||99):99;
+    await Promise.all([
+      _applyCapacity('pickup-slot','pickup-closed-msg',max),
+      _applyCapacity('delivery-slot','delivery-closed-msg',max)
+    ]);
+  }catch(e){/* offline: show all slots */}
+}
+async function _applyCapacity(selId,msgId,max){
+  const sel=document.getElementById(selId);if(!sel||sel.style.display==='none')return;
+  const slots=genSlots();
+  const counts={};
+  await Promise.all(slots.map(async s=>{
+    const sp=await db.collection('orderSlots').doc(slotToKey(s.value)).get();
+    counts[s.value]=(sp.exists?sp.data().count:0)||0;
+  }));
+  const prev=sel.value;
+  const avail=slots.filter(s=>counts[s.value]<max);
+  const msg=document.getElementById(msgId);
+  sel.innerHTML='<option value="">Selecciona una hora...</option>'+avail.map(s=>`<option value="${s.value}">${s.label}</option>`).join('');
+  if(!avail.length){sel.style.display='none';if(msg)msg.style.display='block';}
+  else{sel.style.display='block';if(msg)msg.style.display='none';}
+  if(prev&&avail.find(s=>s.value===prev))sel.value=prev;
+  else if(prev){showToast('El horario elegido ya no está disponible');updateBtn();}
+}
+
+/* ─ Save order to Firestore ─ */
+const SITE_URL=()=>cfg.siteUrl||window.location.origin;
+async function _saveOrder(data){
+  const ref=await db.collection('orders').add({...data,status:'Pendiente',createdAt:firebase.firestore.FieldValue.serverTimestamp(),updatedAt:firebase.firestore.FieldValue.serverTimestamp()});
+  await db.collection('orderSlots').doc(data.slotKey).set({count:firebase.firestore.FieldValue.increment(1),date:data.slotKey.split('_')[0],time:data.slotKey.split('_')[1]},{merge:true});
+  if(fbUser){
+    const pts=data.pointsEarned||0;
+    await db.collection('customers').doc(fbUser.uid).update({totalOrders:firebase.firestore.FieldValue.increment(1),totalSpent:firebase.firestore.FieldValue.increment(data.total||0),points:firebase.firestore.FieldValue.increment(pts),lastOrderAt:firebase.firestore.FieldValue.serverTimestamp()});
+    if(fbCustomer){fbCustomer.points=(fbCustomer.points||0)+pts;}
+    renderAcctBtn();
+  }
+  return ref.id;
 }
 </script>
 <div class="wa-float">
